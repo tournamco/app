@@ -1,8 +1,8 @@
 <resources>
     <declare-styleable name="filter_dropdown">
-        <attr name="exampleString" format="string" />
-        <attr name="exampleDimension" format="dimension" />
-        <attr name="exampleColor" format="color" />
-        <attr name="exampleDrawable" format="color|reference" />
+        <attr name="filter_String" format="string" />
+        <attr name="filter_Dimension" format="dimension" />
+        <attr name="filter_Color" format="color" />
+        <attr name="filter_Drawable" format="color|reference" />
     </declare-styleable>
 </resources>

@@ -44,19 +44,19 @@ public class filter_dropdown extends View {
                 attrs, R.styleable.filter_dropdown, defStyle, 0);
 
         mExampleString = a.getString(
-                R.styleable.filter_dropdown_exampleString);
+                R.styleable.filter_dropdown_filter_String);
         mExampleColor = a.getColor(
-                R.styleable.filter_dropdown_exampleColor,
+                R.styleable.filter_dropdown_filter_Color,
                 mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
         mExampleDimension = a.getDimension(
-                R.styleable.filter_dropdown_exampleDimension,
+                R.styleable.filter_dropdown_filter_Dimension,
                 mExampleDimension);
 
-        if (a.hasValue(R.styleable.filter_dropdown_exampleDrawable)) {
+        if (a.hasValue(R.styleable.filter_dropdown_filter_Drawable)) {
             mExampleDrawable = a.getDrawable(
-                    R.styleable.filter_dropdown_exampleDrawable);
+                    R.styleable.filter_dropdown_filter_Drawable);
             mExampleDrawable.setCallback(this);
         }
 

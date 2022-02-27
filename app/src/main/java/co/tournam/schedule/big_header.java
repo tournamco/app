@@ -44,19 +44,19 @@ public class big_header extends View {
                 attrs, R.styleable.big_header, defStyle, 0);
 
         mExampleString = a.getString(
-                R.styleable.big_header_exampleString);
+                R.styleable.big_header_big_headerString);
         mExampleColor = a.getColor(
-                R.styleable.big_header_exampleColor,
+                R.styleable.big_header_big_headerColor,
                 mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
         mExampleDimension = a.getDimension(
-                R.styleable.big_header_exampleDimension,
+                R.styleable.big_header_big_headerDimension,
                 mExampleDimension);
 
-        if (a.hasValue(R.styleable.big_header_exampleDrawable)) {
+        if (a.hasValue(R.styleable.big_header_big_headerDrawable)) {
             mExampleDrawable = a.getDrawable(
-                    R.styleable.big_header_exampleDrawable);
+                    R.styleable.big_header_big_headerDrawable);
             mExampleDrawable.setCallback(this);
         }
 
