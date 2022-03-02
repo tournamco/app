@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Schedule</string>
+
+    <string-array name="stage_options">
+        <item>Pools</item>
+        <item>Single Elim</item>
+        <item>Double Elim</item>
+        <item>Swiss Elim</item>
+    </string-array>
 </resources>
