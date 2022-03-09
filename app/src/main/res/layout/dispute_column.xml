@@ -18,7 +18,7 @@
 
             <TextView
                 android:id="@+id/scoreTeamA"
-                android:layout_width="80dp"
+                android:layout_width="72dp"
                 android:layout_height="60dp"
                 android:background="@drawable/purple_outline"
                 android:gravity="center"
