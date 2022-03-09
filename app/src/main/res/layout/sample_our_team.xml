@@ -24,71 +24,13 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player A"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingLeft="20dp"/>
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player B"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingLeft="20dp"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player C"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingLeft="20dp"/>
-
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -106,68 +48,11 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player D"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingRight="20dp"/>
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player E"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingRight="20dp"/>
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player F"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:paddingRight="20dp"/>
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-            </LinearLayout>
+            <include layout="@layout/team_member" android:id="@+id/id"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -2,40 +2,47 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:textAlignment="center"
+        android:paddingTop="8dp"
         tools:ignore="MissingConstraints">
 
         <TextView
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="Type"
+            android:layout_height="40dp"
+            android:text="Date"
             android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
-        <Spinner
-            android:layout_width="160dp"
+        <EditText
+            android:layout_width="122dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
-            android:entries="@array/stage_options"
-            android:textAlignment="center"
-            android:spinnerMode="dropdown"/>
+            android:textAlignment="center"/>
 
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="25dp"
             android:layout_height="40dp"
-            android:text="Remove"
-            android:textAllCaps="false"
-            android:background="@drawable/gradient_filled_button"
-            app:backgroundTint="@null"
-            android:layout_marginStart="20dp"/>
+            android:text="to"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:layout_width="122dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_spinner_with_arrow"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 
