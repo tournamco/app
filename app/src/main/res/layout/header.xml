@@ -1,61 +1,52 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_normal"
+    android:layout_marginBottom="@dimen/padding_normal"
+    android:layout_marginEnd="@dimen/padding_normal"
+    android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="false"
+    app:titleTextColor="@android:color/white"
+    android:gravity="start"
+    android:orientation="vertical"
+>
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/header"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/gradient"
         app:layout_constraintDimensionRatio="2:2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057"
-        app:layout_constraintWidth_percent="1" />
+        app:layout_constraintWidth_percent="1"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My profile"
-        android:textAllCaps="false"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintDimensionRatio="2:2"
+        android:text="Teams/Members"
         android:textColor="#A23BC6"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="2:2"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022"
         app:layout_constraintWidth_percent="1" />
+<!-- Remove if Necessary -->
+    <TextView
+        app:layout_constraintDimensionRatio="2:2"
+        android:id="@+id/memberNumber"
+        android:layout_width="400dp"
+        android:layout_height="46dp"
+        android:text="number/number"
+        android:textStyle="bold"
+        android:translationX="250dp"
+        app:layout_constraintWidth_percent="1">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@drawable/gradient_spinner"
-        android:padding="0dp"
-        android:text="Log Out"
-        android:textAllCaps="false"
-        android:textColor="#A23BC6"
-        android:textSize="16sp"
-        app:backgroundTint="@null"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.919"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        tools:ignore="TouchTargetSizeCheck" />
+    </TextView>
 
 
+</RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
