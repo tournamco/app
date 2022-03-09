@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Schedule</string>
+    <string name="entryTitle">Participants</string>
+    <string name="sample_name">Player A</string>
+    <string name="round_header_name">Round 1</string>
 
     <string-array name="stage_options">
         <item>Pools</item>
