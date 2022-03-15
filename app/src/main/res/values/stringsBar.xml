@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">BottomNavigationBar</string>
+    <string name="title_search">Search</string>
     <string name="title_Search">Search</string>
-    <string name="title_Tournament">Tournament</string>
+    <string name="title_tournament">Tournament</string>
+    <string name="title_Tournament">Search</string>
 
-    <string name="title_Schedule">Schedule</string>
+    <string name="title_schedule">Schedule</string>
+    <string name="title_Schedule">Search</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
