@@ -3,17 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-anydpi/dropdown_arrow.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-anydpi/qr_icon.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/gradient_button.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/gradient_filled_button.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/gradient_spinner_with_arrow.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/roundbar_selected.xml" value="0.352" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/drawable-v24/roundbar_unselected.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/gradient.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/gradient_spinner.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/header.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/header.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/match_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/roundedbutton.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_big_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_filter_dropdown.xml" value="0.25" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_our_team.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_roundbar.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_rounded_button.xml" value="0.35260416666666666" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_stage_options.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_stage_options_double.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_stage_options_pools.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_stage_options_single.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_stage_options_swiss.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_ui_button.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_ui_button_with_img.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_ui_slider.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/tournament_summary.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/20202571/Documents/Tournamco/app/app/src/main/res/layout/activity_main.xml" value="0.1" />
