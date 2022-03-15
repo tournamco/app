@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+    <View
+        android:id="@+id/color"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="49dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:paddingRight="2dp"
+                android:layout_height="20dp"
+                android:id="@+id/time"
+                android:text="02:05"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:id="@+id/matchname"
+                android:textSize="13dp"
+                android:text="Tournament name - Round 2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/teamlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

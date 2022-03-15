@@ -12,9 +12,10 @@ public class TournamentModel {
     private List<DisputeModel> disputes;
     private UserModel organizer;
     private String game;
-    private Color color;
+    private int color;
     private int teamSize;
     private boolean isPublic;
+    private String name;
 
     public List<AbstractStageModel> getStages() {
         return stages;
@@ -56,11 +57,11 @@ public class TournamentModel {
         this.game = game;
     }
 
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
@@ -78,5 +79,13 @@ public class TournamentModel {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

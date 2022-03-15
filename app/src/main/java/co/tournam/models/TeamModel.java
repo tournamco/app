@@ -5,6 +5,7 @@ import java.util.List;
 public class TeamModel {
     private List<UserModel> members;
     private UserModel leader;
+    private String name;
 
     public List<UserModel> getMembers() {
         return members;
@@ -20,5 +21,13 @@ public class TeamModel {
 
     public void setLeader(UserModel leader) {
         this.leader = leader;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

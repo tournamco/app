@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@color/black"
+        android:foreground="@drawable/rounded_fg"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:gravity="center_vertical"
+        android:text="Team A"
+        android:paddingLeft="8dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:paddingLeft="4dp"
+        android:text="1"/>
+
+</merge>

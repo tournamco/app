@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.tournam.models.RoundModel;
+import co.tournam.models.TournamentModel;
 
 public abstract class AbstractStageModel {
     private Date minimalDate;
@@ -13,6 +14,8 @@ public abstract class AbstractStageModel {
     private Duration maximalTime;
     private List<RoundModel> rounds;
     private int numberOfParticipants;
+    private TournamentModel tournament;
+    private String name;
 
     public Date getMinimalDate() {
         return minimalDate;
@@ -60,5 +63,21 @@ public abstract class AbstractStageModel {
 
     public void setNumberOfParticipants(int numberOfParticipants) {
         this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public TournamentModel getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(TournamentModel tournament) {
+        this.tournament = tournament;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

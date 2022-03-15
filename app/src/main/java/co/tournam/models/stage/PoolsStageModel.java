@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.tournam.models.TeamModel;
 
-public class PoolsStageModel {
+public class PoolsStageModel extends AbstractStageModel {
     private List<List<TeamModel>> pools;
     private int poolSize;
     private int numberOfWinners;
