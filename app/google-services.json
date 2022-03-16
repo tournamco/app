@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "162574402520",
+    "project_id": "tournamco",
+    "storage_bucket": "tournamco.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162574402520:android:8b8a4924c65261796328ad",
+        "android_client_info": {
+          "package_name": "co.tournam.schedule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162574402520-gdk0dfr2sd7893ojbe74khbb17t2i7vh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQDVeOLG2qJSLu-sq-Ojqjc0EWtN3_6wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162574402520-gdk0dfr2sd7893ojbe74khbb17t2i7vh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
