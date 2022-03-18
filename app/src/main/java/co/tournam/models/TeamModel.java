@@ -15,6 +15,8 @@ public class TeamModel {
         this.members = members;
     }
 
+    public int getCurrentMemberAmount() { return (int) this.members.stream().count(); }
+
     public UserModel getLeader() {
         return leader;
     }
