@@ -11,6 +11,7 @@
         tools:ignore="MissingConstraints">
 
         <Button
+            android:id="@+id/stagelist_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sample_stage"
