@@ -13,6 +13,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
+            android:id="@+id/textentry_threshold_title"
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:text="Date"
@@ -23,6 +24,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/textentry_threshold_from"
             android:layout_width="122dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
@@ -39,6 +41,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/textentry_threshold_to"
             android:layout_width="122dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
