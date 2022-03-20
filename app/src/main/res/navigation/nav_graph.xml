@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_search"
+    app:startDestination="@+id/navigation_search"
+    android:layout_alignParentBottom="true">
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="co.tournam.schedule.Schedule"
+        android:label="@string/title_Schedule"
+        tools:layout="@layout/fragment_schedule" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="co.tournam.schedule.Search"
+        android:label="@string/title_Search"
+        android:icon="@drawable/ic_baseline_search_24"
+        tools:layout="@layout/fragment_search" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_tournament"
+        android:name="co.tournam.schedule.Tournament"
+        android:label="@string/title_Tournament"
+        tools:layout="@layout/fragment_tournament" >
+    </fragment>
+
+
+</navigation>

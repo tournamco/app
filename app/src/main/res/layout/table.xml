@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:stretchColumns="1,2"
+    android:layout_margin="8dp">
+
+
+    <TableRow>
+
+        <TextView
+            android:text="Date Joined"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_row = "1"
+            />
+        <TextView android:id="@+id/dateJoin"
+            android:text="TXD"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_column="1"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:text="Match Win Ratio"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_row = "1"/>
+        <TextView android:id="@+id/winRatio"
+            android:text="TXD"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_column="1"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:text="Match Wins"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_row = "1"/>
+        <TextView android:id="@+id/matchWins"
+            android:text="TXD"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_column="1"
+            />
+    </TableRow>
+    <TableRow>
+
+        <TextView
+            android:layout_row="1"
+            android:padding="10dp"
+            android:text="Tournament Win Ratio"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+        <TextView android:id="@+id/tournamentWinRatio"
+            android:text="TXD"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_column="1"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:text="Tournament Wins"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_row = "1"
+            />
+        <TextView android:id="@+id/tournamentWins"
+            android:text="TXD"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_column="1"
+            />
+    </TableRow>
+    <TableRow>
+
+
+    </TableRow>
+
+
+</TableLayout>
