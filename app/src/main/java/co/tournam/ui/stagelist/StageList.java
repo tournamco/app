@@ -1,6 +1,8 @@
 package co.tournam.ui.stagelist;
 
 import android.content.Context;
+import android.widget.LinearLayout;
+
 import java.util.*;
 
 import co.tournam.models.RoundModel;
@@ -17,6 +19,8 @@ public class StageList extends AbstractStageList {
     }
 
     public void build(Context context) {
+
+
         buildContents(context);
     }
 
@@ -25,6 +29,7 @@ public class StageList extends AbstractStageList {
             StageListItem item = new StageListItem(context, stage);
             this.addView(item);
         }
+
     }
 
 }

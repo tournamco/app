@@ -6,13 +6,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import co.tournam.models.MatchModel;
 import co.tournam.schedule.R;
+import co.tournam.table.Score;
 
 public class GameProofScore extends LinearLayout {
 
     private TextView team1;
     private TextView team2;
     private MatchModel match;
-//    private ScoreBoard score;
+    private Score score;
 
     public GameProofScore(Context context, MatchModel match) {
         super(context);
@@ -36,7 +37,7 @@ public class GameProofScore extends LinearLayout {
         team1 = findViewById(R.id.game_proof_team1);
         team1.setText(match.getTeams().get(0).getName());
 
-//        score = findViewById(R.id.game_proof_score);
+        score = findViewById(R.id.game_proof_score);
         TextView score1 = findViewById(R.id.score1);
         score1.setText(match.getScore(match.getTeams().get(0)));
 
