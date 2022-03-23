@@ -10,6 +10,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
+            android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/score"
@@ -22,6 +23,7 @@
             />
 
         <TextView
+            android:id="@+id/score2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/score_alt"

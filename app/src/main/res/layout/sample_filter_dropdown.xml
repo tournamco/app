@@ -6,7 +6,7 @@
 
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/filter_dropdown_spinner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/gradient_spinner"

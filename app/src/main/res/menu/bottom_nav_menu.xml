@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_schedule"
+
+        android:label=""
+
+        android:title="@string/title_Schedule" />
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:label=""
+        android:title="@string/title_Search" />
+    <item
+        android:id="@+id/navigation_tournament"
+        android:label=""
+
+        android:title="@string/title_Tournament" />
+
+</menu>
