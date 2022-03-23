@@ -16,6 +16,8 @@ public class TournamentModel {
     private int teamSize;
     private boolean isPublic;
     private String name;
+    private int imageID;
+    private int teamLimit;
 
     public List<AbstractStageModel> getStages() {
         return stages;
@@ -32,6 +34,8 @@ public class TournamentModel {
     public void setTeams(List<TeamModel> teams) {
         this.teams = teams;
     }
+
+    public int getCurrentAmountOfTeams() { return (int) teams.stream().count(); }
 
     public List<DisputeModel> getDisputes() {
         return disputes;
@@ -88,4 +92,14 @@ public class TournamentModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setImageID(int imageID) { this.imageID = imageID; }
+
+    public int getImageID() { return imageID; }
+
+    public void setTournamentIcon(int imageID) { this.imageID = imageID; }
+
+    public int getTournamentIcon() { return imageID; }
+
+    public int getTournamentLimit() { return teamLimit; }
 }

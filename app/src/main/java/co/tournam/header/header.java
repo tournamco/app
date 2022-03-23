@@ -26,7 +26,8 @@ public class header extends LinearLayout{
 
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
-        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
 
         buildContents(context);
     }

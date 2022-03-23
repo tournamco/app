@@ -4,6 +4,7 @@ public class UserModel {
     private String username;
     private String gamerTag;
     private String email;
+    private int iconID;
 
     public String getUsername() {
         return username;
@@ -28,4 +29,8 @@ public class UserModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public int getIcon() { return iconID; }
+
+    public void setIcon(int iconID) { this.iconID = iconID; }
 }
