@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import co.tournam.models.FakeData;
-import co.tournam.team_members.TeamMembers;
 import co.tournam.ui.matchlist.SummaryMatchList;
 
 

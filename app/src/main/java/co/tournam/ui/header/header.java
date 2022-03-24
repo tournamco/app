@@ -1,10 +1,9 @@
-package co.tournam.header;
+package co.tournam.ui.header;
 
 import android.content.Context;
 import co.tournam.models.TeamModel;
 import co.tournam.schedule.R;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;

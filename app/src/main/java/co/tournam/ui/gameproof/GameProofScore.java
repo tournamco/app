@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import co.tournam.models.MatchModel;
 import co.tournam.schedule.R;
-import co.tournam.table.Score;
+import co.tournam.ui.table.Score;
 
 public class GameProofScore extends LinearLayout {
 

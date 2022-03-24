@@ -1,19 +1,12 @@
-package co.tournam.team_members;
+package co.tournam.ui.team_members;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 import co.tournam.models.TeamModel;
 import co.tournam.models.UserModel;
-import co.tournam.schedule.R;
 
 public class TeamMembersItem extends LinearLayout {
 

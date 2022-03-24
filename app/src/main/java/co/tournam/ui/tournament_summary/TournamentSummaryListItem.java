@@ -1,8 +1,7 @@
-package co.tournam.tournament_summary;
+package co.tournam.ui.tournament_summary;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

@@ -1,4 +1,4 @@
-package co.tournam.team_members;
+package co.tournam.ui.team_members;
 
 import android.content.Context;
 import android.view.LayoutInflater;
