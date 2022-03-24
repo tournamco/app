@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="co.tournam.schedule.Schedule"
+        android:name="co.tournam.schedule.schedule.Schedule"
         android:label="@string/title_Schedule"
         tools:layout="@layout/fragment_schedule" >
     </fragment>

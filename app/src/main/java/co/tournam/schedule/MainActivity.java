@@ -1,10 +1,8 @@
 package co.tournam.schedule;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,28 +11,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 
 import co.tournam.models.FakeData;
-import co.tournam.ui.matchlist.SummaryMatchList;
+import co.tournam.schedule.schedule.Schedule;
 
 
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycleView;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.context = this.getApplicationContext();
 
         FakeData data = new FakeData();
-        addContentView(
-                new SummaryMatchList(
-                        this.getApplicationContext(),
-                        data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//        addContentView(
+//                new SummaryMatchList(
+//                        this.getApplicationContext(),
+//                        data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
+//                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
@@ -67,11 +66,11 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
-    }
+//        public void logout(View view) {
+//        FirebaseAuth.getInstance().signOut();
+//        startActivity(new Intent(getApplicationContext(), Login.class));
+//        finish();
+//    }
 
 
 }
