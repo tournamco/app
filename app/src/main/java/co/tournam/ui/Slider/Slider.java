@@ -1,14 +1,13 @@
 package co.tournam.ui.Slider;
 
 import android.content.Context;
-
-import co.tournam.schedule.R;
-
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import co.tournam.schedule.R;
 
 public class Slider extends LinearLayout{
     private Button buttonLocal;

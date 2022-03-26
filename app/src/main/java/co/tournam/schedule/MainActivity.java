@@ -3,9 +3,6 @@ package co.tournam.schedule;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-//import com.google.firebase.auth.FirebaseAuth;
 
-import co.tournam.members.Members;
 import co.tournam.models.FakeData;
-import co.tournam.team_members.TeamMembers;
-import co.tournam.tournament_summary.TournamentSummaryList;
-import co.tournam.tournament_summary.TournamentSummaryListItem;
-import co.tournam.ui.matchlist.SummaryMatchList;
 import co.tournam.schedule.schedule.Schedule;
+import co.tournam.schedule.schedule.Search;
+import co.tournam.schedule.schedule.Tournament;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FakeData data = new FakeData();
 
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
-        layout1.addView( new Members(
-                        this.getApplicationContext(),
-                        data.tournament.getTeams().get(0)));
-        layout1.addView( new TournamentSummaryListItem(
-                this.getApplicationContext(),
-                data.tournament));
+//        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
+//        layout1.addView( new Members(
+//                        this.getApplicationContext(),
+//                        data.tournament.getTeams().get(0)));
+//        layout1.addView( new TournamentSummaryListItem(
+//                this.getApplicationContext(),
+//                data.tournament));
         /*addContentView(
                 new Members(
                         this.getApplicationContext(),
@@ -55,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));*/
         this.context = this.getApplicationContext();
 
-        FakeData data = new FakeData();
+//        FakeData data = new FakeData();
 //        addContentView(
 //                new SummaryMatchList(
 //                        this.getApplicationContext(),
@@ -91,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-        public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
-    }
+//        public void logout(View view) {
+//        FirebaseAuth.getInstance().signOut();
+//        startActivity(new Intent(getApplicationContext(), Login.class));
+//        finish();
+//    }
 
 
 }

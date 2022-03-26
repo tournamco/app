@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="co.tournam.schedule.Search"
+        android:name="co.tournam.schedule.schedule.Search"
         android:label="@string/title_Search"
         android:icon="@drawable/ic_baseline_search_24"
         tools:layout="@layout/fragment_search" >
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/navigation_tournament"
-        android:name="co.tournam.schedule.Tournament"
+        android:name="co.tournam.schedule.schedule.Tournament"
         android:label="@string/title_Tournament"
         tools:layout="@layout/fragment_tournament" >
     </fragment>

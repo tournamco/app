@@ -3,9 +3,7 @@ package co.tournam.members;
 import android.content.Context;
 
 import co.tournam.models.TeamModel;
-import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
-import co.tournam.tournament_summary.TournamentSummaryListItem;
 
 public class Members extends AbstractMembers{
 
