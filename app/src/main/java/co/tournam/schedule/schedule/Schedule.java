@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
+import co.tournam.schedule.R;
 import co.tournam.schedule.ScheduleActivity;
-import co.tournam.schedule.Search;
 
 
 /**
@@ -65,6 +65,7 @@ public class Schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        inflater.inflate(R.layout.fragment_schedule, container, false);
         ScheduleActivity views = new ScheduleActivity(this.getContext());
 
         return views;

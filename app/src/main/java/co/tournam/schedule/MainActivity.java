@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +15,13 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseAuth;
 
-import co.tournam.members.Members;
 import co.tournam.models.FakeData;
 import co.tournam.ui.matchlist.SummaryMatchList;
 import co.tournam.schedule.schedule.Schedule;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
+import co.tournam.schedule.schedule.Schedule;
+import co.tournam.schedule.schedule.Search;
+import co.tournam.schedule.schedule.Tournament;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FakeData data = new FakeData();
 
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
-        /*layout1.addView( new Members(
-                        this.getApplicationContext(),
-                        data.tournament.getTeams().get(0)));
-        layout1.addView( new TournamentSummaryListItem(
-                this.getApplicationContext(),
-                data.tournament));
+//        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
+//        layout1.addView( new Members(
+//                        this.getApplicationContext(),
+//                        data.tournament.getTeams().get(0)));
+//        layout1.addView( new TournamentSummaryListItem(
+//                this.getApplicationContext(),
+//                data.tournament));
         /*addContentView(
                 new Members(
                         this.getApplicationContext(),
@@ -92,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-        public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
-    }
+//        public void logout(View view) {
+//        FirebaseAuth.getInstance().signOut();
+//        startActivity(new Intent(getApplicationContext(), Login.class));
+//        finish();
+//    }
 
 
 }

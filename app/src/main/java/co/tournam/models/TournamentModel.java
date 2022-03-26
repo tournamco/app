@@ -1,7 +1,5 @@
 package co.tournam.models;
 
-import android.graphics.Color;
-
 import java.util.List;
 
 import co.tournam.models.stage.AbstractStageModel;
@@ -18,6 +16,7 @@ public class TournamentModel {
     private String name;
     private int imageID;
     private int teamLimit;
+    private String location;
 
     public List<AbstractStageModel> getStages() {
         return stages;
@@ -102,4 +101,8 @@ public class TournamentModel {
     public int getTournamentIcon() { return imageID; }
 
     public int getTournamentLimit() { return teamLimit; }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location){ this.location = location;}
 }

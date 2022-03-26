@@ -3,7 +3,6 @@ package co.tournam.members;
 import android.content.Context;
 
 import co.tournam.models.TeamModel;
-import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
 
 public class Members extends AbstractMembers{

@@ -16,7 +16,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/gradient"
         app:layout_constraintDimensionRatio="2:2"
-        app:layout_constraintWidth_percent="1"/>
+        app:layout_constraintWidth_percent="1" />
 
     <TextView
         android:id="@+id/teamsOrMembers"
@@ -26,11 +26,11 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintDimensionRatio="2:2"
         android:text="Teams/Members"
         android:textColor="#A23BC6"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintDimensionRatio="2:2"
         app:layout_constraintWidth_percent="1" />
     <!-- Remove if Necessary -->
     <TextView

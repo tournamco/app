@@ -19,6 +19,8 @@
         android:paddingRight="10sp"
         app:backgroundTint="@null"
         app:cornerRadius="5dp"
+
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
