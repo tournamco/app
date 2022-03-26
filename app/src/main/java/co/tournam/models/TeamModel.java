@@ -1,12 +1,14 @@
 package co.tournam.models;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 public class TeamModel {
     private List<UserModel> members;
     private UserModel leader;
     private String name;
-    private String image;
+    private Bitmap image;
 
     public List<UserModel> getMembers() {
         return members;
@@ -34,9 +36,9 @@ public class TeamModel {
         this.name = name;
     }
 
-    public String getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(String image){this.image = image;}
+    public void setImage(Bitmap image){this.image = image;}
 }

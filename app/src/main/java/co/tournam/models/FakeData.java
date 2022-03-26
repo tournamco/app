@@ -1,5 +1,6 @@
 package co.tournam.models;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import java.time.LocalDateTime;

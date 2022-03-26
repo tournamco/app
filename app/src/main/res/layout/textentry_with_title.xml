@@ -24,10 +24,11 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:layout_width="270dp"
+            android:id="@+id/editTextEntry"
+            android:layout_width="208dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
     </LinearLayout>
 

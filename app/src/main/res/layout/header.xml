@@ -35,13 +35,14 @@
     <!-- Remove if Necessary -->
     <TextView
 
-        app:layout_constraintDimensionRatio="2:2"
         android:id="@+id/memberNumber"
         android:layout_width="400dp"
         android:layout_height="46dp"
+        android:gravity="center_vertical"
         android:text="number/number"
         android:textStyle="bold"
         android:translationX="250dp"
+        app:layout_constraintDimensionRatio="2:2"
         app:layout_constraintWidth_percent="1">
 
     </TextView>

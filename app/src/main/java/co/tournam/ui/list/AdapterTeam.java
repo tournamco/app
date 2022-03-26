@@ -1,6 +1,7 @@
 package co.tournam.ui.list;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull AdapterTeam.MyHolder holder, final int position) {
-        String teamImage = list.get(position).getImage();
+        Bitmap teamImage = list.get(position).getImage();
         String teamName = list.get(position).getName();
         holder.name.setText(teamName);
         try {

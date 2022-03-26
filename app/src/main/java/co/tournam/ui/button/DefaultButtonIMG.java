@@ -37,6 +37,6 @@ public class DefaultButtonIMG extends AbstractButton {
 
         button = findViewById(R.id.default_button_with_img);
         button.setText(title);
-        button.setCompoundDrawablesRelative(null, null, image, null);
+        button.setCompoundDrawablesWithIntrinsicBounds(null, null, image, null);
     }
 }

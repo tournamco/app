@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Schedule</string>
     <string name="entryTitle">Participants</string>
+    <string name="name_slot">Name</string>
     <string name="sample_name">Player A</string>
     <string name="round_header_name">Round 1</string>
     <string name="sample_score">1</string>

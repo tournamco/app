@@ -36,7 +36,7 @@ public class TeamScoreIconItem extends LinearLayout {
         inflater.inflate(R.layout.team_score_icon, this, true);
 
         teamIcon = findViewById(R.id.teamscore_icon_image);
-        String imageID = this.team.getImage();
+        Bitmap imageID = this.team.getImage();
 //        backend.getImage(imageID);
 //        teamIcon.setImageBitmap(new Bitmap);   TODO: ONCE WE HAVE BACKEND SET UP
 
