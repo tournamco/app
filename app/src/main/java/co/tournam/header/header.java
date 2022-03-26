@@ -40,13 +40,19 @@ public class header extends LinearLayout{
         title = (TextView) findViewById(R.id.teamsOrMembers);
         memberAmountText = (TextView) findViewById(R.id.memberNumber);
 
-        if( teamsOrMembers == headerTitle.TEAMS) {
-            setTitle("Teams");
-            setMemberAmount(null);
-        }
-        else if( teamsOrMembers == headerTitle.MEMBERS) {
-            setTitle("Members");
-            setMemberAmount(String.valueOf(team.getCurrentMemberAmount()) + " / " + String.valueOf(team.getCurrentMemberAmount()));
+        switch (teamsOrMembers) {
+            case TEAMS:
+                setTitle("Teams");
+                setMemberAmount(null);
+                break;
+            case MEMBERS:
+                setTitle("Members");
+                setMemberAmount(String.valueOf(team.getCurrentMemberAmount()) + " / " + String.valueOf(team.getCurrentMemberAmount()));
+                break;
+            case INVITE:
+                setTitle("Invite");
+                setMemberAmount(null);
+
         }
     }
 

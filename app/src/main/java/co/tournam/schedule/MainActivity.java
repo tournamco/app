@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import co.tournam.members.Members;
 import co.tournam.models.FakeData;
 import co.tournam.team_members.TeamMembers;
+import co.tournam.tournament_summary.TournamentSummaryList;
+import co.tournam.tournament_summary.TournamentSummaryListItem;
 import co.tournam.ui.matchlist.SummaryMatchList;
 
 
@@ -29,14 +33,25 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         FakeData data = new FakeData();
-        addContentView(
-                new SummaryMatchList(
-                        this.getApplicationContext(),
-                        data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
+        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
+        layout1.addView( new Members(
+                        this.getApplicationContext(),
+                        data.tournament.getTeams().get(0)));
+        layout1.addView( new TournamentSummaryListItem(
+                this.getApplicationContext(),
+                data.tournament));
+        /*addContentView(
+                new Members(
+                        this.getApplicationContext(),
+                        data.tournament.getTeams().get(0)),
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        addContentView(
+                new TournamentSummaryListItem(
+                        this.getApplicationContext(),
+                        data.tournament),
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));*/
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
         getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();
@@ -65,8 +80,6 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
-
-
 
         public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
