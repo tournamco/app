@@ -1,4 +1,4 @@
-package co.tournam.schedule;
+package co.tournam.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,10 +10,12 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import co.tournam.schedule.R;
+
 /**
  * TODO: document your custom view class.
  */
-public class UiSlider extends View {
+public class filter_dropdown extends View {
     private String mExampleString; // TODO: use a default from R.string...
     private int mExampleColor = Color.RED; // TODO: use a default from R.color...
     private float mExampleDimension = 0; // TODO: use a default from R.dimen...
@@ -23,17 +25,17 @@ public class UiSlider extends View {
     private float mTextWidth;
     private float mTextHeight;
 
-    public UiSlider(Context context) {
+    public filter_dropdown(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public UiSlider(Context context, AttributeSet attrs) {
+    public filter_dropdown(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public UiSlider(Context context, AttributeSet attrs, int defStyle) {
+    public filter_dropdown(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -41,22 +43,22 @@ public class UiSlider extends View {
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.UiSlider, defStyle, 0);
+                attrs, R.styleable.filter_dropdown, defStyle, 0);
 
         mExampleString = a.getString(
-                R.styleable.UiSlider_exampleString);
+                R.styleable.filter_dropdown_filter_String);
         mExampleColor = a.getColor(
-                R.styleable.UiSlider_exampleColor,
+                R.styleable.filter_dropdown_filter_Color,
                 mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
         mExampleDimension = a.getDimension(
-                R.styleable.UiSlider_exampleDimension,
+                R.styleable.filter_dropdown_filter_Dimension,
                 mExampleDimension);
 
-        if (a.hasValue(R.styleable.UiSlider_exampleDrawable)) {
+        if (a.hasValue(R.styleable.filter_dropdown_filter_Drawable)) {
             mExampleDrawable = a.getDrawable(
-                    R.styleable.UiSlider_exampleDrawable);
+                    R.styleable.filter_dropdown_filter_Drawable);
             mExampleDrawable.setCallback(this);
         }
 

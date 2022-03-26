@@ -1,6 +1,6 @@
 package co.tournam.schedule;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 
 import co.tournam.members.Members;
 import co.tournam.models.FakeData;
@@ -22,12 +22,13 @@ import co.tournam.team_members.TeamMembers;
 import co.tournam.tournament_summary.TournamentSummaryList;
 import co.tournam.tournament_summary.TournamentSummaryListItem;
 import co.tournam.ui.matchlist.SummaryMatchList;
+import co.tournam.schedule.schedule.Schedule;
 
 
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycleView;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity{
                         this.getApplicationContext(),
                         data.tournament),
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));*/
+        this.context = this.getApplicationContext();
+
+        FakeData data = new FakeData();
+//        addContentView(
+//                new SummaryMatchList(
+//                        this.getApplicationContext(),
+//                        data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
+//                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
         getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();

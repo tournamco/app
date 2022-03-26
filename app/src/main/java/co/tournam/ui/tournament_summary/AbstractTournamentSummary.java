@@ -1,4 +1,4 @@
-package co.tournam.tournament_summary;
+package co.tournam.ui.tournament_summary;
 
 import android.content.Context;
 import android.widget.LinearLayout;

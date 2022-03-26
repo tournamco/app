@@ -1,4 +1,4 @@
-package co.tournam.table;
+package co.tournam.ui.table;
 
 import android.content.Context;
 import android.util.TypedValue;

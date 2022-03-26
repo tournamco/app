@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/id"
+        android:id="@+id/imagelist_add_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/imagelist_add"

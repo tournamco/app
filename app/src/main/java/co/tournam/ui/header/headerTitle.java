@@ -1,4 +1,4 @@
-package co.tournam.header;
+package co.tournam.ui.header;
 
 public enum headerTitle {
     TEAMS,
