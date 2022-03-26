@@ -45,7 +45,7 @@ public class TeamMembersItemUser extends LinearLayout {
         memberIcon = (ImageView) findViewById(R.id.Icon);
 
         setName(user.getGamerTag());
-        setIcon(user.getIcon());
+        //setIcon(user.getIcon());
     }
 
     private void setName(String name) { memberName.setText(name);}
