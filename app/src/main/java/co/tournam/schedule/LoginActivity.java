@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import co.tournam.api.ApiErrors;
 import co.tournam.api.UserHandler;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void failure(String message) {
+                    public void failure(ApiErrors error, String message) {
                         Toast.makeText(LoginActivity.this, "Not able to Authenticate the User:" + message, Toast.LENGTH_SHORT).show();
                     }
                 });

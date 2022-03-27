@@ -2,13 +2,16 @@ package co.tournam.api;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NoCache;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.CookieHandler;
@@ -28,8 +31,32 @@ public class RequestHandler {
         queue.start();
     }
 
-    public static void request(String path, int method, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener) {
-        JsonObjectRequest request = new JsonObjectRequest(method, url + path, data, listener, errorListener);
+    public static void request(String path, int method, RequestSetup setup) {
+        JSONObject body = null;
+        try {
+            body = setup.body();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(method, url + path, body, (Response.Listener<JSONObject>) response -> {
+            try {
+                setup.success(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            NetworkResponse networkResponse = error.networkResponse;
+
+            if(networkResponse == null || networkResponse.data == null) return;
+
+            try {
+                JSONObject response = new JSONObject(new String(networkResponse.data));
+                if(!response.has("errno")) return;
+
+                setup.failure(ApiErrors.valueOfIndex(response.getInt("errno")), response.getString("message"));
+            } catch (JSONException e) {}
+        });
         queue.add(request);
     }
 
@@ -47,5 +74,14 @@ public class RequestHandler {
         }
 
         return false;
+    }
+
+    public interface RequestSetup extends AbstractCompleted {
+        JSONObject body() throws JSONException;
+        void success(JSONObject response) throws JSONException;
+    }
+
+    public interface AbstractCompleted {
+        void failure(ApiErrors error, String message);
     }
 }
