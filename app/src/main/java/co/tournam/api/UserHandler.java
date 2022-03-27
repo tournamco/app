@@ -6,9 +6,20 @@ import com.android.volley.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.tournam.models.TeamModel;
 import co.tournam.models.UserModel;
 
 public class UserHandler {
+    public static UserModel fromJSON(JSONObject user) throws JSONException {
+        return new UserModel(
+                user.getString("id"),
+                user.getString("username"),
+                user.getString("email"),
+                user.getString("gamertag"),
+                user.getString("icon")
+        );
+    }
+
     public static void create(String username, String password, String gamerTag, String email, CreateCompleted listener) {
         RequestHandler.request("/user/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override

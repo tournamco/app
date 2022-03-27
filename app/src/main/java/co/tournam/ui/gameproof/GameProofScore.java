@@ -39,10 +39,10 @@ public class GameProofScore extends LinearLayout {
 
         score = findViewById(R.id.game_proof_score);
         TextView score1 = findViewById(R.id.score1);
-        score1.setText(match.getScore(match.getTeams().get(0)));
+        score1.setText(match.getScore(match.getKeys().get(0)));
 
         TextView score2 = findViewById(R.id.score2);
-        score2.setText(match.getScore(match.getTeams().get(1)));
+        score2.setText(match.getScore(match.getKeys().get(1)));
 
         team2 = findViewById(R.id.game_proof_team2);
         team2.setText(match.getTeams().get(1).getName());

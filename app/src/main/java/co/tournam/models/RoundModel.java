@@ -5,24 +5,15 @@ import java.util.List;
 import co.tournam.models.stage.AbstractStageModel;
 
 public class RoundModel {
-    private List<MatchModel> matches;
-    private AbstractStageModel stage;
+    private List<String> matches;
     private String name;
 
-    public List<MatchModel> getMatches() {
+    public List<String> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<MatchModel> matches) {
+    public void setMatches(List<String> matches) {
         this.matches = matches;
-    }
-
-    public AbstractStageModel getStage() {
-        return stage;
-    }
-
-    public void setStage(AbstractStageModel stage) {
-        this.stage = stage;
     }
 
     public String getName() {

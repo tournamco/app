@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import co.tournam.models.MatchModel;
@@ -55,8 +56,9 @@ public class SummaryMatchListItem extends LinearLayout {
         LinearLayout teams = (LinearLayout) findViewById(R.id.teamlist);
         teamItems = new ArrayList<>();
 
-        for(TeamModel team : match.getTeams()) {
-            SummaryMatchListItemTeam teamItem = new SummaryMatchListItemTeam(context, team, match.getScore(team), match.isWinner(team));
+        for(String key : match.getTeams().keySet()) {
+            TeamModel team = match.getTeams().get(key);
+            SummaryMatchListItemTeam teamItem = new SummaryMatchListItemTeam(context, team, match.getScore(key), match.isWinner(team));
             teamItems.add(teamItem);
             teams.addView(teamItem);
         }
@@ -68,7 +70,7 @@ public class SummaryMatchListItem extends LinearLayout {
     }
 
     private void setMatchname(MatchModel match) {
-        matchnameText.setText(match.getFullName());
+        matchnameText.setText(match.getName());
     }
 
     public void setColor(int color) {

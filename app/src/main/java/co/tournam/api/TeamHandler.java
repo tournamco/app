@@ -7,11 +7,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import co.tournam.models.MatchModel;
+import co.tournam.models.TeamModel;
+import co.tournam.models.UserModel;
 
 public class TeamHandler {
+    public static TeamModel fromJSON(JSONObject team) throws JSONException {
+        List<UserModel> members = new ArrayList<>();
+        JSONArray membersData = team.getJSONArray("members");
+
+        for(int i = 0; i < membersData.length(); i++) {
+            members.add(UserHandler.fromJSON(membersData.getJSONObject(i)));
+        }
+
+        return new TeamModel(
+                team.getString("id"),
+                team.getString("name"),
+                UserHandler.fromJSON(team.getJSONObject("leader")),
+                members,
+                team.getBoolean("isPublic"),
+                team.getString("icon"),
+                team.getString("tournament")
+        );
+    }
+
     public static void createEmptyTeam(String tournamentId, boolean isPublic, CreateEmptyTeamComplete listener) {
         RequestHandler.request("/team/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
@@ -198,8 +220,10 @@ public class TeamHandler {
                 List<MatchModel> matches = new ArrayList<>();
 
                 for(int i = 0; i < matchesData.length(); i++) {
-                    JSONObject matchData = matchesData.getJSONObject(i);
+                    matches.add(MatchHandler.fromJSON(matchesData.getJSONObject(i)));
                 }
+
+                listener.success(matches);
             }
 
             @Override
