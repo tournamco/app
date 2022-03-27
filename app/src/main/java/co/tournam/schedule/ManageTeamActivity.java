@@ -36,25 +36,30 @@ public class ManageTeamActivity extends AppCompatActivity {
         layout.addView( new TournamentSummaryListItem(
                 context,
                 data.tournament));
+
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
         LinearLayout layout2 = (LinearLayout) findViewById(R.id.teamIcon);
         layout2.addView( new ImageListItem(
                 context, bm
                 ));
+
         LinearLayout layout3 = (LinearLayout) findViewById(R.id.teamName);
         layout3.addView( new TextEntry(
                 context, "Name", false
         ));
+
         LinearLayout layout4 = (LinearLayout) findViewById(R.id.headerOne);
         layout4.addView( new header(
                 context,
                 null,
                 headerTitle.INVITE
         ));
+
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
         Drawable phone_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);;
         Drawable link_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);;
         LinearLayout layout5 = (LinearLayout) findViewById(R.id.Buttons);
+
         layout5.addView( new DefaultButtonIMG(
                 context,
                 "Use QR",

@@ -2,6 +2,8 @@ package co.tournam.ui.teamscore;
 
 import android.content.Context;
 
+import java.util.Arrays;
+
 import co.tournam.models.MatchModel;
 import co.tournam.ui.table.Score;
 
@@ -19,7 +21,9 @@ public class TeamScore extends AbstractTeamScore {
 
     public void buildContents(Context context) {
         TeamScoreIconItem team1 = new TeamScoreIconItem(context, this.match.getTeams().get(0));
-        Score score = new Score(context, this.match);
+        Score score = new Score(context, Arrays.asList(
+                this.match.getScore(this.match.getTeams().get(0)),
+                this.match.getScore(this.match.getTeams().get(1))));
         TeamScoreIconItem team2 = new TeamScoreIconItem(context, this.match.getTeams().get(1));
 
         this.addView(team1);

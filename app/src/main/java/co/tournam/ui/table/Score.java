@@ -6,20 +6,19 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import co.tournam.models.MatchModel;
 import co.tournam.schedule.R;
 
 public class Score extends LinearLayout{
 
-    private MatchModel matchModel;
+    private List<Integer> scores;
 
-
-
-
-    public Score(Context context, MatchModel matchModel) {
+    public Score(Context context, List<Integer> scores) {
         super(context);
 
-        this.matchModel = matchModel;
+        this.scores = scores;
 
 
         build(context);
@@ -38,19 +37,12 @@ public class Score extends LinearLayout{
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.score_cells, this, true);
 
-
         TextView score1Text = findViewById(R.id.score1);
-        score1Text.setText(matchModel.getScore(matchModel.getTeams().get(0)));
+        score1Text.setText(scores.get(0));
 
         TextView score2Text= findViewById(R.id.score2);
-        score2Text.setText(matchModel.getScore(matchModel.getTeams().get(1)));
-
-
-
-
+        score2Text.setText(scores.get(1));
     }
-
-
 
     private int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(
