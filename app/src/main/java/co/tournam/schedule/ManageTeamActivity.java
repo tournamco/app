@@ -25,66 +25,98 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 public class ManageTeamActivity extends AppCompatActivity {
 
     Context context;
+    private LinearLayout tournamentLogoLayout;
+    private LinearLayout teamIconLayout;
+    private LinearLayout teamNameLayout;
+    private LinearLayout firstHeaderLayout;
+    private LinearLayout buttonsLayout;
+    private LinearLayout secondHeaderLayout;
+    private LinearLayout membersLayout;
+    private FakeData data;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_team);
-        FakeData data = new FakeData();
+        data = new FakeData();
         context = this.getApplicationContext();
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.tournamentLogo);
-        layout.addView( new TournamentSummaryListItem(
+        setTournamentLogo();
+        setTeamIcon();
+        setTeamName();
+        setFirstHeader();
+        setButtons();
+        setSecondHeader();
+        setMembers();
+    }
+
+    private void setTournamentLogo() {
+        tournamentLogoLayout = (LinearLayout) findViewById(R.id.tournamentLogo);
+        tournamentLogoLayout.addView( new TournamentSummaryListItem(
                 context,
                 data.tournament));
+    }
+
+    private void setTeamIcon() {
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.teamIcon);
-        layout2.addView( new ImageListItem(
+        teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
+        teamIconLayout.addView( new ImageListItem(
                 context, bm
-                ));
-        LinearLayout layout3 = (LinearLayout) findViewById(R.id.teamName);
-        layout3.addView( new TextEntry(
+        ));
+    }
+
+    private void setTeamName() {
+        teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
+        teamNameLayout.addView( new TextEntry(
                 context, "Name", false
         ));
-        LinearLayout layout4 = (LinearLayout) findViewById(R.id.headerOne);
-        layout4.addView( new header(
+    }
+
+    private void setFirstHeader() {
+        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
+        firstHeaderLayout.addView( new header(
                 context,
                 null,
                 headerTitle.INVITE
         ));
+    }
+
+    private void setButtons() {
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
         Drawable phone_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);;
         Drawable link_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);;
-        LinearLayout layout5 = (LinearLayout) findViewById(R.id.Buttons);
-        layout5.addView( new DefaultButtonIMG(
+        buttonsLayout = (LinearLayout) findViewById(R.id.Buttons);
+        buttonsLayout.addView( new DefaultButtonIMG(
                 context,
                 "Use QR",
                 qr_icon
         ));
-        layout5.addView( new DefaultButtonIMG(
+        buttonsLayout.addView( new DefaultButtonIMG(
                 context,
                 "Use link",
                 phone_icon
         ));
-        layout5.addView( new DefaultButtonIMG(
+        buttonsLayout.addView( new DefaultButtonIMG(
                 context,
                 "Use NFC",
                 link_icon
         ));
-        LinearLayout layout6 = (LinearLayout) findViewById(R.id.headerTwo);
-        layout6.addView( new header(
+    }
+
+    private void setSecondHeader() {
+        secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
+        secondHeaderLayout.addView( new header(
                 context,
                 data.tournament.getTeams().get(0),
                 headerTitle.MEMBERS
         ));
-        LinearLayout layout7 = (LinearLayout) findViewById(R.id.members);
-        layout7.addView( new Members(
-                this.getApplicationContext(),
-                data.tournament.getTeams().get(0)));
-
-
     }
 
-
+    private void setMembers() {
+        membersLayout = (LinearLayout) findViewById(R.id.members);
+        membersLayout.addView( new Members(
+                this.getApplicationContext(),
+                data.tournament.getTeams().get(0)));
+    }
 }
 
 

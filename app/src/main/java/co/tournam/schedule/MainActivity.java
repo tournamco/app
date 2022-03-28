@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        Intent switchActivityIntent = new Intent(this, ManageTeamActivity.class);
+        Intent switchActivityIntent = new Intent(this, DisputesActivity.class);
         startActivity(switchActivityIntent);
     }
 
