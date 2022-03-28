@@ -38,7 +38,7 @@ public class MembersListItem extends LinearLayout {
         playerName = (TextView) findViewById(R.id.namet);
 
         setName(user.getGamerTag());
-        setIcon(user.getIcon());
+        //setIcon(user.getIcon());
     }
 
     private void setName(String name) { playerName.setText(name);}

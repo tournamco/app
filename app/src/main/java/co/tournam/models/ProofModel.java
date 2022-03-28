@@ -1,26 +1,25 @@
 package co.tournam.models;
 
-import android.media.Image;
-
 import java.util.List;
+import java.util.Map;
 
 public class ProofModel {
-    private List<Integer> scores;
-    private List<Image> proof;
+    private Map<String, Integer> scores;
+    private List<String> images;
 
-    public List<Integer> getScores() {
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public Map<String, Integer> getScores() {
         return scores;
     }
 
-    public void setScores(List<Integer> scores) {
+    public void setScores(Map<String, Integer> scores) {
         this.scores = scores;
-    }
-
-    public List<Image> getProof() {
-        return proof;
-    }
-
-    public void setProof(List<Image> proof) {
-        this.proof = proof;
     }
 }

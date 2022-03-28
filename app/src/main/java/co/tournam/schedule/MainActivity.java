@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseAuth;
 
+import co.tournam.api.UserHandler;
 import co.tournam.models.FakeData;
-import co.tournam.ui.matchlist.SummaryMatchList;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 import co.tournam.schedule.schedule.Schedule;
 import co.tournam.schedule.schedule.Search;
 import co.tournam.schedule.schedule.Tournament;
@@ -34,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FakeData data = new FakeData();
+        this.context = this.getApplicationContext();
+
+        if(!UserHandler.isLoggedIn()) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+            return;
+        }
 
 //        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);
 //        layout1.addView( new Members(
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                         this.getApplicationContext(),
                         data.tournament),
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));*/
-        this.context = this.getApplicationContext();
 
 //        FakeData data = new FakeData();
 //        addContentView(
@@ -89,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
         });
         Intent switchActivityIntent = new Intent(this, DisputesActivity.class);
         startActivity(switchActivityIntent);
-    }
+//    }
 
 //        public void logout(View view) {
 //        FirebaseAuth.getInstance().signOut();
-//        startActivity(new Intent(getApplicationContext(), Login.class));
+
 //        finish();
-//    }
+    }
 
 
 }

@@ -5,10 +5,25 @@ import android.graphics.Bitmap;
 import java.util.List;
 
 public class TeamModel {
+    private String id;
     private List<UserModel> members;
     private UserModel leader;
     private String name;
-    private Bitmap image;
+    private String icon;
+    private String tournamentId;
+    private boolean isPublic;
+
+    public TeamModel(String id, String name, UserModel leader, List<UserModel> members,
+                     boolean isPublic, String icon, String tournamentId) {
+        this.id = id;
+        this.name = name;
+        this.leader = leader;
+        this.members = members;
+        this.isPublic = isPublic;
+        this.icon = icon;
+        this.tournamentId = tournamentId;
+    }
+
 
     public List<UserModel> getMembers() {
         return members;
@@ -35,10 +50,4 @@ public class TeamModel {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Bitmap getImage() {
-        return image;
-    }
-
-    public void setImage(Bitmap image){this.image = image;}
 }

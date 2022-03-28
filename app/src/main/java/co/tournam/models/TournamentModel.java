@@ -3,10 +3,16 @@ package co.tournam.models;
 import java.util.List;
 
 import co.tournam.models.stage.AbstractStageModel;
+import co.tournam.models.stage.StageModel;
 
 public class TournamentModel {
-    private List<AbstractStageModel> stages;
-    private List<TeamModel> teams;
+    private boolean online;
+    private String banner;
+    private int currentStage;
+    private int gameLength;
+    private String id;
+    private List<StageModel> stages;
+    private List<String> teams;
     private List<DisputeModel> disputes;
     private UserModel organizer;
     private String game;
@@ -14,23 +20,41 @@ public class TournamentModel {
     private int teamSize;
     private boolean isPublic;
     private String name;
-    private int imageID;
-    private int teamLimit;
     private String location;
 
-    public List<AbstractStageModel> getStages() {
+    public TournamentModel(String id, String name, String game, List<String> teams,
+                           List<StageModel> stages, UserModel organizer, boolean isPublic,
+                           int color, int teamSize, int gameLength, int currentStage, String banner,
+                           String location, boolean online) {
+        this.id = id;
+        this.name = name;
+        this.game = game;
+        this.teams = teams;
+        this.stages = stages;
+        this.organizer = organizer;
+        this.isPublic = isPublic;
+        this.color = color;
+        this.teamSize = teamSize;
+        this.gameLength = gameLength;
+        this.currentStage = currentStage;
+        this.banner = banner;
+        this.location = location;
+        this.online = online;
+    }
+
+    public List<StageModel> getStages() {
         return stages;
     }
 
-    public void setStages(List<AbstractStageModel> stages) {
+    public void setStages(List<StageModel> stages) {
         this.stages = stages;
     }
 
-    public List<TeamModel> getTeams() {
+    public List<String> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<TeamModel> teams) {
+    public void setTeams(List<String> teams) {
         this.teams = teams;
     }
 
@@ -92,17 +116,47 @@ public class TournamentModel {
         this.name = name;
     }
 
-    public void setImageID(int imageID) { this.imageID = imageID; }
-
-    public int getImageID() { return imageID; }
-
-    public void setTournamentIcon(int imageID) { this.imageID = imageID; }
-
-    public int getTournamentIcon() { return imageID; }
-
-    public int getTournamentLimit() { return teamLimit; }
-
     public String getLocation() { return location; }
 
     public void setLocation(String location){ this.location = location;}
+
+    public int getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(int currentStage) {
+        this.currentStage = currentStage;
+    }
+
+    public int getGameLength() {
+        return gameLength;
+    }
+
+    public void setGameLength(int gameLength) {
+        this.gameLength = gameLength;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 }

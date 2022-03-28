@@ -1,6 +1,7 @@
 package co.tournam.models;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,41 +11,35 @@ import java.util.Map;
 import co.tournam.models.stage.AbstractStageModel;
 
 public class MatchModel {
-    private List<TeamModel> teams;
+    private String id;
+    private String name;
+    private Map<String, TeamModel> teams;
     private List<GameModel> games;
     private LocalDateTime startDate;
-    private TournamentModel tournament;
-    private RoundModel round;
+    private LocalDateTime endDate;
+    private MatchTournamentModel tournament;
+    private Map<String, Integer> scores;
+    private List<String> keys;
 
-    public List<TeamModel> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<TeamModel> teams) {
+    public MatchModel(String id, String name, LocalDateTime startDate, LocalDateTime endDate,
+                      MatchTournamentModel tournament, Map<String, Integer> scores,
+                      List<String> keys, List<GameModel> games, Map<String, TeamModel> teams) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tournament = tournament;
+        this.scores = scores;
+        this.keys = keys;
+        this.games = games;
         this.teams = teams;
     }
 
-    public List<GameModel> getGames() {
-        return games;
-    }
-
-    public void setGames(List<GameModel> games) {
-        this.games = games;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public int getScore(TeamModel team) {
+    public int getScore(String key) {
         int score = 0;
 
         for(GameModel game : games) {
-            if(!game.isWinner(team)) continue;
+            if(!game.isWinner(key)) continue;
 
             score++;
         }
@@ -60,8 +55,9 @@ public class MatchModel {
         Map<TeamModel, Integer> wins = new HashMap<>();
 
         for(GameModel game : games) {
-            for(TeamModel winner : game.getWinners()) {
-                System.out.println("help " + winner.getName());
+            for(String winnerKey : game.getWinners()) {
+                TeamModel winner = this.teams.get(winnerKey);
+
                 if(!wins.containsKey(winner)) {
                     wins.put(winner, 1);
                     continue;
@@ -89,25 +85,99 @@ public class MatchModel {
         return maxEntry.getKey();
     }
 
-    public void setTournament(TournamentModel tournament) {
-        this.tournament = tournament;
+    public String getId() {
+        return id;
     }
 
-    public TournamentModel getTournament() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public MatchTournamentModel getTournament() {
         return tournament;
     }
 
-    public RoundModel getRound() {
-        return round;
+    public void setTournament(MatchTournamentModel tournament) {
+        this.tournament = tournament;
     }
 
-    public void setRound(RoundModel round) {
-        this.round = round;
+    public Map<String, Integer> getScores() {
+        return scores;
     }
 
-    public String getFullName() {
-        AbstractStageModel stage = round.getStage();
+    public void setScores(Map<String, Integer> scores) {
+        this.scores = scores;
+    }
 
-        return tournament.getName() + ", " + stage.getName() + " - " + round.getName();
+    public List<String> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<String> keys) {
+        this.keys = keys;
+    }
+
+    public Map<String, TeamModel> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Map<String, TeamModel> teams) {
+        this.teams = teams;
+    }
+
+    public List<GameModel> getGames() {
+        return games;
+    }
+
+    public void setGames(List<GameModel> games) {
+        this.games = games;
+    }
+
+    public static class MatchTournamentModel {
+        private String id;
+        private String name;
+        private int color;
+
+        public MatchTournamentModel(String id, String name, int color) {
+            this.id = id;
+            this.name = name;
+            this.color = color;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getColor() {
+            return color;
+        }
     }
 }

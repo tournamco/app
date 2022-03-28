@@ -8,16 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import co.tournam.api.ApiErrors;
+import co.tournam.api.UserHandler;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Login extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity {
 
     EditText userName, password;
     Button loginButton, registerButton;
@@ -57,20 +54,18 @@ public class Login extends AppCompatActivity {
 
                 //authenticate the user
 
-                auth.signInWithEmailAndPassword(sUserName, sPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                UserHandler.login(sUserName, sPassword, new UserHandler.LoginCompleted() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Login.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    public void success(String userId) {
 
-                        }else{
-                            Toast.makeText(Login.this, "Not able to Authenticate the User:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
 
-                        }
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        Toast.makeText(LoginActivity.this, "Not able to Authenticate the User:" + message, Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
 
