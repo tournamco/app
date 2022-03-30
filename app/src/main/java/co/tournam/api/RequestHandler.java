@@ -22,7 +22,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class RequestHandler {
-    private static String url = "http://192.168.56.1:8183";
+    public final static String url = "http://192.168.56.1:8183";
     private static Cache cache = new NoCache();
     private static Network network = new BasicNetwork(new HurlStack());
     private static RequestQueue queue = new RequestQueue(cache, network);
