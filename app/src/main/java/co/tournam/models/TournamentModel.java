@@ -1,6 +1,7 @@
 package co.tournam.models;
 
 import java.util.List;
+import java.util.Map;
 
 import co.tournam.models.stage.AbstractStageModel;
 import co.tournam.models.stage.StageModel;
@@ -158,5 +159,78 @@ public class TournamentModel {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public class CreateStageModel {
+        private StageTypes type;
+        private String name;
+        private int numberOfParticipants;
+        private String minimalDate;
+        private String maximalDate;
+        private String minimalTime;
+        private String maximalTime;
+        private Map<String, Integer> options;
+
+        public CreateStageModel(StageTypes type, String name, int numberOfParticipants,
+                                String minimalDate, String maximalDate, String minimalTime,
+                                String maximalTime, Map<String, Integer> options) {
+            this.type = type;
+            this.name = name;
+            this.numberOfParticipants = numberOfParticipants;
+            this.minimalDate = minimalDate;
+            this.maximalDate = maximalDate;
+            this.minimalTime = minimalTime;
+            this.maximalTime = maximalTime;
+            this.options = options;
+        }
+
+        public StageTypes getType() {
+            return type;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getNumberOfParticipants() {
+            return numberOfParticipants;
+        }
+
+        public String getMinimalDate() {
+            return minimalDate;
+        }
+
+        public String getMaximalDate() {
+            return maximalDate;
+        }
+
+        public String getMinimalTime() {
+            return minimalTime;
+        }
+
+        public String getMaximalTime() {
+            return maximalTime;
+        }
+
+        public Map<String, Integer> getOptions() {
+            return options;
+        }
+    }
+
+    public enum StageTypes {
+        SWISS_ELIMINATION("swiss"),
+        SINGLE_ELIMINATION("single"),
+        DOUBLE_ELIMINATION("double"),
+        POOLS("pools");
+
+        private final String type;
+
+        StageTypes(String type) {
+            this.type = type;
+        }
+
+        public String getValue() {
+            return this.type;
+        }
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 
 import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
+import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
 
 public class TeamHandler {
@@ -235,5 +236,39 @@ public class TeamHandler {
 
     public interface ListMatchesComplete extends RequestHandler.AbstractCompleted {
         void success(List<MatchModel> matches);
+    }
+
+    public static void listTournaments(int pageNumber, int pageSize, ListTournamentsComplete listener) {
+        RequestHandler.request("/team/tournament/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("pageNumber", pageNumber);
+                json.put("pageSize", pageSize);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                JSONArray tournamentsData = response.getJSONArray("tournaments");
+                List<TournamentModel> tournaments = new ArrayList<>();
+
+                for(int i = 0; i < tournamentsData.length(); i++) {
+                    tournaments.add(TournamentHandler.fromJSON(tournamentsData.getJSONObject(i)));
+                }
+
+                listener.success(tournaments);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface ListTournamentsComplete extends RequestHandler.AbstractCompleted {
+        void success(List<TournamentModel> matches);
     }
 }
