@@ -22,7 +22,7 @@ public class FakeData {
     public UserModel user3;
     public UserModel user4;
 
-    public FakeData() {
+/*    public FakeData() {
         user1 = new UserModel();
         user1.setEmail("user1@tournam.co");
         user1.setGamerTag("user1");
@@ -119,5 +119,5 @@ public class FakeData {
         match1.setTournament(tournament);
         match2.setTournament(tournament);
         stage1.setTournament(tournament);
-    }
+    }*/
 }

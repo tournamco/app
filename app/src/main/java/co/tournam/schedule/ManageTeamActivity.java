@@ -104,18 +104,18 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     private void setSecondHeader() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-        secondHeaderLayout.addView( new header(
+       /* secondHeaderLayout.addView( new header(
                 context,
                 data.tournament.getTeams().get(0),
                 headerTitle.MEMBERS
-        ));
+      )); */
     }
 
     private void setMembers() {
         membersLayout = (LinearLayout) findViewById(R.id.members);
-        membersLayout.addView( new Members(
+      /*  membersLayout.addView( new Members(
                 this.getApplicationContext(),
-                data.tournament.getTeams().get(0)));
+                data.tournament.getTeams().get(0)));*/
     }
 }
 
