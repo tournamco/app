@@ -43,8 +43,8 @@ public class MatchProofActivity extends AppCompatActivity {
         bitList.add(bm4);
         bitList.add(bm5);
 
-        matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
-        matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
+        //matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
+        //matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
     }
 
 

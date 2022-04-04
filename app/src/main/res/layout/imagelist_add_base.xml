@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imagelist_add_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/imagelist_add"
+        android:scaleType="fitCenter"
         app:backgroundTint="@null"
         android:clipToOutline="true"
         android:src="@drawable/imagelist_add_plus"

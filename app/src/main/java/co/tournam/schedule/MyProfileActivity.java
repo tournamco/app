@@ -22,19 +22,19 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addContentView(
+     /*   addContentView(
                 new big_header(
                         this.getApplicationContext()
                 ),
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         addContentView(
                 new TournamentSummaryListItem(
-                        this.getApplicationContext(),
-                        data.tournament),
+                      //  this.getApplicationContext(),
+                        //data.tournament),
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
-        getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();
 
         bottomNav.setSelectedItemId(R.id.navHostFragment);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -45,10 +45,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.navigation_tournament:
-                        selectedFragment = new Tournament();
+                        //selectedFragment = new Tournament();
                         break;
                     case R.id.navigation_search:
-                        selectedFragment = new Search();
+                      //  selectedFragment = new Search();
                         break;
                     case R.id.navigation_schedule:
                         selectedFragment = new Schedule();
@@ -57,7 +57,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, selectedFragment).commit();
                 return true;
             }
-        });
+        });*/
     }
 
 

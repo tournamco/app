@@ -12,7 +12,7 @@ import co.tournam.ui.matchlist.SummaryMatchList;
 
 
 
-public class MatchPage extends AppCompatActivity{
+public class MatchPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +20,13 @@ public class MatchPage extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         FakeData data = new FakeData();
-        addContentView(
-                new SummaryMatchList(
-                        this.getApplicationContext(),
-                        data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        // addContentView(
+        // new SummaryMatchList(
+        //  this.getApplicationContext(),
+        //  data.tournament.getStages().get(0).getRounds().get(0).getMatches()),
+        //new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+        //  }
 
     }
-
 }

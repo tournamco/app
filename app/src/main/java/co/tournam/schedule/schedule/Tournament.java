@@ -62,7 +62,7 @@ public class Tournament extends Fragment {
         
     }
 
-    @Override
+   /* @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -70,5 +70,5 @@ public class Tournament extends Fragment {
         TournamentActivity views = new TournamentActivity(this.getContext());
 
         return views;
-    }
+    }*/
 }

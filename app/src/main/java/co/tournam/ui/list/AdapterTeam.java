@@ -45,13 +45,13 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull AdapterTeam.MyHolder holder, final int position) {
-        Bitmap teamImage = list.get(position).getImage();
+       /* Bitmap teamImage = list.get(position).getImage();
         String teamName = list.get(position).getName();
         holder.name.setText(teamName);
         try {
             Glide.with(context).load(teamImage).into(holder.profiletv);
         } catch (Exception e) {
-        }
+        }*/
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import co.tournam.models.FakeData;
+import co.tournam.models.TournamentModel;
 import co.tournam.schedule.schedule.Schedule;
 import co.tournam.ui.big_header;
 import co.tournam.ui.button.DefaultButton;
@@ -27,21 +28,21 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class JoinTournamentActivity extends AppCompatActivity {
 
+    public JoinTournamentActivity(TournamentModel tournament) {
+        this.tournament = tournament;
+    }
+
     Context context;
     private LinearLayout tournamentBannerLayout;
     private LinearLayout firstHeaderLayout;
     private LinearLayout teamsListLayout;
     private LinearLayout backButton;
-    private FakeData data;
-
-
-
-
+    private TournamentModel tournament;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_tournament);
-        data = new FakeData();
+
         context = this.getApplicationContext();
 
         setBackButton();
@@ -67,7 +68,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
         tournamentBannerLayout.addView( new TournamentSummaryListItem(
                 context,
-                data.tournament));
+                tournament));
     }
 
     public void setFirstHeader() {
@@ -82,9 +83,10 @@ public class JoinTournamentActivity extends AppCompatActivity {
     public void setTeams() {
 
         teamsListLayout = (LinearLayout) findViewById(R.id.teamlist);
+
         teamsListLayout.addView( new AdapterTeam(
                 context,
-                data.tournament.getTeams()
+                tournament.getTeams()
         ));
 
     }

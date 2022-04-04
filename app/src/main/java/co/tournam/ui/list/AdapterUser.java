@@ -42,13 +42,13 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-        String userImage = list.get(position).getImage();
+       /* String userImage = list.get(position).getImage();
         String username = list.get(position).getUsername();
         holder.name.setText(username);
         try {
             Glide.with(context).load(userImage).into(holder.profiletv);
         } catch (Exception e) {
-        }
+        }*/
     }
 
     @Override

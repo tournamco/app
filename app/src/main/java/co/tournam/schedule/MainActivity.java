@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FakeData data = new FakeData();
+        //FakeData data = new FakeData();
         this.context = this.getApplicationContext();
-
         if(!UserHandler.isLoggedIn()) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 

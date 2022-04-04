@@ -1,7 +1,10 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,31 +19,19 @@ import co.tournam.ui.filterdropdown.FilterDropdown;
 import co.tournam.ui.header.headerTournament;
 import co.tournam.ui.tournament_summary.TournamentSummaryList;
 
-public class TournamentActivity extends LinearLayout {
+public class TournamentActivity extends AppCompatActivity {
 
+    private Context context;
     private FilterDropdown filter;
     private Slider slider;
     private DefaultButtonFilled button;
-
-    public TournamentActivity(Context context) {
-
-        super(context);
-
-        build(context);
-    }
-
-    public void build(Context context) {
-
-        setOrientation(VERTICAL);
+    private LinearLayout tournamentsLayout;
 
 
-        buildContents(context);
-    }
-
-    public void buildContents(Context context) {
-        headerTournament header = new headerTournament(this.getContext(), "Tournaments");
-        this.addView(header);
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tournament);
+        context = this.getApplicationContext();
         TeamHandler.listTournaments(0, 10, new TeamHandler.ListTournamentsComplete() {
             @Override
             public void success(List<TournamentModel> matches) {
@@ -56,6 +47,7 @@ public class TournamentActivity extends LinearLayout {
 
     private void buildTournamentSummaryList(List<TournamentModel> tournaments, Context context) {
         TournamentSummaryList list = new TournamentSummaryList(context, tournaments);
-        this.addView(list);
+        tournamentsLayout = (LinearLayout) findViewById(R.id.tournamentsListing);
+        tournamentsLayout.addView(list);
     }
 }

@@ -62,11 +62,11 @@ public class Table extends TableLayout {
         tournamentWinRatioText = (TextView) findViewById(R.id.tournamentWinRatio);
         tournamentWinsText = (TextView) findViewById(R.id.tournamentWins);
 
-        setDate(userModel.getDateJoined());
-        setWinRatio(userModel.getWinRatio());
-        setMatchWins(userModel.getMatchWins());
-        setTournamentWinRatio(userModel.getTournamentWinRatio());
-        setTournamentWins(userModel.getTournamentWins());
+        //setDate(userModel.getDateJoined());
+        //setWinRatio(userModel.getWinRatio());
+        //setMatchWins(userModel.getMatchWins());
+        //setTournamentWinRatio(userModel.getTournamentWinRatio());
+       // setTournamentWins(userModel.getTournamentWins());
 
 
     }

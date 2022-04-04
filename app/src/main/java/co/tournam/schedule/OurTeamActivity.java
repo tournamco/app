@@ -34,7 +34,7 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 public class OurTeamActivity extends AppCompatActivity {
 
     Context context;
-    private LinearLayout manageTeamButton
+    private LinearLayout manageTeamButton;
     private LinearLayout tournamentBannerLayout;
     private LinearLayout teamIconLayout;
     private LinearLayout teamNameLayout;
@@ -106,7 +106,7 @@ public class OurTeamActivity extends AppCompatActivity {
     public void setTeamMembers() {
         teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
         List<TeamModel> team = new ArrayList<TeamModel>();
-        team.add(data.tournament.getTeams().get(0));
+        //team.add(data.tournament.getTeams().get(0));
         teamMemberLayout.addView(new TeamMembers(
            context,
            team
@@ -126,9 +126,9 @@ public class OurTeamActivity extends AppCompatActivity {
     public void setMatchList() {
 
         matchList = (LinearLayout) findViewById(R.id.matchList);
-        matchList.addView(new SummaryMatchList(
-                context,
-                data.tournament.getMatches(data.team1)
-        ));
+        //matchList.addView(new SummaryMatchList(
+                //context,
+               // data.tournament.getMatches(data.team1)
+      // ));
     }
 }

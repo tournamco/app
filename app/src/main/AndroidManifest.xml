@@ -26,6 +26,9 @@
             android:name=".ManageTeamActivity"
             android:exported="true" />
         <activity
+            android:name=".TournamentActivity"
+            android:exported="true" />
+        <activity
             android:name=".DisputesActivity"
             android:exported="true" />
 <!--        <activity-->
@@ -33,6 +36,7 @@
 <!--            android:exported="true">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -40,16 +44,16 @@
 
                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
--        </activity>
-<!--        <activity-->
-<!--            android:name=".Register"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        </activity>
+      <activity
+           android:name=".Register"
+            android:exported="true">
+            <intent-filter>-->
+               <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+              <category android:name="android.intent.category.LAUNCHER" />-->
+           </intent-filter>
+       </activity>
 
     </application>
 
