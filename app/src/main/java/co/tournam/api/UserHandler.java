@@ -112,6 +112,7 @@ public class UserHandler {
 
             @Override
             public void success(JSONObject response) throws JSONException {
+                JSONObject userData = response.getJSONObject("user");
                 UserModel user = new UserModel(
                     response.getString("id"),
                     response.getString("username"),
@@ -132,6 +133,125 @@ public class UserHandler {
 
     public interface MeCompleted extends RequestHandler.AbstractCompleted {
         void success(UserModel me);
+    }
+
+    public static void changeUsername(String newUsername, ChangeComplete listener) {
+        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("field", "username");
+                json.put("value", newUsername);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void changeEmail(String newEmail, ChangeComplete listener) {
+        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("field", "email");
+                json.put("value", newEmail);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void changeGamertag(String newGamertag, ChangeComplete listener) {
+        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("field", "gamertag");
+                json.put("value", newGamertag);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void changeIcon(String newIcon, ChangeComplete listener) {
+        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("field", "icon");
+                json.put("value", newIcon);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void changePassword(String oldPassword, String newPassword, ChangeComplete listener) {
+        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("oldPassword", oldPassword);
+                json.put("newPassword", newPassword);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface ChangeComplete extends RequestHandler.AbstractCompleted {
+        void success();
     }
 
     public static boolean isLoggedIn() {
