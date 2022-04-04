@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class ProofHandler {
-    public static void resolve(String matchId, int gameIndex, ResolveComplete listener) {
+    public static void create(String matchId, int gameIndex, CreateComplete listener) {
         RequestHandler.request("/proof/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
@@ -34,7 +34,7 @@ public class ProofHandler {
         });
     }
 
-    public interface ResolveComplete extends RequestHandler.AbstractCompleted {
+    public interface CreateComplete extends RequestHandler.AbstractCompleted {
         void success(String proofId);
     }
 
@@ -63,6 +63,33 @@ public class ProofHandler {
     }
 
     public interface AddImageComplete extends RequestHandler.AbstractCompleted {
+        void success();
+    }
+
+    public static void removeImage(String proofId, String imageId, RemoveImageComplete listener) {
+        RequestHandler.request("/proof/image/remove", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("id", proofId);
+                json.put("image", imageId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface RemoveImageComplete extends RequestHandler.AbstractCompleted {
         void success();
     }
 

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.stage.StageModel;
 
@@ -147,7 +148,7 @@ public class TournamentHandler {
         void success(String id);
     }
 
-    public static void create(String id, DeleteComplete listener) {
+    public static void delete(String id, DeleteComplete listener) {
         RequestHandler.request("/tournament/delete", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
@@ -171,5 +172,73 @@ public class TournamentHandler {
 
     public interface DeleteComplete extends RequestHandler.AbstractCompleted {
         void success();
+    }
+
+    public static void listMatches(String tournamentId, ListMatchesComplete listener) {
+        RequestHandler.request("/tournament/match/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("tournament", tournamentId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                List<MatchModel> matches = new ArrayList<>();
+                JSONArray matchesData = response.getJSONArray("matches");
+
+                for(int i = 0; i < matchesData.length(); i++) {
+                    matches.add(MatchHandler.fromJSON(matchesData.getJSONObject(i)));
+                }
+
+                listener.success(matches);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface ListMatchesComplete extends RequestHandler.AbstractCompleted {
+        void success(List<MatchModel> matches);
+    }
+
+    public static void listRoundMatches(String tournamentId, int stageIndex, int roundIndex, ListRoundMatchesComplete listener) {
+        RequestHandler.request("/tournament/round/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("tournament", tournamentId);
+                json.put("stage", stageIndex);
+                json.put("round", roundIndex);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                List<MatchModel> matches = new ArrayList<>();
+                JSONArray matchesData = response.getJSONArray("matches");
+
+                for(int i = 0; i < matchesData.length(); i++) {
+                    matches.add(MatchHandler.fromJSON(matchesData.getJSONObject(i)));
+                }
+
+                listener.success(matches);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface ListRoundMatchesComplete extends RequestHandler.AbstractCompleted {
+        void success(List<MatchModel> matches);
     }
 }
