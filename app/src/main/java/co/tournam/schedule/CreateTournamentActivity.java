@@ -1,31 +1,26 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import java.util.List;
 
+import co.tournam.api.ApiErrors;
+import co.tournam.api.TournamentHandler;
 import co.tournam.models.FakeData;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.big_header;
-import co.tournam.ui.button.DefaultButton;
+import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
-import co.tournam.ui.list.AdapterTeam;
-import co.tournam.ui.stageoptions.PoolStageOption;
-import co.tournam.ui.stageoptions.PoolStageOptionBody;
+import co.tournam.ui.stageoptions.StageOption;
+import co.tournam.ui.stageoptions.StageOptionBody;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class CreateTournamentActivity extends AppCompatActivity {
@@ -38,10 +33,21 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private LinearLayout tournamentTeamSizeLayout;
     private LinearLayout tournamentColorPickerLayout;
     private LinearLayout stageOptionLayout;
-    private LinearLayout createButton;
-    private LinearLayout addButton;
-    private LinearLayout backButton;
+    private LinearLayout createButtonLayout;
+    private LinearLayout addButtonLayout;
+    private LinearLayout backButtonLayout;
     private FakeData data;
+    
+    private boolean isOnline;
+    
+    private String name;
+    private int color;
+    private String game;
+    private int teamSize;
+    private boolean isPublic;
+    private int gameLength;
+    private List<TournamentModel.CreateStageModel> stages;
+    private String location;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +66,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setFirstHeader();
         setStageOption();
         setAddButton();
+
+        
+        
     }
 
     public void setBackButton() {
 
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        backButton = (LinearLayout) findViewById(R.id.backButton);
-        backButton.addView( new DefaultButtonIMG(
+        backButtonLayout = (LinearLayout) findViewById(R.id.backButton);
+        backButtonLayout.addView( new DefaultButtonIMG(
                 context,
                 "",
                 qr_icon
@@ -76,16 +85,74 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setCreateButton() {
 
-        createButton = (LinearLayout) findViewById(R.id.backButton);
-        createButton.addView( new DefaultButtonFilled(
+        createButtonLayout = (LinearLayout) findViewById(R.id.backButton);
+        createButtonLayout.addView(new DefaultButtonFilled(
                 context,
                 "Create"
         ));
 
+        createButtonLayout.getChildAt(0).setOnClickListener(v -> {
+            infoUpdate();
+            createTournament();
+        });
+
+
+    }
+    
+    public void createTournament() {
+        if (this.isOnline) {
+            TournamentHandler.createOnline(this.name, this.color, this.game, this.teamSize, 
+                    this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
+                @Override
+                public void success(String id) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        } else {
+            TournamentHandler.createOffline(this.name, this.color, this.game, this.teamSize,
+                    this.isPublic, this.gameLength, this.location, this.stages, new TournamentHandler.CreateComplete() {
+                @Override
+                public void success(String id) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        }
     }
 
-    public void setTournamentBanner() {
+    public void infoUpdate() {
 
+//        this.name = tournamentNameLayout.getChildAt(0).getEntry().getText();
+//
+//        this.color = tournamentColorPickerLayout.getChildAt(0).getEntry().getText();
+//
+//        this.game = tournamentGameNameLayout.getChildAt(0).getEntry().getText();
+//
+//        this.teamSize = (int) tournamentTeamSizeLayout.getChildAt(0).getEntry().getText();
+//
+//        this.gameLength = (int) tournamentGameLengthLayout.getChildAt(0).getEntry().getText();
+
+//        this.location;
+
+//        for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
+//            this.stages.add(stageOptionLayout.getChildAt(i).createStageFromEntry());
+//        }
+
+
+    }
+
+
+    public void setTournamentBanner() {
+        //TODO TournamentHandler.fromJSON
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
         tournamentBannerLayout.addView( new TournamentSummaryListItem(
                 context,
@@ -95,7 +162,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentName() {
 
         tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName);
-        tournamentNameLayout.addView( new PoolStageOptionBody(
+        tournamentNameLayout.addView( new StageOptionBody(
                 context,
                 "Name"));
     }
@@ -103,7 +170,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentGameName() {
 
         tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName);
-        tournamentGameNameLayout.addView( new PoolStageOptionBody(
+        tournamentGameNameLayout.addView( new StageOptionBody(
                 context,
                 "Game Name"));
     }
@@ -111,7 +178,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentTeamSize() {
 
         tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize);
-        tournamentTeamSizeLayout.addView( new PoolStageOptionBody(
+        tournamentTeamSizeLayout.addView( new StageOptionBody(
                 context,
                 "Team Size"));
     }
@@ -119,7 +186,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentColorPicker() {
 
         tournamentColorPickerLayout = (LinearLayout) findViewById(R.id.tournamentColorPicker);
-        tournamentColorPickerLayout.addView( new PoolStageOptionBody(
+        tournamentColorPickerLayout.addView( new StageOptionBody(
                 context,
                 "Color"));
     }
@@ -136,7 +203,15 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setStageOption() {
 
         stageOptionLayout = (LinearLayout) findViewById(R.id.teamlist);
-        stageOptionLayout.addView( new PoolStageOption(
+        stageOptionLayout.addView( new StageOption(
+                context
+        ));
+
+    }
+
+    public void addStageOption() {
+
+        stageOptionLayout.addView( new StageOption(
                 context
         ));
 
@@ -145,12 +220,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setAddButton() {
 
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        addButton = (LinearLayout) findViewById(R.id.addStageOptionButton);
-        addButton.addView( new DefaultButtonIMG(
+        addButtonLayout = (LinearLayout) findViewById(R.id.addStageOptionButton);
+        addButtonLayout.addView( new DefaultButtonIMG(
                 context,
                 "",
                 qr_icon
         ));
+
+        addButtonLayout.getChildAt(0).setOnClickListener(v -> {
+            addStageOption();
+        });
 
     }
 

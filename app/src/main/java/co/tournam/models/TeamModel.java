@@ -1,7 +1,5 @@
 package co.tournam.models;
 
-import android.graphics.Bitmap;
-
 import java.util.List;
 
 public class TeamModel {
@@ -50,4 +48,6 @@ public class TeamModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getIcon() { return icon;}
 }

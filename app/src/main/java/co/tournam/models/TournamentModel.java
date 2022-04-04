@@ -3,7 +3,6 @@ package co.tournam.models;
 import java.util.List;
 import java.util.Map;
 
-import co.tournam.models.stage.AbstractStageModel;
 import co.tournam.models.stage.StageModel;
 
 public class TournamentModel {
@@ -161,7 +160,7 @@ public class TournamentModel {
         this.online = online;
     }
 
-    public class CreateStageModel {
+    public static class CreateStageModel {
         private StageTypes type;
         private String name;
         private int numberOfParticipants;

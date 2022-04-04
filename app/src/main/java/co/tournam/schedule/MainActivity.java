@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
             return;
+        } else {
+            startActivity(new Intent(getApplicationContext(), OurTeamActivity.class));
         }
 
 //        LinearLayout layout1 = (LinearLayout) findViewById(R.id.list1);

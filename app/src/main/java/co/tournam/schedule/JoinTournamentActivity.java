@@ -3,27 +3,16 @@ package co.tournam.schedule;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
-import co.tournam.models.FakeData;
 import co.tournam.models.TournamentModel;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.big_header;
-import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
-import co.tournam.ui.list.AdapterTeam;
+import co.tournam.ui.list.TeamList;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class JoinTournamentActivity extends AppCompatActivity {
@@ -84,9 +73,10 @@ public class JoinTournamentActivity extends AppCompatActivity {
 
         teamsListLayout = (LinearLayout) findViewById(R.id.teamlist);
 
-        teamsListLayout.addView( new AdapterTeam(
+        teamsListLayout.addView( new TeamList(
                 context,
-                tournament.getTeams()
+                tournament.getTeams(),
+                "Join"
         ));
 
     }

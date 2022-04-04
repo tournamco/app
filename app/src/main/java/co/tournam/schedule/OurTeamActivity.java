@@ -1,27 +1,22 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import co.tournam.api.ApiErrors;
+import co.tournam.api.TeamHandler;
 import co.tournam.models.FakeData;
+import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.big_header;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
@@ -58,14 +53,18 @@ public class OurTeamActivity extends AppCompatActivity {
         setTeamMembers();
         setSecondHeader();
         setMatchList();
+
+
+
+
     }
 
     public void setManageTeamButton() {
         manageTeamButton = (LinearLayout) findViewById(R.id.manageButton);
-        manageTeamButton.addView( new DefaultButton(
-                context,
-                "Manage"
-        ));
+        DefaultButton theManageButton = new DefaultButton(context, "Manage");
+        manageTeamButton.addView(theManageButton);
+
+        theManageButton.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
     }
 
     public void setTournamentBanner() {
@@ -77,7 +76,7 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     public void setTeamIcon() {
-        //TODO Change once we can use backend Images.
+        //TODO fromJSON working
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
         teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
         teamIconLayout.addView( new ImageListItem(
@@ -86,7 +85,7 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     public void setTeamName() {
-
+        //TODO fromJSON working
         teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
         teamNameLayout.addView( new TextEntry(
                 context, "Name", false
@@ -104,12 +103,14 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     public void setTeamMembers() {
+        //TODO fromJSON working
         teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
-        List<TeamModel> team = new ArrayList<TeamModel>();
-        //team.add(data.tournament.getTeams().get(0));
+        TeamModel team = data.team1;
+        List<TeamModel> teams = new ArrayList<TeamModel>();
+        teams.add(team);
         teamMemberLayout.addView(new TeamMembers(
-           context,
-           team
+                context,
+                teams
         ));
     }
 
@@ -125,10 +126,26 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setMatchList() {
 
+        TeamHandler.listMatches(0, 10, new TeamHandler.ListMatchesComplete() {
+            @Override
+            public void success(List<MatchModel> matches) {
+                OurTeamActivity.this.buildMatchSummaryList(matches, context);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
+
+    }
+
+    public void buildMatchSummaryList(List<MatchModel> matches, Context context) {
         matchList = (LinearLayout) findViewById(R.id.matchList);
-        //matchList.addView(new SummaryMatchList(
-                //context,
-               // data.tournament.getMatches(data.team1)
-      // ));
+        matchList.addView(new SummaryMatchList(
+                context,
+                matches
+        ));
     }
 }
