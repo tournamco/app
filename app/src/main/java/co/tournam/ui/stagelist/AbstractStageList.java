@@ -1,17 +1,17 @@
 package co.tournam.ui.stagelist;
+
 import android.content.Context;
-import android.service.autofill.FieldClassification;
 import android.widget.LinearLayout;
+
 import java.util.List;
 
-import co.tournam.models.MatchModel;
-import co.tournam.models.stage.PoolsStageModel;
+import co.tournam.models.stage.StageModel;
 
 public abstract class AbstractStageList extends LinearLayout {
 
-    protected List<PoolsStageModel> stages;
+    protected List<StageModel> stages;
 
-    public AbstractStageList(Context context, List<PoolsStageModel> stages) {
+    public AbstractStageList(Context context, List<StageModel> stages) {
         super(context);
 
         this.stages = stages;

@@ -11,44 +11,70 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/tournamentLogo"
+            android:id="@+id/userIcon_Container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/teamIcon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tournamentLogo"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Manage_Team_Text"
+            <LinearLayout
+                android:id="@+id/userIcon_mypf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/change_userIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change2"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="My Profile"
-            android:textStyle="bold"
-            android:textSize="18sp"
+            android:orientation="horizontal"
+            android:id="@+id/Main_Text_Layout_mypf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.022" />
+            app:layout_constraintVertical_bias="0.022">
+
+
+
+            <TextView
+                android:id="@+id/My_Profile_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="My Profile"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
+
+            <LinearLayout
+                android:id="@+id/logoutButton_mypf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0"/>
+
+
+        </LinearLayout>
 
         <View
             android:layout_width="wrap_content"
@@ -60,63 +86,140 @@
             app:layout_constraintDimensionRatio="2:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Manage_Team_Text"
-            app:layout_constraintTop_toBottomOf="@+id/Manage_Team_Text"
+            app:layout_constraintStart_toStartOf="@+id/Main_Text_Layout_mypf"
+            app:layout_constraintTop_toBottomOf="@+id/Main_Text_Layout_mypf"
             app:layout_constraintVertical_bias="0.02" />
 
         <LinearLayout
-            android:id="@+id/teamName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teamIcon"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/headerOne"
+            android:id="@+id/username_Container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teamName"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/userIcon_Container"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/username_mypf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/change_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change2"/>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/Buttons"
+            android:id="@+id/gamerTag_Container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerOne"
-            app:layout_constraintVertical_bias="0.03"/>
+            app:layout_constraintTop_toBottomOf="@+id/username_Container"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/gamerTag_mypf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/change_gamerTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change2"/>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/headerTwo"
+            android:id="@+id/email_Container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Buttons"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/gamerTag_Container"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/email_mypf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/change_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change2"/>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/members"
+            android:id="@+id/first_header_mypf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerTwo"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/email_Container"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/change_password_mypf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/first_header_mypf"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/second_header_mypf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_password_mypf"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/statistics_table_mypf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/second_header_mypf"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

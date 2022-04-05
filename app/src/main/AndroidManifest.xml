@@ -26,6 +26,9 @@
             android:name=".ManageTeamActivity"
             android:exported="true" />
         <activity
+            android:name=".CreateTournamentActivity"
+            android:exported="true" />
+        <activity
             android:name=".TournamentActivity"
             android:exported="true" />
         <activity

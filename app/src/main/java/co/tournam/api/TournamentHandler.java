@@ -241,4 +241,78 @@ public class TournamentHandler {
     public interface ListRoundMatchesComplete extends RequestHandler.AbstractCompleted {
         void success(List<MatchModel> matches);
     }
+
+    /**
+     * Get the list of all tournaments that are at a location nearby.
+     * @param location The location to search for tournaments.
+     * @param radius The radius to search for tournaments in degrees.
+     * @param listener The listener to call when the request is complete.
+     */
+    public static void discoveryLocal(String location, int radius, int pageNumber, int pageSize, DiscoverComplete listener) {
+        RequestHandler.request("/tournament/discovery", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("location", location);
+                json.put("radius", radius);
+                json.put("local", true);
+                json.put("pageNumber", pageNumber);
+                json.put("pageSize", pageSize);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                JSONArray tournamentsData = response.getJSONArray("tournaments");
+                List<TournamentModel> tournaments = new ArrayList<>();
+
+                for(int i = 0; i < tournamentsData.length(); i++) {
+                    tournaments.add(TournamentHandler.fromJSON(tournamentsData.getJSONObject(i)));
+                }
+
+                listener.success(tournaments);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void discoveryOnline(int pageNumber, int pageSize, DiscoverComplete listener) {
+        RequestHandler.request("/tournament/discovery", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("local", false);
+                json.put("pageNumber", pageNumber);
+                json.put("pageSize", pageSize);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                JSONArray tournamentsData = response.getJSONArray("tournaments");
+                List<TournamentModel> tournaments = new ArrayList<>();
+
+                for(int i = 0; i < tournamentsData.length(); i++) {
+                    tournaments.add(TournamentHandler.fromJSON(tournamentsData.getJSONObject(i)));
+                }
+
+                listener.success(tournaments);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface DiscoverComplete extends RequestHandler.AbstractCompleted {
+        void success(List<TournamentModel> tournaments);
+    }
 }

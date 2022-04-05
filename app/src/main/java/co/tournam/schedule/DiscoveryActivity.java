@@ -1,6 +1,7 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.widget.LinearLayout;
@@ -10,6 +11,8 @@ import androidx.core.content.res.ResourcesCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.tournam.api.ApiErrors;
+import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
 import co.tournam.ui.Text;
@@ -20,6 +23,7 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListJoin;
 
 public class DiscoveryActivity extends LinearLayout {
 
+    List<TournamentModel> fake = new ArrayList<TournamentModel>();
     Resources res = getResources();
     Drawable qr = ResourcesCompat.getDrawable(res, R.drawable.qr_icon, null);
     Drawable nfc = ResourcesCompat.getDrawable(res, R.mipmap.ic_nfc, null);
@@ -51,8 +55,22 @@ public class DiscoveryActivity extends LinearLayout {
                16
        );
 
-        // TODO: GET MATCHLIST FROM SERVER
-        List<TournamentModel> fake = new ArrayList<TournamentModel>();
+        // TODO: GET TournamentLIST FROM SERVER
+
+
+        TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
+            @Override
+            public void success(List<TournamentModel> tournaments) {
+
+                fake.addAll(tournaments);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
 
 
         DefaultButton button = new DefaultButton(this.getContext(), "Create");
@@ -85,6 +103,10 @@ public class DiscoveryActivity extends LinearLayout {
         this.addView(text,4);
 
         this.addView(list);
+
+        header.button.setOnClickListener(view -> {
+            context.startActivity(new Intent(context, CreateTournamentActivity.class));
+        });
 
 
     }

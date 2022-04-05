@@ -3,14 +3,13 @@ package co.tournam.ui.button;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import co.tournam.schedule.R;
 
 public class DefaultButton extends AbstractButton {
 
     private String title;
-    private Button button;
+    public Button button;
 
     public DefaultButton(Context context, String title) {
         super(context);
@@ -21,7 +20,7 @@ public class DefaultButton extends AbstractButton {
     }
 
     public void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+
 
         buildContents(context);
     }

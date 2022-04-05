@@ -2,7 +2,6 @@ package co.tournam.ui.stageoptions;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -21,14 +20,14 @@ public class StageOption extends LinearLayout {
     private StageOptionTime timeDuration;
 
 
-    public StageOption(Context context) {
+    public StageOption(Context context){
         super(context);
 
         build(context);
     }
 
     private void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+        setOrientation(LinearLayout.VERTICAL);
 
         buildContents(context);
     }
@@ -39,7 +38,7 @@ public class StageOption extends LinearLayout {
         inflater.inflate(R.layout.sample_stage_options, this, true);
 
         spinner = findViewById(R.id.stageoption_spinner);
-        spinner.setAdapter(new ArrayAdapter<TournamentModel.StageTypes>(context, R.layout.sample_stage_options));
+//        spinner.setAdapter(new ArrayAdapter<TournamentModel.StageTypes>(context, R.layout.sample_stage_options));
 
         name = new StageOptionBody(context, "Name of Stage");
         this.addView(name);

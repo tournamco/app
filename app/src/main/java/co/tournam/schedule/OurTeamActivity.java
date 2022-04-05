@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import co.tournam.api.ApiErrors;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
@@ -42,7 +39,6 @@ public class OurTeamActivity extends AppCompatActivity {
     private LinearLayout teamMemberLayout;
     private LinearLayout secondHeaderLayout;
     private LinearLayout matchList;
-
     private String teamID;
     private String tournamentID;
 
@@ -59,10 +55,6 @@ public class OurTeamActivity extends AppCompatActivity {
         setTeamMembers();
         setSecondHeader();
         setMatchList();
-
-
-
-
     }
 
     public void setManageTeamButton() {
@@ -70,7 +62,7 @@ public class OurTeamActivity extends AppCompatActivity {
         DefaultButton theManageButton = new DefaultButton(context, "Manage");
         manageTeamButton.addView(theManageButton);
 
-        theManageButton.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
+        theManageButton.button.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
     }
 
     public void setTournamentBanner() {

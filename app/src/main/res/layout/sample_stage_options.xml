@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:paddingTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -25,7 +26,7 @@
             android:layout_width="160dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
-            android:entries="TournamentModel.StageTypes"
+            android:entries="@array/stage_options"
             android:spinnerMode="dropdown"
             android:textAlignment="center" />
 

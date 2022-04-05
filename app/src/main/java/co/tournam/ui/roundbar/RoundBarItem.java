@@ -11,7 +11,7 @@ import co.tournam.schedule.R;
 public class RoundBarItem extends LinearLayout {
 
     private RoundModel round;
-    private Button button;
+    public Button button;
 
     public RoundBarItem(Context context, RoundModel round) {
         super(context);
