@@ -14,6 +14,9 @@ public class UserModel {
         this.email = email;
         this.icon = icon;
     }
+    public String getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;

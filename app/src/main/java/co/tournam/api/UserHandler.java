@@ -254,6 +254,34 @@ public class UserHandler {
         void success();
     }
 
+    public static void isUserInTeam(String teamId, IsUserInTeamComplete listener) {
+        TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                UserHandler.me(new MeCompleted() {
+                    @Override
+                    public void success(UserModel user) {
+                        listener.success(team.getMembers().contains(user.getId()));
+                    }
+
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        listener.failure(error, message);
+                    }
+                });
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface IsUserInTeamComplete extends RequestHandler.AbstractCompleted {
+        void success(boolean isInTeam);
+    }
+
     public static boolean isLoggedIn() {
         return RequestHandler.hasCookie("_session");
     }
