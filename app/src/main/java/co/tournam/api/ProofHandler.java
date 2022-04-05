@@ -1,14 +1,43 @@
 package co.tournam.api;
 
+import android.util.ArrayMap;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import co.tournam.models.ProofModel;
+
 public class ProofHandler {
+    public static ProofModel fromJSON(JSONObject json) throws JSONException {
+        JSONObject scoresData = json.getJSONObject("scores");
+        Map<String, Integer> scores = new ArrayMap<>();
+
+        for(int i = 0; i < scoresData.names().length(); i++) {
+            scores.put(scoresData.names().getString(i), scoresData.getInt(scoresData.names().getString(i)));
+        }
+
+        JSONArray imagesData = json.getJSONArray("images");
+        List<String> images = new ArrayList<>();
+
+        for(int i = 0; i < imagesData.length(); i++) {
+            images.add(imagesData.getString(i));
+        }
+
+        return new ProofModel(
+                json.getString("id"),
+                json.getString("team"),
+                scores, images
+        );
+    }
+
     public static void create(String matchId, int gameIndex, CreateComplete listener) {
         RequestHandler.request("/proof/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
@@ -123,5 +152,31 @@ public class ProofHandler {
 
     public interface SetScoresComplete extends RequestHandler.AbstractCompleted {
         void success();
+    }
+
+    public static void info(String proofId, InfoComplete listener) {
+        RequestHandler.request("/proof/info", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("id", proofId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success(ProofHandler.fromJSON(response));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface InfoComplete extends RequestHandler.AbstractCompleted {
+        void success(ProofModel proof);
     }
 }
