@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/textentry_threshold_from"
-            android:layout_width="122dp"
+            android:layout_width="92dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
             android:textAlignment="center"/>
@@ -42,7 +42,7 @@
 
         <EditText
             android:id="@+id/textentry_threshold_to"
-            android:layout_width="122dp"
+            android:layout_width="92dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
             android:textAlignment="center"/>

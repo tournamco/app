@@ -27,7 +27,7 @@ public class StageOption extends LinearLayout {
     }
 
     private void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+        setOrientation(LinearLayout.VERTICAL);
 
         buildContents(context);
     }
