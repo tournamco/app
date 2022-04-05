@@ -23,7 +23,7 @@ public class MatchProofActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_proof);
-        data = new FakeData();
+        //data = new FakeData();
         context = this.getApplicationContext();
 
         setDisputes();
@@ -31,20 +31,19 @@ public class MatchProofActivity extends AppCompatActivity {
 
     private void setDisputes() {
         matchProofLayout = (LinearLayout) findViewById(R.id.proof);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
-        Bitmap bm2 = BitmapFactory.decodeResource(getResources(), R.drawable.imagelist_add_plus);
-        Bitmap bm3 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
-        Bitmap bm4 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
-        Bitmap bm5 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
-        List<Bitmap> bitList = new ArrayList<Bitmap>();
-        bitList.add(bm);
-        bitList.add(bm2);
-        bitList.add(bm3);
-        bitList.add(bm4);
-        bitList.add(bm5);
-
-        //matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
-        //matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
+        //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
+        //Bitmap bm2 = BitmapFactory.decodeResource(getResources(), R.drawable.imagelist_add_plus);
+        //Bitmap bm3 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
+        //Bitmap bm4 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
+        //Bitmap bm5 = BitmapFactory.decodeResource(getResources(), R.drawable.change2);
+        //List<Bitmap> bitList = new ArrayList<Bitmap>();
+        //bitList.add(bm);
+        //bitList.add(bm2);
+        //bitList.add(bm3);
+        //bitList.add(bm4);
+        //bitList.add(bm5);
+        matchProofLayout.addView(new GameProof(context, , ));
+        matchProofLayout.addView(new GameProof(context, , ));
     }
 
 
