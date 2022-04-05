@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +16,12 @@ import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.FakeData;
 import co.tournam.models.TournamentModel;
+import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
-import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
-import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class CreateTournamentActivity extends AppCompatActivity {
 
@@ -47,6 +47,9 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private int gameLength;
     private List<TournamentModel.CreateStageModel> stages;
     private String location;
+//    private int stageCounter = 1;
+
+    private DefaultButton back;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +69,24 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setStageOption();
         setAddButton();
 
-        
+
         
     }
 
     public void setBackButton() {
 
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        backButtonLayout = (LinearLayout) findViewById(R.id.backButton);
-        backButtonLayout.addView( new DefaultButtonIMG(
-                context,
-                "",
-                qr_icon
-        ));
+        backButtonLayout = (LinearLayout) findViewById(R.id.backButton_create_tournament);
+        back = new DefaultButton(context, "Back");
+        backButtonLayout.addView(back);
+        back.button.setOnClickListener(v -> startActivity(new Intent(context, MainActivity.class)));
+
 
     }
 
     public void setCreateButton() {
 
-        createButtonLayout = (LinearLayout) findViewById(R.id.backButton);
+        createButtonLayout = (LinearLayout) findViewById(R.id.createButton_create_tournament);
         createButtonLayout.addView(new DefaultButtonFilled(
                 context,
                 "Create"
@@ -151,16 +153,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
 
     public void setTournamentBanner() {
-        //TODO TournamentHandler.fromJSON
-        tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
-        tournamentBannerLayout.addView( new TournamentSummaryListItem(
-                context,
-                data.tournament));
+
+        tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner_create_tournament);
+//        tournamentBannerLayout.addView( new TournamentSummaryListItem(
+//                context,
+//                ));
     }
 
     public void setTournamentName() {
 
-        tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName);
+        tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName_create_tournament);
         tournamentNameLayout.addView( new StageOptionBody(
                 context,
                 "Name"));
@@ -168,7 +170,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setTournamentGameName() {
 
-        tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName);
+        tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName_create_tournament);
         tournamentGameNameLayout.addView( new StageOptionBody(
                 context,
                 "Game Name"));
@@ -176,7 +178,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setTournamentTeamSize() {
 
-        tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize);
+        tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize_create_tournament);
         tournamentTeamSizeLayout.addView( new StageOptionBody(
                 context,
                 "Team Size"));
@@ -184,14 +186,14 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setTournamentColorPicker() {
 
-        tournamentColorPickerLayout = (LinearLayout) findViewById(R.id.tournamentColorPicker);
+        tournamentColorPickerLayout = (LinearLayout) findViewById(R.id.tournamentColorPicker_create_tournament);
         tournamentColorPickerLayout.addView( new StageOptionBody(
                 context,
                 "Color"));
     }
 
     public void setFirstHeader() {
-        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
+        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne_create_tournament);
         firstHeaderLayout.addView( new header(
                 context,
                 null,
@@ -201,32 +203,32 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setStageOption() {
 
-        stageOptionLayout = (LinearLayout) findViewById(R.id.teamlist);
-        stageOptionLayout.addView( new StageOption(
-                context
-        ));
+        stageOptionLayout = (LinearLayout) findViewById(R.id.stageOptions_create_tournament);
+        StageOption stage = new StageOption(context);
+        stageOptionLayout.addView(stage);
+
+
 
     }
 
     public void addStageOption() {
 
-        stageOptionLayout.addView( new StageOption(
-                context
-        ));
+        StageOption stage = new StageOption(context);
+        stageOptionLayout.addView(stage);
+
+        Log.e("hi", String.valueOf(stageOptionLayout.getChildCount()));
+
 
     }
 
     public void setAddButton() {
 
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        addButtonLayout = (LinearLayout) findViewById(R.id.addStageOptionButton);
-        addButtonLayout.addView( new DefaultButtonIMG(
-                context,
-                "",
-                qr_icon
-        ));
+        addButtonLayout = (LinearLayout) findViewById(R.id.addStageOptionButton_create_tournament);
+        DefaultButton button = new DefaultButton(context, "Add");
+        addButtonLayout.addView(button , 0);
 
-        addButtonLayout.getChildAt(0).setOnClickListener(v -> {
+        button.button.setOnClickListener(v -> {
             addStageOption();
         });
 

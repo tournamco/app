@@ -27,10 +27,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
             return;
-        } else {
-            startActivity(new Intent(getApplicationContext(), OurTeamActivity.class));
         }
-
 
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
@@ -55,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, selectedFragment).commit();
             return true;
         });
-        Intent switchActivityIntent = new Intent(this, DisputesActivity.class);
-        startActivity(switchActivityIntent);
+
     }
 }

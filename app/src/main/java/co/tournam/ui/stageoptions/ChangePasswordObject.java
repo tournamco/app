@@ -42,7 +42,7 @@ public class ChangePasswordObject extends LinearLayout {
         change = new DefaultButtonFilled(context, "Change");
         this.addView(change);
 
-        change.setOnClickListener(v -> {
+        change.button.setOnClickListener(v -> {
             String oldPassword = oldPass.getText().toString();
             String newPassword = newPass.getText().toString();
             String confirmal = confirmNewPass.getText().toString();

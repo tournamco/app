@@ -51,21 +51,27 @@ public class header extends LinearLayout{
             case INVITE:
                 setTitle("Invite");
                 setMemberAmount(null);
+                break;
             case MATCHES:
                 setTitle("Matches");
                 setMemberAmount(null);
+                break;
             case STAGES:
                 setTitle("Stages");
                 setMemberAmount(null);
+                break;
             case INFORMATION:
                 setTitle("Information");
                 setMemberAmount(null);
+                break;
             case PROOF_OF_SCORE:
                 setTitle("Proof of Score");
                 setMemberAmount(null);
+                break;
             case CHANGE_PASSWORD:
                 setTitle("Change Password");
                 setMemberAmount(null);
+                break;
             case STATISTICS:
                 setTitle("Statistics");
                 setMemberAmount(null);

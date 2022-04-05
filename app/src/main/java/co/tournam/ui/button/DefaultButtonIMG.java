@@ -11,7 +11,7 @@ import co.tournam.schedule.R;
 public class DefaultButtonIMG extends AbstractButton {
 
     private String title;
-    private Button button;
+    public Button button;
     private Drawable image;
 
     public DefaultButtonIMG(Context context, String title, Drawable image) {

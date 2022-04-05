@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
@@ -70,6 +71,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         try {
                             bm = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                            ImageLoader.uploadImage(bm);
                             proofs.add(bm);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -219,7 +221,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         proofOfScoreLayout.addView(imageList);
         proofOfScoreLayout.addView(addImage);
 
-        addImage.setOnClickListener(v -> {
+        addImage.button.setOnClickListener(v -> {
             // Perform action on click
             openGallery();
         });

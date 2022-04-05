@@ -10,7 +10,7 @@ import co.tournam.schedule.R;
 public class DefaultButtonFilled extends AbstractButton{
 
     private String title;
-    private Button button;
+    public Button button;
 
     public DefaultButtonFilled(Context context, String title) {
         super(context);

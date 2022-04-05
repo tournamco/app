@@ -62,7 +62,7 @@ public class OurTeamActivity extends AppCompatActivity {
         DefaultButton theManageButton = new DefaultButton(context, "Manage");
         manageTeamButton.addView(theManageButton);
 
-        theManageButton.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
+        theManageButton.button.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
     }
 
     public void setTournamentBanner() {

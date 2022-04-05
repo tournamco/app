@@ -12,7 +12,7 @@ public class headerDiscovery extends LinearLayout {
 
     private TextView title;
     private String headerText;
-    private Button button;
+    public Button button;
 
 
 

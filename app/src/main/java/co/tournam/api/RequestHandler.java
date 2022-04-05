@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class RequestHandler {
-    public final static String url = "http://159.223.239.183/";
+    public final static String url = "https://api.tournam.co/";
     private static Cache cache = new NoCache();
     private static Network network = new BasicNetwork(new HurlStack());
     private static RequestQueue queue = new RequestQueue(cache, network);
