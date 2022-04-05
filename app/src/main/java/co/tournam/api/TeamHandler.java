@@ -273,7 +273,7 @@ public class TeamHandler {
     }
 
     public static void matchInfo(String matchId, MatchInfoComplete listener) {
-        RequestHandler.request("/team/tournament/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/match/info", Request.Method.GET, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
