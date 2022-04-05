@@ -178,6 +178,47 @@
             app:layout_constraintTop_toBottomOf="@+id/stageOptions_create_tournament"
             app:layout_constraintVertical_bias="0.0"/>
 
+        <LinearLayout
+            android:id="@+id/extrainfo_Container_create_tournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addStageOptionButton_create_tournament"
+            app:layout_constraintVertical_bias="0.0">
+
+
+            <CheckBox
+                android:id="@+id/isOnline_checkbox_create_tournament"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The tournament is online" />
+
+            <CheckBox
+                android:id="@+id/isPublic_checkbox_create_tournament"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The tournament is public" />
+
+            <LinearLayout
+                android:id="@+id/location_create_tournament"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/isPublic_checkbox_create_tournament"
+                app:layout_constraintVertical_bias="0.0"/>
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

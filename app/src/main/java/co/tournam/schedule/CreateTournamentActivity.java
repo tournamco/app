@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,6 @@ import java.util.List;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
-import co.tournam.models.FakeData;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
@@ -36,7 +36,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private LinearLayout createButtonLayout;
     private LinearLayout addButtonLayout;
     private LinearLayout backButtonLayout;
-    private FakeData data;
+    private LinearLayout locationLayout;
     
     private boolean isOnline;
     private String name;
@@ -47,15 +47,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private int gameLength;
     private List<TournamentModel.CreateStageModel> stages;
     private String location;
-//    private int stageCounter = 1;
 
-    private DefaultButton back;
+    private CheckBox onlineBox;
+    private CheckBox publicBox;
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tournament);
-        data = new FakeData();
         context = this.getApplicationContext();
 
         setBackButton();
@@ -68,7 +69,10 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setFirstHeader();
         setStageOption();
         setAddButton();
+        setLocation();
 
+        onlineBox = findViewById(R.id.isOnline_checkbox_create_tournament);
+        publicBox = findViewById(R.id.isPublic_checkbox_create_tournament);
 
         
     }
@@ -77,7 +81,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
         backButtonLayout = (LinearLayout) findViewById(R.id.backButton_create_tournament);
-        back = new DefaultButton(context, "Back");
+        DefaultButton back = new DefaultButton(context, "Back");
         backButtonLayout.addView(back);
         back.button.setOnClickListener(v -> startActivity(new Intent(context, MainActivity.class)));
 
@@ -92,7 +96,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                 "Create"
         ));
 
-        createButtonLayout.getChildAt(0).setOnClickListener(v -> {
+        ((DefaultButtonFilled) createButtonLayout.getChildAt(0)).button.setOnClickListener(v -> {
             infoUpdate();
             createTournament();
         });
@@ -127,6 +131,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     System.err.println("API_ERROR: " + error.name() + " - " + message);
                 }
             });
+
         }
     }
 
@@ -140,14 +145,17 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         this.teamSize = Integer.parseInt(((StageOptionBody) tournamentTeamSizeLayout.getChildAt(0)).getEntry());
 
-        //this.gameLength = Integer.parseInt(((StageOptionBody) tournamentGameLengthLayout.getChildAt(0)).getEntry());
+        this.location = ((StageOptionBody) locationLayout.getChildAt(0)).getEntry();
 
-//        this.location = ;
-//
         for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
             this.stages.add(((StageOption) stageOptionLayout.getChildAt(i)).createStageFromEntry());
         }
 
+        //TODO Change once we understand what game length means
+        this.gameLength = 60;
+
+        this.isOnline = onlineBox.isChecked();
+        this.isPublic = publicBox.isChecked();
 
     }
 
@@ -232,6 +240,12 @@ public class CreateTournamentActivity extends AppCompatActivity {
             addStageOption();
         });
 
+    }
+
+    public void setLocation() {
+        locationLayout = findViewById(R.id.location_create_tournament);
+        locationLayout.addView(new StageOptionBody(context, "Location"));
+        ((StageOptionBody) locationLayout.getChildAt(0)).setEntryHint("If not online...");
     }
 
 

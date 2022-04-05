@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -62,12 +63,14 @@ public class DiscoveryActivity extends LinearLayout {
             @Override
             public void success(List<TournamentModel> tournaments) {
 
+                Toast.makeText(context, "Successful retrieval", Toast.LENGTH_LONG).show();
                 fake.addAll(tournaments);
             }
 
             @Override
             public void failure(ApiErrors error, String message) {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
+                Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
             }
         });
 

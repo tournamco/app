@@ -45,4 +45,6 @@ public class StageOptionBody extends LinearLayout {
     }
 
     public void setEntryText(String text) { entryText.setText(text);}
+
+    public void setEntryHint(String text) { entryText.setHint(text);}
 }
