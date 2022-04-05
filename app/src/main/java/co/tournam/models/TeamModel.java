@@ -21,7 +21,7 @@ public class TeamModel {
         this.icon = icon;
         this.tournamentId = tournamentId;
     }
-
+    public String getID() { return id; }
 
     public List<UserModel> getMembers() {
         return members;

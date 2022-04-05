@@ -33,6 +33,6 @@ public class GameProofHeader extends LinearLayout {
         inflater.inflate(R.layout.game_proof_header, this, true);
 
         textView = findViewById(R.id.game_proof_header);
-        //textView.setText(match.getFullName());
+        textView.setText(match.getName());
     }
 }
