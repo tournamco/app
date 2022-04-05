@@ -1,12 +1,12 @@
 package co.tournam.ui.header;
 
 import android.content.Context;
-import co.tournam.models.TeamModel;
-import co.tournam.schedule.R;
-
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import co.tournam.models.TeamModel;
+import co.tournam.schedule.R;
 
 
 public class header extends LinearLayout{
@@ -51,6 +51,25 @@ public class header extends LinearLayout{
             case INVITE:
                 setTitle("Invite");
                 setMemberAmount(null);
+            case MATCHES:
+                setTitle("Matches");
+                setMemberAmount(null);
+            case STAGES:
+                setTitle("Stages");
+                setMemberAmount(null);
+            case INFORMATION:
+                setTitle("Information");
+                setMemberAmount(null);
+            case PROOF_OF_SCORE:
+                setTitle("Proof of Score");
+                setMemberAmount(null);
+            case CHANGE_PASSWORD:
+                setTitle("Change Password");
+                setMemberAmount(null);
+            case STATISTICS:
+                setTitle("Statistics");
+                setMemberAmount(null);
+
 
         }
     }

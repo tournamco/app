@@ -25,7 +25,7 @@
             android:layout_width="160dp"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_spinner_with_arrow"
-            android:entries="TournamentModel.StageTypes"
+            android:entries="@array/stage_options"
             android:spinnerMode="dropdown"
             android:textAlignment="center" />
 

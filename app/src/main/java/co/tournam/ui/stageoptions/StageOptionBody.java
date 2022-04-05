@@ -43,4 +43,6 @@ public class StageOptionBody extends LinearLayout {
     public String getEntry() {
         return this.entryText.getText().toString();
     }
+
+    public void setEntryText(String text) { entryText.setText(text);}
 }

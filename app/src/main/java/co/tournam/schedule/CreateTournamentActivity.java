@@ -130,23 +130,23 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void infoUpdate() {
 
-//        this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
+        this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
+
+        this.color = Integer.parseInt(((StageOptionBody) tournamentColorPickerLayout.getChildAt(0)).getEntry());
+
+        this.game = ((StageOptionBody) tournamentGameNameLayout.getChildAt(0)).getEntry();
+
+        this.teamSize = Integer.parseInt(((StageOptionBody) tournamentTeamSizeLayout.getChildAt(0)).getEntry());
+
+        //this.gameLength = Integer.parseInt(((StageOptionBody) tournamentGameLengthLayout.getChildAt(0)).getEntry());
+
+//        this.location = ;
 //
-//        this.color = tournamentColorPickerLayout.getChildAt(0).getEntry().getText();
-//
-//        this.game = tournamentGameNameLayout.getChildAt(0).getEntry().getText();
-//
-//        this.teamSize = (int) tournamentTeamSizeLayout.getChildAt(0).getEntry().getText();
-//
-//        this.gameLength = (int) tournamentGameLengthLayout.getChildAt(0).getEntry().getText();
-//
-//        this.location;
-//
-//        for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
-//            this.stages.add(stageOptionLayout.getChildAt(i).createStageFromEntry());
-//        }
-//
-//
+        for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
+            this.stages.add(((StageOption) stageOptionLayout.getChildAt(i)).createStageFromEntry());
+        }
+
+
     }
 
 

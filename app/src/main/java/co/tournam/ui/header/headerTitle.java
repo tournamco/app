@@ -5,5 +5,9 @@ public enum headerTitle {
     MEMBERS,
     INVITE,
     MATCHES,
-    STAGES
+    STAGES,
+    INFORMATION,
+    PROOF_OF_SCORE,
+    CHANGE_PASSWORD,
+    STATISTICS
 }
