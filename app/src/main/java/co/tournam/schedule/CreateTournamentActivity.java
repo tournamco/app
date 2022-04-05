@@ -39,7 +39,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private FakeData data;
     
     private boolean isOnline;
-    
     private String name;
     private int color;
     private String game;
@@ -131,7 +130,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void infoUpdate() {
 
-//        this.name = tournamentNameLayout.getChildAt(0).getEntry().getText();
+//        this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
 //
 //        this.color = tournamentColorPickerLayout.getChildAt(0).getEntry().getText();
 //
@@ -140,14 +139,14 @@ public class CreateTournamentActivity extends AppCompatActivity {
 //        this.teamSize = (int) tournamentTeamSizeLayout.getChildAt(0).getEntry().getText();
 //
 //        this.gameLength = (int) tournamentGameLengthLayout.getChildAt(0).getEntry().getText();
-
+//
 //        this.location;
-
+//
 //        for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
 //            this.stages.add(stageOptionLayout.getChildAt(i).createStageFromEntry());
 //        }
-
-
+//
+//
     }
 
 
