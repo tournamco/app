@@ -7,7 +7,7 @@ import co.tournam.models.RoundModel;
 
 
 public class RoundBar extends AbstractRoundBar {
-    public RoundBar(Context context, ArrayList<RoundModel> rounds) {
+    public RoundBar(Context context, List<RoundModel> rounds) {
         super(context, rounds);
 
         build(context);
