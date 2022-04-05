@@ -49,7 +49,7 @@ public class ImageLoader {
             e.printStackTrace();
         }
 
-        return null;
+        return bitmap;
     }
 
     public static void ensureFolderExists(Path folder) throws IOException {

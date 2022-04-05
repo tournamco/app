@@ -269,7 +269,33 @@ public class TeamHandler {
     }
 
     public interface ListTournamentsComplete extends RequestHandler.AbstractCompleted {
-        void success(List<TournamentModel> matches);
+        void success(List<TournamentModel> tournaments);
+    }
+
+    public static void matchInfo(String matchId, MatchInfoComplete listener) {
+        RequestHandler.request("/team/tournament/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("match", matchId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success(MatchHandler.fromJSON(response.getJSONObject("match")));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface MatchInfoComplete extends RequestHandler.AbstractCompleted {
+        void success(MatchModel match);
     }
 
     public static void info(String id, InfoComplete listener) {
