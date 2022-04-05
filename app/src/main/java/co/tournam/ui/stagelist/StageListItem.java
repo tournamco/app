@@ -4,15 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import co.tournam.models.stage.PoolsStageModel;
+
+import co.tournam.models.stage.StageModel;
 import co.tournam.schedule.R;
 
 public class StageListItem extends LinearLayout {
 
-    private PoolsStageModel stage;
+    private StageModel stage;
     private Button button;
 
-    public StageListItem(Context context, PoolsStageModel stage) {
+    public StageListItem(Context context, StageModel stage) {
         super(context);
 
         this.stage = stage;

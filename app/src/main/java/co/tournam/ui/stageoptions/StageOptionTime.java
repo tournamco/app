@@ -1,25 +1,24 @@
 package co.tournam.ui.stageoptions;
+
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import co.tournam.models.stage.PoolsStageModel;
 import co.tournam.schedule.R;
 
-public class PoolStageOptionTime extends LinearLayout {
+public class StageOptionTime extends LinearLayout {
 
     private TextView titleText;
     private String title;
 //    private boolean thresholdType;
 //
-//    private EditText fromEdit;
-//    private EditText toEdit;
+    private EditText fromEdit;
+    private EditText toEdit;
 
 
-    public PoolStageOptionTime(Context context, String title) {
+    public StageOptionTime(Context context, String title) {
         super(context);
 
         this.title = title;
@@ -43,4 +42,8 @@ public class PoolStageOptionTime extends LinearLayout {
 
 
     }
+
+    public String getFirstEntry() { return this.fromEdit.getText().toString(); }
+
+    public String getSecondEntry() { return this.toEdit.getText().toString(); }
 }

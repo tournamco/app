@@ -38,6 +38,7 @@ public class Dispute extends LinearLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.dispute, this, true);
 
+        // Jort -> I'm sorry!
         DisputeModel.DisputeTeamModel teamA = this.dispute.getTeams().get(this.dispute.getKeys().get(0));
         DisputeModel.DisputeTeamModel teamB = this.dispute.getTeams().get(this.dispute.getKeys().get(1));
 

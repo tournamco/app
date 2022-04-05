@@ -1,63 +1,46 @@
 package co.tournam.schedule;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
-import co.tournam.members.Members;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.big_header;
-import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
+import co.tournam.api.ApiErrors;
+import co.tournam.api.UserHandler;
+import co.tournam.models.UserModel;
 
 public class MyProfileActivity extends AppCompatActivity {
+
+    private LinearLayout userIconLayout;
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_our_team);
+        this.context = this.getApplicationContext();
 
-     /*   addContentView(
-                new big_header(
-                        this.getApplicationContext()
-                ),
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        addContentView(
-                new TournamentSummaryListItem(
-                      //  this.getApplicationContext(),
-                        //data.tournament),
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();
+    }
 
-        bottomNav.setSelectedItemId(R.id.navHostFragment);
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+    public void setTeamIcon() {
+
+        //userIconLayout = (LinearLayout) findViewById(R.id.mypf_userIcon);
+
+        UserHandler.me(new UserHandler.MeCompleted() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public void success(UserModel me) {
 
-                Fragment selectedFragment = null;
-
-                switch (item.getItemId()) {
-                    case R.id.navigation_tournament:
-                        //selectedFragment = new Tournament();
-                        break;
-                    case R.id.navigation_search:
-                      //  selectedFragment = new Search();
-                        break;
-                    case R.id.navigation_schedule:
-                        selectedFragment = new Schedule();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, selectedFragment).commit();
-                return true;
             }
-        });*/
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+
+            }
+        });
+
     }
 
 

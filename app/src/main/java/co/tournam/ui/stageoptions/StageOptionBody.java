@@ -5,15 +5,17 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import co.tournam.schedule.R;
 
-public class PoolStageOptionBody extends LinearLayout {
+public class StageOptionBody extends LinearLayout {
 
     private TextView titleText;
     private String title;
+    private EditText entryText;
 
 
-    public PoolStageOptionBody(Context context, String title) {
+    public StageOptionBody(Context context, String title) {
         super(context);
         this.title = title;
 
@@ -34,5 +36,11 @@ public class PoolStageOptionBody extends LinearLayout {
         titleText = findViewById(R.id.textentry_title);
         titleText.setText(this.title);
 
+        entryText = (EditText) findViewById(R.id.editTextEntry);
+
+    }
+
+    public String getEntry() {
+        return this.entryText.getText().toString();
     }
 }

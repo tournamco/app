@@ -1,27 +1,22 @@
 package co.tournam.schedule;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tournam.models.FakeData;
+import co.tournam.api.ApiErrors;
+import co.tournam.api.ImageLoader;
+import co.tournam.api.TeamHandler;
+import co.tournam.api.TournamentHandler;
+import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
-import co.tournam.schedule.schedule.Schedule;
-import co.tournam.ui.big_header;
+import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
@@ -33,6 +28,11 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class OurTeamActivity extends AppCompatActivity {
 
+    public OurTeamActivity(String teamID, String tournamentID) {
+        this.teamID = teamID;
+        this.tournamentID = tournamentID;
+    }
+
     Context context;
     private LinearLayout manageTeamButton;
     private LinearLayout tournamentBannerLayout;
@@ -42,12 +42,13 @@ public class OurTeamActivity extends AppCompatActivity {
     private LinearLayout teamMemberLayout;
     private LinearLayout secondHeaderLayout;
     private LinearLayout matchList;
-    private FakeData data;
+
+    private String teamID;
+    private String tournamentID;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_our_team);
-        data = new FakeData();
         context = this.getApplicationContext();
 
         setManageTeamButton();
@@ -58,39 +59,78 @@ public class OurTeamActivity extends AppCompatActivity {
         setTeamMembers();
         setSecondHeader();
         setMatchList();
+
+
+
+
     }
 
     public void setManageTeamButton() {
         manageTeamButton = (LinearLayout) findViewById(R.id.manageButton);
-        manageTeamButton.addView( new DefaultButton(
-                context,
-                "Manage"
-        ));
+        DefaultButton theManageButton = new DefaultButton(context, "Manage");
+        manageTeamButton.addView(theManageButton);
+
+        theManageButton.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
     }
 
     public void setTournamentBanner() {
 
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
-        tournamentBannerLayout.addView( new TournamentSummaryListItem(
-                context,
-                data.tournament));
+
+        TournamentHandler.info(this.tournamentID, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                tournamentBannerLayout.addView( new TournamentSummaryListItem(
+                        context,
+                        tournament));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
+
     }
 
     public void setTeamIcon() {
-        //TODO Change once we can use backend Images.
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
+
         teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
-        teamIconLayout.addView( new ImageListItem(
-                context, bm
-        ));
+
+        TeamHandler.info(this.teamID, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                teamIconLayout.addView( new ImageListItem(
+                        context, ImageLoader.loadImage(team.getIcon(), context)
+                ));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
     }
 
     public void setTeamName() {
-
         teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
-        teamNameLayout.addView( new TextEntry(
-                context, "Name", false
-        ));
+
+        TeamHandler.info(this.teamID, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                teamNameLayout.addView( new TextEntry(
+                        context, team.getName(), false
+                ));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
 
     }
 
@@ -105,11 +145,21 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setTeamMembers() {
         teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
-        List<TeamModel> team = new ArrayList<TeamModel>();
-        //team.add(data.tournament.getTeams().get(0));
+        List<TeamModel> teams = new ArrayList<TeamModel>();
+        TeamHandler.info(teamID, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                teams.add(team);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+
+            }
+        });
         teamMemberLayout.addView(new TeamMembers(
-           context,
-           team
+                context,
+                teams
         ));
     }
 
@@ -125,10 +175,26 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setMatchList() {
 
+        TeamHandler.listMatches(0, 10, new TeamHandler.ListMatchesComplete() {
+            @Override
+            public void success(List<MatchModel> matches) {
+                OurTeamActivity.this.buildMatchSummaryList(matches, context);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
+
+    }
+
+    public void buildMatchSummaryList(List<MatchModel> matches, Context context) {
         matchList = (LinearLayout) findViewById(R.id.matchList);
-        //matchList.addView(new SummaryMatchList(
-                //context,
-               // data.tournament.getMatches(data.team1)
-      // ));
+        matchList.addView(new SummaryMatchList(
+                context,
+                matches
+        ));
     }
 }

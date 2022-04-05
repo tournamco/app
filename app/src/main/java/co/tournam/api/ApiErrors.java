@@ -26,7 +26,8 @@ public enum ApiErrors {
     ROUND_NOT_FOUND(18),
     UNAUTHORIZED(19),
     NOT_FOUND(20),
-    INTERNAL_SERVER_ERROR(21);
+    INTERNAL_SERVER_ERROR(21),
+    INVALID_FIELD(22);
 
     private static final Map<Integer, ApiErrors> BY_INDEX = new HashMap<>();
 
