@@ -142,6 +142,7 @@
         <entry key="..\:/Users/20202571/Documents/Tournamco/app/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-anydpi/arrow_right.xml" value="0.2565" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-anydpi/dropdown_arrow.xml" value="0.2605" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-anydpi/nfc_icon.xml" value="0.2495" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-anydpi/qr_icon.xml" value="0.2605" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-v24/gradient_button.xml" value="0.2605" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable-v24/gradient_filled_button.xml" value="0.2605" />
@@ -157,7 +158,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2605" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable/rounded_corners.xml" value="0.2565" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_create_tournament.xml" value="0.2509057971014493" />
-        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_discovery.xml" value="0.322463768115942" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_discovery.xml" value="0.1" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_login.xml" value="0.20923913043478262" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_main.xml" value="0.17046605876393112" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_manage_team.xml" value="0.1762917933130699" />
@@ -184,6 +185,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/row_team.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/row_user.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_big_header.xml" value="0.3625" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_button_gradient_fill.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_filter_dropdown.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_game_proof.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_imagelist_changeable.xml" value="0.35833333333333334" />
@@ -198,6 +200,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_stage_options_swiss.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_stagelist_view.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_stageoptions.xml" value="0.3625" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_text.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_ui_button.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_ui_button_with_img.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_ui_slider.xml" value="0.3625" />

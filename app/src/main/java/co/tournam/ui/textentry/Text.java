@@ -1,4 +1,4 @@
-package co.tournam.ui;
+package co.tournam.ui.textentry;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -17,7 +17,7 @@ import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
-import co.tournam.ui.Text;
+import co.tournam.ui.textentry.Text;
 import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.headerDiscovery;
 import co.tournam.ui.tournament_summary.TournamentSummaryListJoin;
@@ -27,8 +27,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     Context context;
     private List<TournamentModel> tournamentList = new ArrayList<TournamentModel>();
 
-    private Drawable nfc;
-    private Drawable qr;
+    Drawable nfc;
+    Drawable qr;
     private LinearLayout mainDiscoveryHeaderLayout;
     private LinearLayout joinWithQRLayout;
     private LinearLayout joinWithNFCLayout;
@@ -44,7 +44,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_discovery);
         this.context = this.getApplicationContext();
         this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
-        this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.mipmap.ic_nfc, null);
+        this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.drawable.nfc_icon, null);
 
         setMainDiscoveryHeaderLayout();
         setJoinWithQRLayout();
@@ -58,7 +58,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setMainDiscoveryHeaderLayout() {
 
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
-        headerDiscovery header = new headerDiscovery(this.context, "Discovery");
+        headerDiscovery header = new headerDiscovery(context, "Discovery");
         header.button.setOnClickListener(v -> context.startActivity(new Intent(context,
                 CreateTournamentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         mainDiscoveryHeaderLayout.addView(header);
@@ -68,7 +68,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setJoinWithQRLayout() {
 
         joinWithQRLayout = (LinearLayout) findViewById(R.id.discovery_join_qr);
-        DefaultButtonIMG qrJoin = new DefaultButtonIMG(this.context, "Join using QR code", qr);
+        DefaultButtonIMG qrJoin = new DefaultButtonIMG(context,
+                "              Join using QR code              ", qr);
         joinWithQRLayout.addView(qrJoin);
 
     }
@@ -76,7 +77,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setJoinWithNFCLayout() {
 
         joinWithNFCLayout = (LinearLayout) findViewById(R.id.discovery_join_nfc);
-        DefaultButtonIMG nfcJoin = new DefaultButtonIMG(this.context, "Join using NFC", nfc);
+        DefaultButtonIMG nfcJoin = new DefaultButtonIMG(context,
+                "                  Join using NFC                  ", nfc);
         joinWithNFCLayout.addView(nfcJoin);
 
 
@@ -85,7 +87,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setLocalOnlineSliderLayout() {
 
         localOnlineSliderLayout = (LinearLayout) findViewById(R.id.discovery_slider);
-        Slider slider = new Slider(this.context, true);
+        Slider slider = new Slider(context, true);
         localOnlineSliderLayout.addView(slider);
         slider.buttonLocal.setOnClickListener(v -> {
             slider.setButtons(false);
@@ -104,7 +106,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setTournamentHeaderLayout() {
 
         tournamentHeaderLayout = (LinearLayout) findViewById(R.id.discovery_tourn_header);
-        Text text = new Text(this.context, "tournaments");
+        Text text = new Text(context, "tournaments");
         tournamentHeaderLayout.addView(text);
 
     }
@@ -112,8 +114,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setTournamentListLayout() {
 
         tournamentListLayout = (LinearLayout) findViewById(R.id.discovery_tourn_list);
-        //updateList();
-        TournamentSummaryListJoin list = new TournamentSummaryListJoin(this.context, tournamentList);
+        updateList();
+        TournamentSummaryListJoin list = new TournamentSummaryListJoin(context, tournamentList);
         tournamentListLayout.addView(list);
 
     }
@@ -163,46 +165,9 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void updateList() {
 
         if(this.isLocal) {
-            this.tournamentList = getOffline(this.context, "TODO LOCATION");
+            this.tournamentList = getOffline(context, "TODO LOCATION");
         } else {
-            this.tournamentList = getOnline(this.context);
+            this.tournamentList = getOnline(context);
         }
     }
-
 }
-
-
-
-//        DefaultButton button = new DefaultButton(this.getContext(), "Create");
-//
-//        headerDiscovery header = new headerDiscovery(this.getContext(), "Discovery");
-//
-//        TournamentSummaryListJoin list = new TournamentSummaryListJoin(this.getContext(), fake);
-//
-//
-//        Slider slider = new Slider(this.getContext(), true);
-//
-//
-//        DefaultButtonIMG qrJoin = new DefaultButtonIMG(this.getContext(), "Join using QR code", qr);
-//
-//        qrJoin.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,6));
-//
-//        DefaultButtonIMG nfcJoin = new DefaultButtonIMG(this.getContext(), "Join using NFC", nfc);
-//
-//        qrJoin.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,6));
-//
-//        Text text = new Text(this.getContext(), "Tournaments");
-//
-//        text.setLayoutParams(param);
-//        this.addView(header);
-//        this.addView(qrJoin);
-//        this.addView(nfcJoin);
-//        this.addView(slider,3);
-//
-//        this.addView(text,4);
-//
-//        this.addView(list);
-//
-//        header.button.setOnClickListener(view -> {
-//            context.startActivity(new Intent(context, CreateTournamentActivity.class));
-//        });
