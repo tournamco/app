@@ -12,7 +12,7 @@ public class StageOptionBody extends LinearLayout {
 
     private TextView titleText;
     private String title;
-    private EditText entryText;
+    public EditText entryText;
 
 
     public StageOptionBody(Context context, String title) {

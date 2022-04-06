@@ -40,6 +40,9 @@ public class StageOptionTime extends LinearLayout {
         titleText = findViewById(R.id.textentry_threshold_title);
         titleText.setText(this.title);
 
+        fromEdit = findViewById(R.id.textentry_threshold_from);
+        toEdit = findViewById(R.id.textentry_threshold_to);
+
 
     }
 
