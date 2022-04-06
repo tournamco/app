@@ -21,10 +21,15 @@
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_login.xml" value="0.19010416666666666" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_manage_team.xml" value="0.22" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_match_details.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_match_proof.xml" value="0.17831813576494426" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_my_profile.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_our_team.xml" value="0.17831813576494426" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament.xml" value="0.10552536231884058" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_disputes.xml" value="0.1" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_name.xml" value="0.1" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_page.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/change_button.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/dispute.xml" value="0.33" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/dispute_column.xml" value="0.19010416666666666" />
@@ -72,14 +77,17 @@
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/stagelist_row_base.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/summary_match_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/table.xml" value="0.19010416666666666" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/table_row.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_logo.xml" value="0.22" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_member.xml" value="0.29322916666666665" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_member_right.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_member_total.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_score.xml" value="0.19010416666666666" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/team_score_icon.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/teamscore.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/textentry_threshold.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/textentry_with_title.xml" value="0.33" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/tournament_page.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/tournament_summary.xml" value="0.25" />
         <entry key="..\:/Users/20200876/AndroidStudioProjects/app/app/src/main/res/drawable-v24/imagelist_add.xml" value="0.1375" />
         <entry key="..\:/Users/20200876/AndroidStudioProjects/app/app/src/main/res/drawable/white_border.xml" value="0.1375" />
