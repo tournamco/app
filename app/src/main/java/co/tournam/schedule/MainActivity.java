@@ -27,30 +27,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startActivity(new Intent(getApplicationContext(), ScheduleActivity.class));
         }
-
-
-//        BottomNavigationView bottomNav = findViewById(R.id.bottomNav_view);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new Search()).commit();
-//
-//        bottomNav.setSelectedItemId(R.id.navHostFragment);
-//        bottomNav.setOnItemSelectedListener(item -> {
-//
-//            Fragment selectedFragment = null;
-//
-//            switch (item.getItemId()) {
-//                case R.id.navigation_tournament:
-//                    selectedFragment = new Tournament();
-//                    break;
-//                case R.id.navigation_search:
-//                    selectedFragment = new Search();
-//                    break;
-//                case R.id.navigation_schedule:
-//                    selectedFragment = new Schedule();
-//                    break;
-//            }
-//            getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, selectedFragment).commit();
-//            return true;
-//        });
-
     }
 }
