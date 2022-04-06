@@ -2,14 +2,8 @@ package co.tournam.schedule.schedule;
 
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-
-import co.tournam.schedule.DiscoveryActivity;
-import co.tournam.schedule.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,12 +52,12 @@ public class Search extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        DiscoveryActivity views = new DiscoveryActivity(this.getContext());
-        inflater.inflate(R.layout.fragment_search, container, false);
-        return views;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        DiscoveryActivity views = new DiscoveryActivity(this.getContext());
+//        inflater.inflate(R.layout.fragment_search, container, false);
+//        return views;
+//    }
 }

@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import co.tournam.schedule.R;
 
 public class Slider extends LinearLayout{
-    private Button buttonLocal;
-    private Button buttonOnline;
+    public Button buttonLocal;
+    public Button buttonOnline;
     private boolean localBool;
 
     public Slider(Context context, boolean newLocalBool)
@@ -42,7 +42,7 @@ public class Slider extends LinearLayout{
         setButtons(localBool);
     }
 
-    private void setButtons(boolean localBool) {
+    public void setButtons(boolean localBool) {
         if(localBool == true) {
             buttonOnline.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
@@ -54,4 +54,10 @@ public class Slider extends LinearLayout{
             buttonOnline.setBackgroundTintList(null);
         }
     }
+
+    public boolean getBool() {
+        return this.localBool;
+    }
+
+
 }
