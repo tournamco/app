@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp" />
 
             </RelativeLayout>
@@ -80,24 +80,36 @@
             app:layout_constraintTop_toBottomOf="@+id/schedule_slider_container"
             app:layout_constraintVertical_bias="0.02" />
 
-
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/schedule_match_list"
             app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/schedule_match_list_container"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_schedule"/>
+            app:layout_constraintTop_toBottomOf="@+id/header_schedule">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/schedule_match_list"/>
+
+        </ScrollView>
 
 
-
-
-
-
-
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/schedule_bottomNav_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_match_list_container"
+            app:layout_constraintVertical_bias="1.0"
+            app:menu="@menu/bottom_nav_menu" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,17 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
@@ -38,6 +42,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setSliderLayout();
         setFilterDropdownLayout();
         setMatchListLayout();
+        setNavigationBar();
 
     }
 
@@ -124,5 +129,27 @@ public class ScheduleActivity extends AppCompatActivity {
             matchListLayout.addView(matchList);
 
         }
+    }
+
+    public void setNavigationBar() {
+
+        BottomNavigationView bottomNav = findViewById(R.id.schedule_bottomNav_view);
+        bottomNav.setSelectedItemId(R.id.navigation_schedule);
+        bottomNav.setOnItemSelectedListener(item -> {
+
+            switch (item.getItemId()) {
+                case R.id.navigation_tournament:
+                    startActivity(new Intent(ScheduleActivity.this, TournamentActivity.class));
+                    break;
+                case R.id.navigation_discovery:
+                    startActivity(new Intent(ScheduleActivity.this, DiscoveryActivity.class));
+                    break;
+                case R.id.navigation_schedule:
+                    startActivity(new Intent(ScheduleActivity.this, ScheduleActivity.class));
+                    break;
+            }
+
+            return true;
+        });
     }
 }

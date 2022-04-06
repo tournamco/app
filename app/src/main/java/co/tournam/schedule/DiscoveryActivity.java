@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         setLocalOnlineSliderLayout();
         setTournamentHeaderLayout();
         setTournamentListLayout();
+        setNavigationBar();
 
     }
 
@@ -170,5 +173,27 @@ public class DiscoveryActivity extends AppCompatActivity {
         } else {
             this.tournamentList = getOnline(context);
         }
+    }
+
+    public void setNavigationBar() {
+
+        BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
+        bottomNav.setSelectedItemId(R.id.navigation_discovery);
+        bottomNav.setOnItemSelectedListener(item -> {
+
+            switch (item.getItemId()) {
+                case R.id.navigation_tournament:
+                    startActivity(new Intent(DiscoveryActivity.this, TournamentActivity.class));
+                    break;
+                case R.id.navigation_discovery:
+                    startActivity(new Intent(DiscoveryActivity.this, DiscoveryActivity.class));
+                    break;
+                case R.id.navigation_schedule:
+                    startActivity(new Intent(DiscoveryActivity.this, ScheduleActivity.class));
+                    break;
+            }
+
+            return true;
+        });
     }
 }
