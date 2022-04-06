@@ -74,10 +74,11 @@ public class TournamentHandler {
         void success(TournamentModel tournament);
     }
 
-    public static void create(JSONObject json, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
+    public static void create(JSONObject json, String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
         RequestHandler.request("/tournament/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
+                json.put("banner", banner);
                 json.put("name", name);
                 json.put("game", game);
                 json.put("color", color);
@@ -123,17 +124,17 @@ public class TournamentHandler {
         });
     }
 
-    public static void createOnline(String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
+    public static void createOnline(String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
         JSONObject json = new JSONObject();
         try {
             json.put("online", true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        create(json, name, color, game, teamSize, isPublic, gameLength, stages, listener);
+        create(json, banner, name, color, game, teamSize, isPublic, gameLength, stages, listener);
     }
 
-    public static void createOffline(String name, int color, String game, int teamSize, boolean isPublic, int gameLength, String location, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
+    public static void createOffline(String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, String location, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
         JSONObject json = new JSONObject();
         try {
             json.put("online", false);
@@ -141,7 +142,7 @@ public class TournamentHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        create(json, name, color, game, teamSize, isPublic, gameLength, stages, listener);
+        create(json, banner, name, color, game, teamSize, isPublic, gameLength, stages, listener);
     }
 
     public interface CreateComplete extends RequestHandler.AbstractCompleted {

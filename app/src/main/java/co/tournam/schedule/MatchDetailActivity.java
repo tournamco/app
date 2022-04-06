@@ -71,7 +71,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         try {
                             bm = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                            ImageLoader.uploadImage(bm);
+                            String id = ImageLoader.uploadImage(bm);
                             proofs.add(bm);
                         } catch (IOException e) {
                             e.printStackTrace();

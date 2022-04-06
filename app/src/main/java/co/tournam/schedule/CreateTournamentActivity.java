@@ -1,27 +1,37 @@
 package co.tournam.schedule;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.ImageLoader;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
+import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
 
@@ -39,7 +49,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private LinearLayout addButtonLayout;
     private LinearLayout backButtonLayout;
     private LinearLayout locationLayout;
-    
+
+    private String bannerID = "";
     private boolean isOnline;
     private String name;
     private int color;
@@ -52,6 +63,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     private CheckBox onlineBox;
     private CheckBox publicBox;
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    private Bitmap bannerImage;
 
 
 
@@ -61,6 +74,23 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_tournament);
         context = this.getApplicationContext();
         this.stages = new ArrayList<>();
+
+        // Open Gallery
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        try {
+                            bannerImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                            new BackgroundWorker().execute(bannerImage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    }
+                });
 
         setBackButton();
         setCreateButton();
@@ -109,7 +139,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     
     public void createTournament() {
         if (this.isOnline) {
-            TournamentHandler.createOnline(this.name, this.color, this.game, this.teamSize, 
+            TournamentHandler.createOnline(this.bannerID, this.name, this.color, this.game, this.teamSize,
                     this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
                 @Override
                 public void success(String id) {
@@ -124,7 +154,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                 }
             });
         } else {
-            TournamentHandler.createOffline(this.name, this.color, this.game, this.teamSize,
+            TournamentHandler.createOffline(this.bannerID, this.name, this.color, this.game, this.teamSize,
                     this.isPublic, this.gameLength, this.location, this.stages, new TournamentHandler.CreateComplete() {
                 @Override
                 public void success(String id) {
@@ -181,10 +211,24 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentBanner() {
 
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner_create_tournament);
-//        tournamentBannerLayout.addView( new TournamentSummaryListItem(
-//                context,
-//                ));
+        ImageListItem image;
+        if (this.bannerID.equals("")) {
+            image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.imagelist_add_plus));
+        } else {
+            image = new ImageListItem(context, ImageLoader.loadImage(this.bannerID, context));
+        }
+
+        DefaultButton selectImage = new DefaultButton(context, "Upload");
+        tournamentBannerLayout.addView(image);
+        tournamentBannerLayout.addView(selectImage);
+        selectImage.button.setOnClickListener(v -> {
+            openGallery();
+        });
+
     }
+
+
 
     public void setTournamentName() {
 
@@ -233,17 +277,12 @@ public class CreateTournamentActivity extends AppCompatActivity {
         StageOption stage = new StageOption(context);
         stageOptionLayout.addView(stage);
 
-
-
     }
 
     public void addStageOption() {
 
         StageOption stage = new StageOption(context);
         stageOptionLayout.addView(stage);
-
-        Log.e("hi", String.valueOf(stageOptionLayout.getChildCount()));
-
 
     }
 
@@ -264,6 +303,33 @@ public class CreateTournamentActivity extends AppCompatActivity {
         locationLayout = findViewById(R.id.location_create_tournament);
         locationLayout.addView(new StageOptionBody(context, "Location"));
         ((StageOptionBody) locationLayout.getChildAt(0)).setEntryHint("If not online...");
+    }
+
+    public void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        someActivityResultLauncher.launch(intent);
+    }
+
+    private class BackgroundWorker
+            extends AsyncTask<Bitmap, Void, String> {
+
+        @Override
+        protected String doInBackground(Bitmap... params) {
+
+            Bitmap bm = params[0];
+            String result = "";
+            result = ImageLoader.uploadImage(bm);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            CreateTournamentActivity.this.bannerID = result;
+        }
+
+
     }
 
 
