@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
@@ -58,6 +60,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tournament);
         context = this.getApplicationContext();
+        this.stages = new ArrayList<>();
 
         setBackButton();
         setCreateButton();
@@ -110,11 +113,13 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
                 @Override
                 public void success(String id) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
+                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
 
                 @Override
                 public void failure(ApiErrors error, String message) {
+                    Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
                     System.err.println("API_ERROR: " + error.name() + " - " + message);
                 }
             });
@@ -123,11 +128,13 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     this.isPublic, this.gameLength, this.location, this.stages, new TournamentHandler.CreateComplete() {
                 @Override
                 public void success(String id) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
+                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
 
                 @Override
                 public void failure(ApiErrors error, String message) {
+                    Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
                     System.err.println("API_ERROR: " + error.name() + " - " + message);
                 }
             });
@@ -156,6 +163,17 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         this.isOnline = onlineBox.isChecked();
         this.isPublic = publicBox.isChecked();
+
+        Log.w("Updated:", "True");
+        Log.w("Name:", this.name);
+        Log.w("Color:", String.valueOf(this.color));
+        Log.w("Game:", this.game);
+        Log.w("Team Size:", String.valueOf(this.teamSize));
+        Log.w("Location:", this.location);
+        Log.w("Stage Count:", String.valueOf(this.stages.size()));
+        Log.w("Game Length", String.valueOf(this.gameLength));
+        Log.w("isOnline:", String.valueOf(this.isOnline));
+        Log.w("isPublic:", String.valueOf(this.isPublic));
 
     }
 

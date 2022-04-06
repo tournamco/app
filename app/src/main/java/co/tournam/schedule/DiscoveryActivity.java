@@ -1,7 +1,6 @@
 package co.tournam.schedule;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -26,9 +25,8 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     Context context;
     private List<TournamentModel> tournamentList = new ArrayList<TournamentModel>();
-    private Resources res = getResources();
-    private Drawable qr = ResourcesCompat.getDrawable(res, R.drawable.qr_icon, null);
-    private Drawable nfc = ResourcesCompat.getDrawable(res, R.mipmap.ic_nfc, null);
+    private Drawable qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
+    private Drawable nfc = ResourcesCompat.getDrawable(this.getResources(), R.mipmap.ic_nfc, null);
 
     private LinearLayout mainDiscoveryHeaderLayout;
     private LinearLayout joinWithQRLayout;

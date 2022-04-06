@@ -16,8 +16,8 @@ public class StageOption extends LinearLayout {
     private StageOptionBody name;
     private StageOptionBody noOfParticipants;
 //    private StageOptionBody noOfWinners;
-    private StageOptionTime dateDuration;
-    private StageOptionTime timeDuration;
+    private StageOptionTime dateSpan;
+    private StageOptionTime timeSpan;
 
 
     public StageOption(Context context){
@@ -49,25 +49,37 @@ public class StageOption extends LinearLayout {
 //        noOfWinners = new StageOptionBody(context, "Number of Winners");
 //        this.addView(noOfWinners);
 
-        dateDuration = new StageOptionTime(context, "Date");
-        this.addView(dateDuration);
+        dateSpan = new StageOptionTime(context, "Date");
+        this.addView(dateSpan);
 
-        timeDuration = new StageOptionTime(context, "Time");
-        this.addView(timeDuration);
+        timeSpan = new StageOptionTime(context, "Time");
+        this.addView(timeSpan);
 
     }
 
     public TournamentModel.CreateStageModel createStageFromEntry() {
 
+        TournamentModel.StageTypes type;
+        String selected = spinner.getSelectedItem().toString();
+        if (selected.equals("Pools")) {
+            type = TournamentModel.StageTypes.POOLS;
+        } else if (selected.equals("Single Elim")) {
+            type = TournamentModel.StageTypes.SINGLE_ELIMINATION;
+        } else if (selected.equals("Double Elim")) {
+            type = TournamentModel.StageTypes.DOUBLE_ELIMINATION;
+        } else {
+            type = TournamentModel.StageTypes.SWISS_ELIMINATION;
+        }
+
         Map<String, Integer> options = new HashMap<>();
         TournamentModel.CreateStageModel sample = new TournamentModel.CreateStageModel(
-                (TournamentModel.StageTypes) spinner.getSelectedItem(),
+                type,
                 this.name.getEntry(),
                 Integer.parseInt(this.noOfParticipants.getEntry()),
-                this.dateDuration.getFirstEntry(),
-                this.dateDuration.getSecondEntry(),
-                this.timeDuration.getFirstEntry(),
-                this.timeDuration.getSecondEntry(),
+                this.dateSpan.getFirstEntry(),
+                this.dateSpan.getSecondEntry(),
+                this.timeSpan.getFirstEntry(),
+                this.timeSpan.getSecondEntry(),
                 options);
 
         return sample;
