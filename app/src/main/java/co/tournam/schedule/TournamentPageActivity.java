@@ -90,7 +90,7 @@ public class TournamentPageActivity extends AppCompatActivity {
 
     private void setStages(Context context) {
         stages.removeAllViews();
-        stages.addView(new StageList(context, (ArrayList<StageModel>) tournamentModel.getStages()));
+        stages.addView(new StageList(context, (ArrayList<StageModel>) tournamentModel.getStages(), tournamentModel));
     }
 
     private void setTeams(Context context) {

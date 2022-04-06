@@ -37,6 +37,13 @@ public class StageActivity extends AppCompatActivity {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle b = getIntent().getExtras();
+
+        if(b != null) {
+            tournamentID = b.getString("key");
+            stageIndex = b.getInt("keyTwo");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_view);
         this.context = this.getApplicationContext();

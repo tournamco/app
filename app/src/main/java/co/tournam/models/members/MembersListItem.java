@@ -1,7 +1,8 @@
-package co.tournam.members;
+package co.tournam.models.members;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,10 +15,13 @@ public class MembersListItem extends LinearLayout {
 
     private ImageView logo;
     private TextView playerName;
+    private String buttonText;
+    private Button actionButton;
 
-    public MembersListItem(Context context, UserModel user) {
+    public MembersListItem(Context context, UserModel user, String buttonText) {
         super(context);
 
+        this.buttonText = buttonText;
         this.user = user;
 
         build(context);
@@ -25,7 +29,7 @@ public class MembersListItem extends LinearLayout {
 
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
-        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        //setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         buildContents(context);
     }
 
@@ -36,6 +40,8 @@ public class MembersListItem extends LinearLayout {
 
         logo = (ImageView) findViewById(R.id.imaget);
         playerName = (TextView) findViewById(R.id.namet);
+        actionButton = (Button) findViewById(R.id.button2);
+        setButtonText(buttonText);
 
         setName(user.getGamerTag());
         //setIcon(user.getIcon());
@@ -44,4 +50,6 @@ public class MembersListItem extends LinearLayout {
     private void setName(String name) { playerName.setText(name);}
 
     private void setIcon(int imageID) { logo.setImageResource(imageID);}
+
+    private void setButtonText(String text) { actionButton.setText(text);}
 }

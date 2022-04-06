@@ -1,9 +1,7 @@
-package co.tournam.members;
+package co.tournam.models.members;
 
 import android.content.Context;
 import android.widget.LinearLayout;
-
-import java.util.List;
 
 import co.tournam.models.TeamModel;
 
