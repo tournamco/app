@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         } else {
-            startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class));
+            startActivity(new Intent(getApplicationContext(), ScheduleActivity.class));
         }
 
 

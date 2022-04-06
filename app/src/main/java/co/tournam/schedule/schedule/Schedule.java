@@ -1,13 +1,8 @@
 package co.tournam.schedule.schedule;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.fragment.app.Fragment;
 
-import co.tournam.schedule.R;
-import co.tournam.schedule.ScheduleActivity;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -61,13 +56,13 @@ public class Schedule extends Fragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        inflater.inflate(R.layout.fragment_schedule, container, false);
-        ScheduleActivity views = new ScheduleActivity(this.getContext());
-
-        return views;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        inflater.inflate(R.layout.fragment_schedule, container, false);
+//        ScheduleActivity views = new ScheduleActivity(this.getContext());
+//
+//        return views;
+//    }
 }
