@@ -17,6 +17,7 @@
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.352" />
         <entry key="..\:/Tournamco/app/app/src/main/res/drawable/testdrawable.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_create_tournament.xml" value="0.17831813576494426" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_discovery.xml" value="0.19635416666666666" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_join_tournament.xml" value="0.17831813576494426" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_login.xml" value="0.19010416666666666" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -26,10 +27,11 @@
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_my_profile.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_our_team.xml" value="0.17831813576494426" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_stage_view.xml" value="0.12092391304347826" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament.xml" value="0.10552536231884058" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_disputes.xml" value="0.1" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_name.xml" value="0.1" />
-        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_page.xml" value="0.1" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/activity_tournament_page.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/change_button.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/dispute.xml" value="0.33" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/dispute_column.xml" value="0.19010416666666666" />
@@ -74,7 +76,7 @@
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_ui_button_with_img.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/sample_ui_slider.xml" value="0.25" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/score_cells.xml" value="0.1" />
-        <entry key="..\:/Tournamco/app/app/src/main/res/layout/stagelist_row_base.xml" value="0.36666666666666664" />
+        <entry key="..\:/Tournamco/app/app/src/main/res/layout/stagelist_row_base.xml" value="0.21464646464646464" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/summary_match_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/table.xml" value="0.19010416666666666" />
         <entry key="..\:/Tournamco/app/app/src/main/res/layout/table_row.xml" value="0.1" />
@@ -157,9 +159,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2605" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/drawable/rounded_corners.xml" value="0.2565" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_create_tournament.xml" value="0.2509057971014493" />
-        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_discovery.xml" value="0.322463768115942" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_login.xml" value="0.20923913043478262" />
-        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_main.xml" value="0.17046605876393112" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_manage_team.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_match_details.xml" value="0.20923913043478262" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_match_proof.xml" value="0.37395833333333334" />
@@ -168,7 +168,6 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_register.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_stage_view.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/change_password_object.xml" value="0.37395833333333334" />
-        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/fragment_search.xml" value="0.1537037037037037" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/header.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/imagelist_add_base.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/imagelist_base.xml" value="0.35833333333333334" />
