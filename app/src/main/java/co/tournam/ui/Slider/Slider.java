@@ -43,7 +43,7 @@ public class Slider extends LinearLayout{
     }
 
     public void setButtons(boolean localBool) {
-        if(localBool == true) {
+        if(localBool == false) {
             buttonOnline.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
             buttonLocal.setBackgroundTintList(null);

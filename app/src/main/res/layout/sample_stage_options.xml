@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Remove"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:background="@drawable/gradient_filled_button"
             app:backgroundTint="@null"
