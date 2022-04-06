@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         } else {
-            startActivity(new Intent(getApplicationContext(), CreateTournamentActivity.class));
+            startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class));
         }
 
 

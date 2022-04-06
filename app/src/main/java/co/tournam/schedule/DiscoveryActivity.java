@@ -1,6 +1,7 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -25,16 +26,15 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     Context context;
     private List<TournamentModel> tournamentList = new ArrayList<TournamentModel>();
-    private Drawable qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
-    private Drawable nfc = ResourcesCompat.getDrawable(this.getResources(), R.mipmap.ic_nfc, null);
 
+    private Drawable nfc;
+    private Drawable qr;
     private LinearLayout mainDiscoveryHeaderLayout;
     private LinearLayout joinWithQRLayout;
     private LinearLayout joinWithNFCLayout;
     private LinearLayout localOnlineSliderLayout;
     private LinearLayout tournamentHeaderLayout;
     private LinearLayout tournamentListLayout;
-
     private boolean isLocal;
 
 
@@ -43,6 +43,8 @@ public class DiscoveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discovery);
         this.context = this.getApplicationContext();
+        this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
+        this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.mipmap.ic_nfc, null);
 
         setMainDiscoveryHeaderLayout();
         setJoinWithQRLayout();
@@ -57,6 +59,8 @@ public class DiscoveryActivity extends AppCompatActivity {
 
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
         headerDiscovery header = new headerDiscovery(this.context, "Discovery");
+        header.button.setOnClickListener(v -> context.startActivity(new Intent(context,
+                CreateTournamentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         mainDiscoveryHeaderLayout.addView(header);
 
     }
@@ -108,15 +112,13 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void setTournamentListLayout() {
 
         tournamentListLayout = (LinearLayout) findViewById(R.id.discovery_tourn_list);
-        updateList();
+        //updateList();
         TournamentSummaryListJoin list = new TournamentSummaryListJoin(this.context, tournamentList);
         tournamentListLayout.addView(list);
 
     }
 
     public List<TournamentModel> getOnline(Context context) {
-        // TODO: GET TournamentLIST FROM SERVER
-
         List<TournamentModel> output = new ArrayList<TournamentModel>();
 
         TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
@@ -138,8 +140,6 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public List<TournamentModel> getOffline(Context context, String location) {
-        // TODO: GET TournamentLIST FROM SERVER
-
         List<TournamentModel> output = new ArrayList<TournamentModel>();
 
         TournamentHandler.discoveryLocal(location, 5, 0, 10,
