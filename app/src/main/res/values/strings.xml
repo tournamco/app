@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Schedule</string>
+    <string name="app_name">Tournamco</string>
     <string name="entryTitle">Participants</string>
     <string name="name_slot">Name</string>
     <string name="sample_name">Player A</string>
