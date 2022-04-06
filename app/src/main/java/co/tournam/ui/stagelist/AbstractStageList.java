@@ -5,16 +5,19 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import co.tournam.models.TournamentModel;
 import co.tournam.models.stage.StageModel;
 
 public abstract class AbstractStageList extends LinearLayout {
 
     protected List<StageModel> stages;
+    protected TournamentModel tournament;
 
-    public AbstractStageList(Context context, List<StageModel> stages) {
+    public AbstractStageList(Context context, List<StageModel> stages, TournamentModel tournament) {
         super(context);
 
         this.stages = stages;
+        this.tournament = tournament;
 
         build(context);
     }

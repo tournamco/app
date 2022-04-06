@@ -20,10 +20,10 @@ public class TeamList extends LinearLayout {
     public void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
 
-        buidContents(context);
+        buildContents(context);
     }
 
-    public void buidContents(Context context) {
+    public void buildContents(Context context) {
 
         for (String teamID : teamIDs) {
             TeamListRow row = new TeamListRow(context, teamID, buttonText);

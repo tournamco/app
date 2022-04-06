@@ -108,8 +108,8 @@ public class Dispute extends LinearLayout {
                }
            });
 
-           this.addView(new DisputeColumn(context, proofModelA));
-           this.addView(new DisputeColumn(context, proofModelB));
+           this.addView(new DisputeColumn(context, proofModelA, dispute.getId()));
+           this.addView(new DisputeColumn(context, proofModelB, dispute.getId()));
        }
 
     }

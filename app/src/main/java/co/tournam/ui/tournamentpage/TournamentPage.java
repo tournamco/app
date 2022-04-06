@@ -83,7 +83,7 @@ public class TournamentPage extends AbstractTournamentPage{
 
     private void setStages(Context context) {
         stages.removeAllViews();
-        stages.addView(new StageList(context, (ArrayList<StageModel>) tournament.getStages()));
+        stages.addView(new StageList(context, (ArrayList<StageModel>) tournament.getStages(), tournament));
     }
 
     private void setTeams(Context context) {

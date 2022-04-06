@@ -33,10 +33,10 @@ public class TeamListRow extends LinearLayout {
     public void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
-        buidContents(context);
+        buildContents(context);
     }
 
-    public void buidContents(Context context) {
+    public void buildContents(Context context) {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,7 +69,6 @@ public class TeamListRow extends LinearLayout {
     public void changeTeam(String teamID) {
         this.teamID = teamID;
     }
-
 
     public String getTeam() {
         return this.teamID;
