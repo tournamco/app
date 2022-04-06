@@ -25,9 +25,9 @@ public class MatchProofActivity extends AppCompatActivity {
 
     Context context;
     private LinearLayout matchProofLayout;
-    private FakeData data;
     private MatchModel match;
-    private boolean truth;
+    private boolean inTeam;
+    private String id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +56,13 @@ public class MatchProofActivity extends AppCompatActivity {
     private void setDisputes() {
         matchProofLayout = (LinearLayout) findViewById(R.id.proof);
         List<GameModel> games = match.getGames();
-        truth = false;
+        inTeam = false;
         Map<String, TeamModel> teams = match.getTeams();
         for (TeamModel team : teams.values()) {
             UserHandler.isUserInTeam(team.getID(), new UserHandler.IsUserInTeamComplete() {
                 @Override
                 public void success(boolean isInTeam) {
-                    truth = isInTeam;
+                    inTeam = isInTeam;
                 }
 
                 @Override
@@ -70,15 +70,13 @@ public class MatchProofActivity extends AppCompatActivity {
 
                 }
             });
-            if(truth == true) {
-                
+            if(inTeam == true) {
+                id = team.getID();
+                for (GameModel game : games) {
+                    matchProofLayout.addView(new GameProof(context, game, match, id ));
+                }
             }
         }
-        for (GameModel game : games) {
-
-        }
-        matchProofLayout.addView(new GameProof(context, bitList, ));
-        matchProofLayout.addView(new GameProof(context, bitList, data.tournament.getStages().get(0).getRounds().get(0).getMatches().get(0)));
     }
 
 

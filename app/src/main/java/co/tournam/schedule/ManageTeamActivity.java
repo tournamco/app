@@ -12,8 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.res.ResourcesCompat;
 
+import co.tournam.api.ApiErrors;
+import co.tournam.api.ImageLoader;
+import co.tournam.api.TeamHandler;
+import co.tournam.api.TournamentHandler;
 import co.tournam.members.Members;
 import co.tournam.models.FakeData;
+import co.tournam.models.TeamModel;
+import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
@@ -32,14 +38,43 @@ public class ManageTeamActivity extends AppCompatActivity {
     private LinearLayout buttonsLayout;
     private LinearLayout secondHeaderLayout;
     private LinearLayout membersLayout;
-    private FakeData data;
+    private TeamModel yourTeam;
+    private TournamentModel tournModel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_team);
-        data = new FakeData();
-        context = this.getApplicationContext();
+        Bundle b = getIntent().getExtras();
+        String teamCode = null;
 
+        if(b != null) {
+            teamCode = b.getString("key");
+        }
+        TeamHandler.info(teamCode, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                yourTeam = team;
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+
+            }
+        });
+
+        String tournID = yourTeam.getTournamentId();
+        TournamentHandler.info(tournID, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                tournModel = tournament;
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+
+            }
+        });
+        setContentView(R.layout.activity_manage_team);
+        context = this.getApplicationContext();
         setTournamentLogo();
         setTeamIcon();
         setTeamName();
@@ -53,21 +88,21 @@ public class ManageTeamActivity extends AppCompatActivity {
         tournamentLogoLayout = (LinearLayout) findViewById(R.id.tournamentLogo);
         tournamentLogoLayout.addView( new TournamentSummaryListItem(
                 context,
-                data.tournament));
+                tournModel));
     }
 
     private void setTeamIcon() {
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.search_playstore);
+
         teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
         teamIconLayout.addView( new ImageListItem(
-                context, bm
+                context, ImageLoader.loadImage(yourTeam.getIcon(), context)
         ));
     }
 
     private void setTeamName() {
         teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
         teamNameLayout.addView( new TextEntry(
-                context, "Name", false
+                context, yourTeam.getName(), false
         ));
     }
 
@@ -104,18 +139,18 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     private void setSecondHeader() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-       /* secondHeaderLayout.addView( new header(
+        secondHeaderLayout.addView( new header(
                 context,
-                data.tournament.getTeams().get(0),
+                yourTeam,
                 headerTitle.MEMBERS
-      )); */
+      ));
     }
 
     private void setMembers() {
         membersLayout = (LinearLayout) findViewById(R.id.members);
-      /*  membersLayout.addView( new Members(
+        membersLayout.addView( new Members(
                 this.getApplicationContext(),
-                data.tournament.getTeams().get(0)));*/
+                yourTeam));
     }
 }
 
