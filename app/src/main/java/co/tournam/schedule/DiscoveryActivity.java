@@ -17,9 +17,9 @@ import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
-import co.tournam.ui.textentry.Text;
 import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.headerDiscovery;
+import co.tournam.ui.textentry.Text;
 import co.tournam.ui.tournament_summary.TournamentSummaryListJoin;
 
 public class DiscoveryActivity extends AppCompatActivity {
@@ -90,12 +90,13 @@ public class DiscoveryActivity extends AppCompatActivity {
         Slider slider = new Slider(context, true);
         localOnlineSliderLayout.addView(slider);
         slider.buttonLocal.setOnClickListener(v -> {
-            slider.setButtons(false);
+            slider.setButtons(true);
             this.isLocal = slider.getBool();
         });
         slider.buttonOnline.setOnClickListener(v -> {
-            slider.setButtons(true);
+            slider.setButtons(false);
             this.isLocal = slider.getBool();
+//            Log.i("isLocal: ", String.valueOf(this.isLocal));
         });
 
         this.isLocal = slider.getBool();

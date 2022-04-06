@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             android:id="@+id/schedule_main_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -23,27 +24,63 @@
 
             <LinearLayout
                 android:id="@+id/schedule_main_header"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:layout_marginStart="5dp"/>
 
-            <LinearLayout
-                android:id="@+id/schedule_filter_dropdown"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:gravity="right">
+
+                <LinearLayout
+                    android:id="@+id/schedule_filter_dropdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="10dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/schedule_slider"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/schedule_slider_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/schedule_main_container"/>
+            android:gravity="start"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_main_container">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/schedule_slider" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:id="@+id/header_schedule"
+            android:background="@drawable/gradient"
+            android:padding="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintDimensionRatio="2:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_slider_container"
+            app:layout_constraintVertical_bias="0.02" />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +90,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/schedule_slider"/>
+            app:layout_constraintTop_toBottomOf="@+id/header_schedule"/>
 
 
 

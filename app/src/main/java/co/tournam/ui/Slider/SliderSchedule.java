@@ -9,23 +9,23 @@ import android.widget.LinearLayout;
 
 import co.tournam.schedule.R;
 
-public class Slider extends LinearLayout{
-    public Button buttonLocal;
-    public Button buttonOnline;
-    private boolean localBool;
+public class SliderSchedule extends LinearLayout{
+    public Button buttonPersonal;
+    public Button buttonAll;
+    private boolean personalBool;
 
-    public Slider(Context context, boolean newLocalBool)
+    public SliderSchedule(Context context, boolean newLocalBool)
     {
         super(context);
 
-        this.localBool = newLocalBool;
+        this.personalBool = newLocalBool;
 
         build(context);
     }
 
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
-        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
 
         buildContents(context);
@@ -34,30 +34,30 @@ public class Slider extends LinearLayout{
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.sample_ui_slider, this, true);
+        inflater.inflate(R.layout.sample_ui_slider_schedule, this, true);
 
-        buttonLocal = (Button) findViewById(R.id.firstButton);
-        buttonOnline = (Button) findViewById(R.id.secondButton);
+        buttonPersonal = (Button) findViewById(R.id.firstButton_schedule);
+        buttonAll = (Button) findViewById(R.id.secondButton_schedule);
 
-        setButtons(localBool);
+        setButtons(personalBool);
     }
 
-    public void setButtons(boolean localBool) {
-        if(localBool == true) {
-            buttonOnline.setBackgroundTintList(
+    public void setButtons(boolean bool) {
+        if(bool == false) {
+            buttonPersonal.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
-            buttonLocal.setBackgroundTintList(null);
+            buttonAll.setBackgroundTintList(null);
         }
         else {
-            buttonLocal.setBackgroundTintList(
+            buttonAll.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
-            buttonOnline.setBackgroundTintList(null);
+            buttonPersonal.setBackgroundTintList(null);
         }
-        this.localBool = localBool;
+        this.personalBool = bool;
     }
 
     public boolean getBool() {
-        return this.localBool;
+        return this.personalBool;
     }
 
 
