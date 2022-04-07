@@ -239,7 +239,7 @@ public class TeamHandler {
     }
 
     public static void listTournaments(int pageNumber, int pageSize, ListTournamentsComplete listener) {
-        RequestHandler.request("/team/tournament/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/tournament/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -273,7 +273,7 @@ public class TeamHandler {
     }
 
     public static void matchInfo(String matchId, MatchInfoComplete listener) {
-        RequestHandler.request("/team/match/info", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/match/info", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -299,7 +299,7 @@ public class TeamHandler {
     }
 
     public static void info(String id, InfoComplete listener) {
-        RequestHandler.request("/team/info", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/info", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -325,7 +325,7 @@ public class TeamHandler {
     }
 
     public static void info(List<String> ids, InfoArrayComplete listener) {
-        RequestHandler.request("/team/info", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/info", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -389,7 +389,7 @@ public class TeamHandler {
     }
 
     public static void list(String tournamentId, ListComplete listener) {
-        RequestHandler.request("/team/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/team/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();

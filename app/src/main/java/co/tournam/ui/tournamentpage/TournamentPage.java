@@ -20,7 +20,6 @@ import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.stage.StageModel;
 import co.tournam.schedule.R;
-import co.tournam.schedule.schedule.Tournament;
 import co.tournam.ui.header.header;
 import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.header.headerTournament;

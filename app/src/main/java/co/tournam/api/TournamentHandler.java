@@ -48,7 +48,7 @@ public class TournamentHandler {
     }
 
     public static void info(String tournamentId, InfoComplete listener) {
-        RequestHandler.request("/tournament/info", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/tournament/info", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -176,7 +176,7 @@ public class TournamentHandler {
     }
 
     public static void listMatches(String tournamentId, ListMatchesComplete listener) {
-        RequestHandler.request("/tournament/match/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/tournament/match/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -209,7 +209,7 @@ public class TournamentHandler {
     }
 
     public static void listRoundMatches(String tournamentId, int stageIndex, int roundIndex, ListRoundMatchesComplete listener) {
-        RequestHandler.request("/tournament/round/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/tournament/round/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -250,7 +250,7 @@ public class TournamentHandler {
      * @param listener The listener to call when the request is complete.
      */
     public static void discoveryLocal(String location, int radius, int pageNumber, int pageSize, DiscoverComplete listener) {
-        RequestHandler.request("/tournament/discovery", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/tournament/discovery", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -283,7 +283,7 @@ public class TournamentHandler {
     }
 
     public static void discoveryOnline(int pageNumber, int pageSize, DiscoverComplete listener) {
-        RequestHandler.request("/tournament/discovery", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/tournament/discovery", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();

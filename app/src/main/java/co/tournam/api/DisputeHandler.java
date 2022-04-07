@@ -50,7 +50,7 @@ public class DisputeHandler {
     }
 
     public static void list(String tournamentId, ListComplete listener) {
-        RequestHandler.request("/dispute/list", Request.Method.GET, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/dispute/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
