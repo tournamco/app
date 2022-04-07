@@ -86,6 +86,7 @@ public class ImageLoader {
 
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
+            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "image/png");
             connection.setDoInput(true);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, connection.getOutputStream());
