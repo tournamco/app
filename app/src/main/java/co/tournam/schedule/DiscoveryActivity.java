@@ -95,14 +95,17 @@ public class DiscoveryActivity extends AppCompatActivity {
         slider.buttonLocal.setOnClickListener(v -> {
             slider.setButtons(true);
             this.isLocal = slider.getBool();
+            updateList();
         });
         slider.buttonOnline.setOnClickListener(v -> {
             slider.setButtons(false);
             this.isLocal = slider.getBool();
+            updateList();
 //            Log.i("isLocal: ", String.valueOf(this.isLocal));
         });
 
         this.isLocal = slider.getBool();
+
 
 
     }
@@ -148,7 +151,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     public List<TournamentModel> getOffline(Context context, String location) {
         List<TournamentModel> output = new ArrayList<TournamentModel>();
 
-        TournamentHandler.discoveryLocal(location, 5, 0, 10,
+        TournamentHandler.discoveryLocal(location, 1, 0, 10,
                 new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {

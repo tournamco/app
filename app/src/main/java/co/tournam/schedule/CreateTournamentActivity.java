@@ -132,6 +132,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         ((DefaultButtonFilled) createButtonLayout.getChildAt(0)).button.setOnClickListener(v -> {
             infoUpdate();
             createTournament();
+            startActivity(new Intent(CreateTournamentActivity.this, DiscoveryActivity.class));
         });
 
 
@@ -195,6 +196,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         this.isPublic = publicBox.isChecked();
 
         Log.w("Updated:", "True");
+        Log.w("Banner ID:", this.bannerID);
         Log.w("Name:", this.name);
         Log.w("Color:", String.valueOf(this.color));
         Log.w("Game:", this.game);
