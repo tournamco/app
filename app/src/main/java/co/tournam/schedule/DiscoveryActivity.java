@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     private LinearLayout tournamentListLayout;
     private boolean isLocal;
 
+    private TournamentSummaryListJoin Thelist;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,20 +124,28 @@ public class DiscoveryActivity extends AppCompatActivity {
 
         tournamentListLayout = (LinearLayout) findViewById(R.id.discovery_tourn_list);
         updateList();
-        TournamentSummaryListJoin list = new TournamentSummaryListJoin(context, tournamentList);
-        tournamentListLayout.addView(list);
+
+        Thelist = new TournamentSummaryListJoin(context, tournamentList);
+        tournamentListLayout.addView(Thelist);
 
     }
 
-    public List<TournamentModel> getOnline(Context context) {
-        List<TournamentModel> output = new ArrayList<TournamentModel>();
+    public void setTournaments(List<TournamentModel> tournaments) {
+        Log.wtf("Set Tournaments was called.", "Executed");
+        Thelist.addTournaments(tournaments);
+    }
 
+
+    public void getOnline(Context context) {
+
+        this.tournamentList.clear();
         TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {
 
                 Toast.makeText(context, "Successful retrieval", Toast.LENGTH_LONG).show();
-                output.addAll(tournaments);
+                Log.wtf("Gotten List length", String.valueOf(tournaments.size()));
+                setTournaments(tournaments);
             }
 
             @Override
@@ -144,19 +154,17 @@ public class DiscoveryActivity extends AppCompatActivity {
                 Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
             }
         });
-
-        return output;
     }
 
-    public List<TournamentModel> getOffline(Context context, String location) {
-        List<TournamentModel> output = new ArrayList<TournamentModel>();
+    public void getOffline(Context context, String location) {
 
+        this.tournamentList.clear();
         TournamentHandler.discoveryLocal(location, 1, 0, 10,
                 new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {
                 Toast.makeText(context, "Successful retrieval", Toast.LENGTH_LONG).show();
-                output.addAll(tournaments);
+                setTournaments(tournaments);
             }
 
             @Override
@@ -165,16 +173,14 @@ public class DiscoveryActivity extends AppCompatActivity {
                 Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
             }
         });
-
-        return output;
     }
 
     public void updateList() {
 
         if(this.isLocal) {
-            this.tournamentList = getOffline(context, "TODO LOCATION");
+            getOffline(context, "TODO LOCATION");
         } else {
-            this.tournamentList = getOnline(context);
+            getOnline(context);
         }
     }
 

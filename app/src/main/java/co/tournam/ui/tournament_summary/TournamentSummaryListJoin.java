@@ -8,8 +8,12 @@ import co.tournam.models.TournamentModel;
 
 public class TournamentSummaryListJoin extends AbstractTournamentSummary{
 
+    private Context context;
+
     public TournamentSummaryListJoin(Context context, List<TournamentModel> tournaments) {
         super(context, tournaments);
+
+        this.context = context;
 
         build(context);
     }
@@ -23,4 +27,15 @@ public class TournamentSummaryListJoin extends AbstractTournamentSummary{
             this.addView(item);
         }
     }
+
+
+    public void addTournaments(List<TournamentModel> Newtournaments) {
+        for(TournamentModel tournament : Newtournaments) {
+            TournamentSummaryListJoinItem item = new TournamentSummaryListJoinItem(this.context, tournament);
+
+            this.addView(item);
+        }
+
+    }
+
 }

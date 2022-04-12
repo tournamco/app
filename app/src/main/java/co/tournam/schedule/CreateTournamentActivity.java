@@ -190,7 +190,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         }
 
         //TODO Change once we understand what game length means
-        this.gameLength = 60;
+        this.gameLength = 20;
 
         this.isOnline = onlineBox.isChecked();
         this.isPublic = publicBox.isChecked();
