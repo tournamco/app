@@ -114,7 +114,7 @@ public class TournamentHandler {
 
             @Override
             public void success(JSONObject response) throws JSONException {
-                listener.success(response.getString("tournament"));
+                listener.success(response.getString("id"));
             }
 
             @Override
