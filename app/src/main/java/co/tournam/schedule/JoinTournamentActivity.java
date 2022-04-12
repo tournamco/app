@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -93,13 +94,32 @@ public class JoinTournamentActivity extends AppCompatActivity {
 
     private void addTeam(String teamId) {
         TeamList list = new TeamList(context, new ArrayList<>(), "Join", team -> {
+            TeamHandler.joinByTeamId(teamId, new TeamHandler.JoinCompleted() {
+                @Override
+                public void success(String teamId, boolean isLeader) {
+                    Toast.makeText(context, "Team Joined", Toast.LENGTH_LONG).show();
+                    finish();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("teamid", teamId);
+                    bundle.putString("tournamentid", tournament.getId());
+                    Intent intent = new Intent(context, OurTeamActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
 
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
         });
         teamsListLayout.addView(list);
 
         TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
             @Override
             public void success(TeamModel team) {
+                System.out.println("Team: " + team.getName() + " - " + team.isPublic() + " - " + team.getMembers().size() + " - " + tournament.getTeamSize() + " - " + (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()));
+
                 if(!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()) {
                     return;
                 }

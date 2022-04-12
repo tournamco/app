@@ -85,6 +85,12 @@ public class CreateTeamActivity extends AppCompatActivity {
             @Override
             public void success(String teamId) {
                 Toast.makeText(context, "Team Created", Toast.LENGTH_LONG).show();
+                finish();
+                Bundle bundle = new Bundle();
+                bundle.putString("teamid", teamId);
+                Intent intent = new Intent(context, OurTeamActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override

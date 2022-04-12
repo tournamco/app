@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 import co.tournam.models.TeamModel;
 
 public class TeamList extends LinearLayout {
@@ -21,10 +22,13 @@ public class TeamList extends LinearLayout {
         this.teams = teams;
         this.buttonText = buttonText;
         this.context = context;
+
+        build(context);
     }
 
     public void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
+        setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 
         buildContents(context);
     }
