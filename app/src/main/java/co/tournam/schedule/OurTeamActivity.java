@@ -129,7 +129,7 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setTeamMembers() {
         teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
-        teamMemberLayout.addView(new UserList());
+        //teamMemberLayout.addView(new UserList());
     }
 
     public void setSecondHeader() {

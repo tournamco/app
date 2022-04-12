@@ -12,10 +12,10 @@ import co.tournam.models.UserModel;
 public class UserList extends LinearLayout {
     private List<UserModel> users;
     private String buttonText;
-    private TeamList.TeamListActionListener listener;
+    private UserList.UserListActionListener listener;
     private Context context;
 
-    public UserList(Context context, List<UserModel> users, String buttonText, TeamList.TeamListActionListener listener) {
+    public UserList(Context context, List<UserModel> users, String buttonText, UserList.UserListActionListener listener) {
         super(context);
 
         this.listener = listener;
