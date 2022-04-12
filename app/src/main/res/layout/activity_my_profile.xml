@@ -10,33 +10,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
-            android:id="@+id/userIcon_Container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintVertical_bias="0.0"
-            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/userIcon_mypf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"/>
-
-            <ImageButton
-                android:id="@+id/change_userIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/change2"/>
-
-        </LinearLayout>
 
 
         <LinearLayout
@@ -50,8 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.022">
-
-
 
             <TextView
                 android:id="@+id/My_Profile_Text"
@@ -74,7 +46,6 @@
                 app:layout_constraintTop_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.0"/>
 
-
         </LinearLayout>
 
         <View
@@ -90,6 +61,38 @@
             app:layout_constraintStart_toStartOf="@+id/Main_Text_Layout_mypf"
             app:layout_constraintTop_toBottomOf="@+id/Main_Text_Layout_mypf"
             app:layout_constraintVertical_bias="0.02" />
+
+        <LinearLayout
+            android:id="@+id/userIcon_Container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/userIcon_mypf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/change_userIcon"
+                android:layout_marginTop="2dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/change2"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/username_Container"
@@ -108,12 +111,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_weight="1"
+                />
 
             <ImageButton
                 android:id="@+id/change_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/change2"/>
 
         </LinearLayout>
@@ -135,11 +141,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-/>
+                android:layout_weight="1"
+                 />
             <ImageButton
                 android:id="@+id/change_gamerTag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/change2"/>
 
         </LinearLayout>
@@ -161,12 +169,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_weight="1"
+                />
 
             <ImageButton
                 android:id="@+id/change_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/change2"/>
 
         </LinearLayout>

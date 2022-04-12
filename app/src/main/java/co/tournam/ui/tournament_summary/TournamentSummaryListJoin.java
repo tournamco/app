@@ -38,4 +38,9 @@ public class TournamentSummaryListJoin extends AbstractTournamentSummary{
 
     }
 
+    public void clearList() {
+        this.removeAllViews();
+    }
+
+
 }

@@ -117,6 +117,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void setTournaments(List<TournamentModel> tournaments) {
         Log.wtf("Set Tournaments was called.", "Executed");
+        Thelist.clearList();
         Thelist.addTournaments(tournaments);
     }
 

@@ -1,21 +1,18 @@
 package co.tournam.ui.tournament_summary;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.api.ImageLoader;
 import co.tournam.models.TournamentModel;
-import co.tournam.schedule.CreateTournamentActivity;
 import co.tournam.schedule.JoinTournamentActivity;
 import co.tournam.schedule.R;
 import co.tournam.schedule.TournamentPageActivity;
@@ -55,8 +52,8 @@ public class TournamentSummaryListJoinItem extends LinearLayout {
         setTournamentBanner(tournament);
         tournamentBanner.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("tournamentId", tournament.getId());
-            Intent intent = new Intent(getContext(), TournamentPageActivity.class);
+            bundle.putString("tournamentID", tournament.getId());
+            Intent intent = new Intent(getContext(), TournamentPageActivity.class).setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.putExtras(bundle);
             getContext().startActivity(intent);
         });
@@ -89,7 +86,7 @@ public class TournamentSummaryListJoinItem extends LinearLayout {
             bundle.putString("tournamentid", tournament.getId());
             Intent intent = new Intent(context, JoinTournamentActivity.class);
             intent.putExtras(bundle);
-            context.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            context.startActivity(intent.setFlags(FLAG_ACTIVITY_NEW_TASK));
         });
     }
 

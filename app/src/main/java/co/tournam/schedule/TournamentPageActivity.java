@@ -1,8 +1,8 @@
 package co.tournam.schedule;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
@@ -27,7 +26,9 @@ public class TournamentPageActivity extends AppCompatActivity {
 
     private TournamentModel tournamentModel;
     private Context context;
-    private ImageView tournamentBanner;
+
+
+    private Bitmap tournamentBanner;
     private TextView gameName;
     private LinearLayout firstHeader;
     private LinearLayout stages;
@@ -35,31 +36,36 @@ public class TournamentPageActivity extends AppCompatActivity {
     private LinearLayout teams;
     private LinearLayout matchesHeader;
     private LinearLayout matchView;
-    private List<MatchModel> matchModels;
+
 
     public void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
         String tournamentID = null;
         if(b != null) {
-            tournamentID = b.getString("key");
+            tournamentID = b.getString("tournamentID");
         }
+        super.onCreate(savedInstanceState);
+        context = this.getApplicationContext();
+        setContentView(R.layout.activity_tournament_page);
+
         TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
             @Override
             public void success(TournamentModel tournament) {
                 tournamentModel = tournament;
+                setup();
             }
 
             @Override
             public void failure(ApiErrors error, String message) {
-
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tournament);
-        context = this.getApplicationContext();
-        setContentView(R.layout.activity_tournament_page);
-        setBanner(context);
-        setGameName(context);
+    }
+
+    private void setup() {
+
+        setCustomHeader();
+        setGameName();
         firstHeader = findViewById(R.id.stageHeader);
         stages = findViewById(R.id.stages);
         firstHeader.addView(new DefaultTitle("Stages", context));
@@ -74,13 +80,15 @@ public class TournamentPageActivity extends AppCompatActivity {
         setMatches(context);
     }
 
-
-    private void setBanner(Context context) {
-        tournamentBanner = findViewById(R.id.tournamentBanner);
-        tournamentBanner.setImageBitmap(ImageLoader.loadImage(tournamentModel.getBanner(), context));
+    public void setCustomHeader() {
+//        customHeaderLayout = findViewById(R.id.tournament_page_header);
+////        new DownloadImageWorker(bitmap -> this.tournamentBanner = bitmap)
+////                .execute(tournamentModel.getBanner());
+//        HeaderTournamentPage customHeader = new HeaderTournamentPage(context, tournamentModel);
     }
 
-    private void setGameName(Context context) {
+
+    private void setGameName() {
         gameName = findViewById(R.id.text);
         gameName.setText(tournamentModel.getGame());
     }
@@ -102,16 +110,21 @@ public class TournamentPageActivity extends AppCompatActivity {
                 new TournamentHandler.ListMatchesComplete() {
                     @Override
                     public void success(List<MatchModel> matches) {
-                        matchModels = matches;
+                        setMatchModels(matches);
                     }
 
                     @Override
                     public void failure(ApiErrors error, String message) {
-
+                        System.err.println("API_ERROR: " + error.name() + " - " + message);
                     }
                 });
-        matchView.addView(new SummaryMatchList(context, matchModels));
+
     }
+
+    public void setMatchModels(List<MatchModel> matches) {
+        matchView.addView(new SummaryMatchList(context, matches));
+    }
+
 }
 
 
