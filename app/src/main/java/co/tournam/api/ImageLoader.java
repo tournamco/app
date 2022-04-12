@@ -26,7 +26,7 @@ public class ImageLoader {
     public static final String UPLOAD_PATH = RequestHandler.url + "/image/upload";
 
     public static Bitmap loadImage(String imageId, Context context) {
-        File cacheDir = context.getCacheDir();
+        /*File cacheDir = context.getCacheDir();
         Path imagesDir = Paths.get(cacheDir.getPath(), "./images");
 
         try {
@@ -39,15 +39,15 @@ public class ImageLoader {
 
         if(Files.exists(child)) {
             return BitmapFactory.decodeFile(child.toFile().getPath());
-        }
+        }*/
 
         Bitmap bitmap = downloadImage(imageId);
 
-        try {
+        /*try {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(child.toFile()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return bitmap;
     }
