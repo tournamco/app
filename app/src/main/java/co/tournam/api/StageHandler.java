@@ -22,7 +22,7 @@ public class StageHandler {
         List<String> winners = new ArrayList<>();
         JSONArray winnersData = json.getJSONArray("winners");
 
-        for(int i = 0; i < roundsData.length(); i++) {
+        for(int i = 0; i < winnersData.length(); i++) {
             winners.add(winnersData.getString(i));
         }
 
