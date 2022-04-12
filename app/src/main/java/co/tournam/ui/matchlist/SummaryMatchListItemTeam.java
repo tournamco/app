@@ -44,7 +44,12 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         nameText = (TextView) findViewById(R.id.name);
         scoreText = (TextView) findViewById(R.id.score);
 
-        setName(team.getName());
+        if (team == null) {
+            setName("Awaiting opponent");
+        } else {
+            setName(team.getName());
+        }
+
         setScore(score);
         setWinner(winner);
     }
