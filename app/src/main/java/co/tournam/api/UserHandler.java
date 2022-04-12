@@ -114,11 +114,11 @@ public class UserHandler {
             public void success(JSONObject response) throws JSONException {
                 JSONObject userData = response.getJSONObject("user");
                 UserModel user = new UserModel(
-                    response.getString("id"),
-                    response.getString("username"),
-                    response.getString("gamerTag"),
-                    response.getString("email"),
-                    response.getString("icon")
+                        userData.getString("id"),
+                        userData.getString("username"),
+                        userData.getString("gamertag"),
+                        userData.getString("email"),
+                        userData.getString("icon")
                 );
 
                 listener.success(user);
