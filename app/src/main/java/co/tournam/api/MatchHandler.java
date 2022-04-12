@@ -33,7 +33,12 @@ public class MatchHandler {
             String key = keysData.getString(i);
             keys.add(key);
             scores.put(key, scoresData.getInt(key));
-            teams.put(key, TeamHandler.fromJSON(teamsData.getJSONObject(key)));
+            if(teamsData.has(key)) {
+                teams.put(key, TeamHandler.fromJSON(teamsData.getJSONObject(key)));
+            }
+            else {
+                teams.put(key, null);
+            }
         }
 
         List<GameModel> games = new ArrayList<>();

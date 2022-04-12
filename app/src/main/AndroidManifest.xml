@@ -50,6 +50,9 @@
             android:name=".CreateTeamActivity"
             android:exported="true" />
         <activity
+            android:name=".OurTeamActivity"
+            android:exported="true" />
+        <activity
             android:name=".TournamentPageActivity"
             android:exported="true" />
         <activity
