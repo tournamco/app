@@ -3,7 +3,6 @@ package co.tournam.schedule;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,9 +12,10 @@ import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
+import co.tournam.models.stage.StageModel;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.matchlist.AlteredMatchList;
 import co.tournam.ui.roundbar.RoundBar;
-import co.tournam.ui.roundbar.RoundBarItem;
 
 
 public class StageActivity extends AppCompatActivity {
@@ -24,10 +24,11 @@ public class StageActivity extends AppCompatActivity {
     private String tournamentID;
     private int stageIndex;
 
-    private TextView mainHeader;
-    private TextView subHeader;
+    private LinearLayout mainHeader;
     private LinearLayout roundBarLayout;
     private LinearLayout alteredMatchListLayout;
+    private StageModel stage;
+    private String tournamentName;
 
     private int currentRound;
 
@@ -43,25 +44,11 @@ public class StageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stage_view);
         this.context = this.getApplicationContext();
 
-        setMainHeader();
-        setSubHeader();
-        setRoundBarLayout();
-        setAlteredMatchListLayout();
 
-    }
-
-    public void setMainHeader() {
-        mainHeader = (TextView) findViewById(R.id.Stage_Name_Text);
-
-    }
-
-    public void setSubHeader() {
-        mainHeader = (TextView) findViewById(R.id.Tournament_Name_Text);
-
-        TournamentHandler.info(this.tournamentID, new TournamentHandler.InfoComplete() {
+        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
             @Override
             public void success(TournamentModel tournament) {
-                mainHeader.setText(tournament.getName());
+                setMainStage(tournament.getStages().get(stageIndex), tournament.getName());
             }
 
             @Override
@@ -69,24 +56,50 @@ public class StageActivity extends AppCompatActivity {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
+    }
+
+    public void setMainStage(StageModel stage, String tournamentName) {
+        this.stage = stage;
+        this.tournamentName = tournamentName;
+        setMainHeader();
+        setRoundBarLayout();
+        setAlteredMatchListLayout();
+    }
+
+
+    public void setMainHeader() {
+        mainHeader = findViewById(R.id.Main_Header_Layout_stageview);
+        SmallHeader header = new SmallHeader(context, this.stage.getName(),
+                this.tournamentName, () -> {
+            finish();
+        });
+        mainHeader.addView(header);
 
 
     }
 
     public void setRoundBarLayout() {
         roundBarLayout = (LinearLayout) findViewById(R.id.roundbar_layout_stageview);
+        RoundBar bar = new RoundBar(context, this.stage.getRounds(), round -> {
+            this.currentRound = stage.getRounds().indexOf(round);
+            refreshMatches();
+        });
 
-        TournamentHandler.info(this.tournamentID, new TournamentHandler.InfoComplete() {
+        roundBarLayout.addView(bar);
+
+
+    }
+
+    public void setAlteredMatchListLayout() {
+        alteredMatchListLayout = (LinearLayout) findViewById(R.id.altered_match_list_stageview);
+        refreshMatches();
+    }
+
+    public void refreshMatches() {
+        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound, new TournamentHandler.ListRoundMatchesComplete() {
             @Override
-            public void success(TournamentModel tournament) {
-                RoundBar bar = new RoundBar(context, tournament.getStages().get(stageIndex).getRounds());
-                for (int k = 0; k < bar.getChildCount(); k++) {
-                    int finalK = k;
-                    ((RoundBarItem) bar.getChildAt(k)).button.setOnClickListener(v -> {
-                        currentRound = finalK;
-                    });
-                }
-                roundBarLayout.addView(bar);
+            public void success(List<MatchModel> matches) {
+                addMatches(matches);
             }
 
             @Override
@@ -96,24 +109,10 @@ public class StageActivity extends AppCompatActivity {
         });
     }
 
-    public void setAlteredMatchListLayout() {
-        alteredMatchListLayout = (LinearLayout) findViewById(R.id.altered_match_list_stageview);
-
-        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound, new TournamentHandler.ListRoundMatchesComplete() {
-            @Override
-            public void success(List<MatchModel> matches) {
-                AlteredMatchList matchList = new AlteredMatchList(context, matches);
-                alteredMatchListLayout.addView(matchList);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
-
-
-
+    public void addMatches(List<MatchModel> matches) {
+        alteredMatchListLayout.removeAllViews();
+        AlteredMatchList matchList = new AlteredMatchList(context, matches);
+        alteredMatchListLayout.addView(matchList);
     }
 
 }

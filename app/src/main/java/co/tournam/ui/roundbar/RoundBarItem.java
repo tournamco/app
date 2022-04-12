@@ -12,11 +12,13 @@ public class RoundBarItem extends LinearLayout {
 
     private RoundModel round;
     public Button button;
+    private RoundBar.RoundbarActionListener listener;
 
-    public RoundBarItem(Context context, RoundModel round) {
+    public RoundBarItem(Context context, RoundModel round, RoundBar.RoundbarActionListener listener) {
         super(context);
 
         this.round = round;
+        this.listener = listener;
         build(context);
     }
 
@@ -33,5 +35,8 @@ public class RoundBarItem extends LinearLayout {
 
         button = findViewById(R.id.roundButton);
         button.setText(round.getName());
+        button.setOnClickListener(v -> {
+            listener.onRoundSelected(round);
+        });
     }
 }

@@ -21,8 +21,8 @@ public class AlteredMatchListHeader extends LinearLayout {
         build(context);
     }
 
-
     public void build(Context context) {
+        setOrientation(HORIZONTAL);
         buildContents(context);
     }
 

@@ -2,7 +2,6 @@ package co.tournam.ui.matchlist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,8 +19,6 @@ public class AlteredMatchListItem extends LinearLayout {
     private List<SummaryMatchListItemTeam> teamItems;
     private MatchModel match;
     private TextView timeText;
-
-    private View colorView;
 
     public AlteredMatchListItem(Context context, MatchModel match) {
         super(context);
@@ -42,8 +39,6 @@ public class AlteredMatchListItem extends LinearLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.match_list_item_altered, this, true);
 
-        colorView = (View)findViewById(R.id.color_altered);
-        setColor(match.getTournament().getColor());
 
         timeText = (TextView)findViewById(R.id.time_altered);
         setTime(match.getStartDate());
@@ -62,10 +57,6 @@ public class AlteredMatchListItem extends LinearLayout {
     private void setTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
         timeText.setText(time.format(formatter));
-    }
-
-    public void setColor(int color) {
-        colorView.setBackgroundColor(color);
     }
 
     public List<SummaryMatchListItemTeam> getTeamItems() {

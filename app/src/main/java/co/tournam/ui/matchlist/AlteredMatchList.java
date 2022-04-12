@@ -1,6 +1,7 @@
 package co.tournam.ui.matchlist;
 
 import android.content.Context;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class AlteredMatchList extends AbstractMatchList {
     }
 
     private void build(Context context) {
+        setOrientation(VERTICAL);
+        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         buildContents(context);
     }
 

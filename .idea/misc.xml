@@ -183,7 +183,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list_header_altered.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list_item.xml" value="0.2418478260869565" />
-        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list_item_altered.xml" value="0.35052083333333334" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list_item_altered.xml" value="0.1" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/match_list_item_team.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/round_header_item.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/round_header_item_selected.xml" value="0.35833333333333334" />
@@ -212,6 +212,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/sample_ui_slider_schedule.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/schedule_header.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/score_cells.xml" value="0.35833333333333334" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/small_header.xml" value="0.1" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/stagelist_row_base.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/table.xml" value="0.37395833333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/table_row.xml" value="0.37395833333333334" />
