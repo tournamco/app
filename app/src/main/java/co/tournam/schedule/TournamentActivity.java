@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
@@ -19,6 +20,8 @@ import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.filterdropdown.FilterDropdown;
+import co.tournam.ui.header.headerDiscovery;
+import co.tournam.ui.header.headerTournament;
 import co.tournam.ui.tournament_summary.TournamentSummaryList;
 
 public class TournamentActivity extends AppCompatActivity {
@@ -28,6 +31,7 @@ public class TournamentActivity extends AppCompatActivity {
     private Slider slider;
     private DefaultButtonFilled button;
     private LinearLayout tournamentsLayout;
+    private TournamentSummaryList tournamentsList;
     private final int pageSize = 10;
     private int pageIndex = 0;
 
@@ -36,15 +40,23 @@ public class TournamentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tournament);
         context = this.getApplicationContext();
 
-
+        setMainTournamentHeaderLayout();
+        buildTournamentSummaryList(context);
+        listMoreTournaments();
         setNavigationBar();
+    }
+
+    public void setMainTournamentHeaderLayout() {
+        LinearLayout headerContainer = (LinearLayout) findViewById(R.id.tournament_main_header);
+        headerTournament header = new headerTournament(context, "Tournament");
+        headerContainer.addView(header);
     }
 
     private void listMoreTournaments() {
         TeamHandler.listTournaments(pageIndex, pageSize, new TeamHandler.ListTournamentsComplete() {
             @Override
-            public void success(List<TournamentModel> matches) {
-                TournamentActivity.this.buildTournamentSummaryList(matches, context);
+            public void success(List<TournamentModel> tournaments) {
+                TournamentActivity.this.addTournaments(tournaments);
             }
 
             @Override
@@ -54,16 +66,19 @@ public class TournamentActivity extends AppCompatActivity {
         });
     }
 
-    private void buildTournamentSummaryList(List<TournamentModel> tournaments, Context context) {
-        TournamentSummaryList list = new TournamentSummaryList(context, tournaments);
-        tournamentsLayout = (LinearLayout) findViewById(R.id.tournamentsListing);
-        tournamentsLayout.addView(list);
+    private void addTournaments(List<TournamentModel> tournaments) {
+        tournamentsList.addTournaments(tournaments);
+    }
+
+    private void buildTournamentSummaryList(Context context) {
+        tournamentsList = new TournamentSummaryList(context, new ArrayList<>());
+        tournamentsLayout = (LinearLayout) findViewById(R.id.tournament_list);
+        tournamentsLayout.addView(tournamentsList);
     }
 
     public void setNavigationBar() {
-
-        BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
-        bottomNav.setSelectedItemId(R.id.navigation_discovery);
+        BottomNavigationView bottomNav = findViewById(R.id.tournament_bottomNav_view);
+        bottomNav.setSelectedItemId(R.id.navigation_tournament);
         bottomNav.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
