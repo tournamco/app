@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import co.tournam.models.MatchModel;
@@ -342,7 +341,7 @@ public class TeamHandler {
 
             @Override
             public void success(JSONObject response) throws JSONException {
-                JSONArray teamsData = response.getJSONArray("tournaments");
+                JSONArray teamsData = response.getJSONArray("teams");
                 List<TeamModel> teams = new ArrayList<>();
 
                 for(int i = 0; i < teamsData.length(); i++) {

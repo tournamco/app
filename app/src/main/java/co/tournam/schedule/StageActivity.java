@@ -31,17 +31,12 @@ public class StageActivity extends AppCompatActivity {
 
     private int currentRound;
 
-    public StageActivity(String tournamentID, int stageIndex) {
-        this.tournamentID = tournamentID;
-        this.stageIndex = stageIndex;
-    }
-
     protected void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
 
         if(b != null) {
-            tournamentID = b.getString("key");
-            stageIndex = b.getInt("keyTwo");
+            tournamentID = b.getString("tournamentID");
+            stageIndex = b.getInt("stageIndex");
         }
 
         super.onCreate(savedInstanceState);

@@ -1,10 +1,11 @@
 package co.tournam.ui.stagelist;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -12,7 +13,6 @@ import java.util.List;
 
 import co.tournam.models.TournamentModel;
 import co.tournam.models.stage.StageModel;
-import co.tournam.schedule.DiscoveryActivity;
 import co.tournam.schedule.R;
 import co.tournam.schedule.StageActivity;
 
@@ -51,17 +51,15 @@ public class StageListItem extends LinearLayout {
 
         button = findViewById(R.id.stagelist_button);
         button.setText(stage.getName());
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("key", tournamentID);
-                bundle.putInt("keyTwo", tournamentIndex);
-                Intent intent = new Intent(context, StageActivity.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putString("tournamentID", tournamentID);
+            bundle.putInt("stageIndex", tournamentIndex);
+            Intent intent = new Intent(context, StageActivity.class).setFlags(FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+
         });
     }
 }

@@ -106,7 +106,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 @Override
                 public void success(List<TournamentModel> tournaments) {
                     for (TournamentModel tournament : tournaments) {
-                        TournamentHandler.listMatches(tournament.getId(), new TournamentHandler.ListMatchesComplete() {
+                        TournamentHandler.listMatches(tournament.getId(), true, new TournamentHandler.ListMatchesComplete() {
                             @Override
                             public void success(List<MatchModel> matches) {
                                 allMatchList.addAll(matches);

@@ -175,12 +175,13 @@ public class TournamentHandler {
         void success();
     }
 
-    public static void listMatches(String tournamentId, ListMatchesComplete listener) {
+    public static void listMatches(String tournamentId, Boolean inFuture, ListMatchesComplete listener) {
         RequestHandler.request("/tournament/match/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
                 json.put("tournament", tournamentId);
+                json.put("future", inFuture);
 
                 return json;
             }
