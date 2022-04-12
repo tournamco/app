@@ -101,7 +101,6 @@ public class JoinTournamentActivity extends AppCompatActivity {
                     finish();
                     Bundle bundle = new Bundle();
                     bundle.putString("teamid", teamId);
-                    bundle.putString("tournamentid", tournament.getId());
                     Intent intent = new Intent(context, OurTeamActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);

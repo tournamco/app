@@ -47,14 +47,6 @@ public class UserListRow extends LinearLayout {
         inflater.inflate(R.layout.row_user, this, true);
 
         userIcon = (ImageView) findViewById(R.id.imaget);
-        userIcon.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("teamid", user.getId());
-            Intent intent = new Intent(context, OurTeamActivity.class);
-            intent.putExtras(bundle);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        });
         userName = (TextView) findViewById(R.id.namet);
         actionButton = (Button) findViewById(R.id.button2);
         if(buttonText != null) {

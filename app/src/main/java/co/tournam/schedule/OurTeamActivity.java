@@ -3,17 +3,23 @@ package co.tournam.schedule;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 import co.tournam.api.ApiErrors;
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
+import co.tournam.api.UserHandler;
 import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
+import co.tournam.models.UserModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
@@ -27,18 +33,11 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 public class OurTeamActivity extends AppCompatActivity {
 
     Context context;
-    private LinearLayout manageTeamButton;
-    private LinearLayout tournamentBannerLayout;
-    private LinearLayout teamIconLayout;
-    private LinearLayout teamNameLayout;
-    private LinearLayout firstHeaderLayout;
-    private LinearLayout teamMemberLayout;
-    private LinearLayout secondHeaderLayout;
-    private LinearLayout matchList;
     private String teamID;
     private String tournamentID;
     private TournamentModel tournament;
     private TeamModel team;
+    private UserModel me;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +48,19 @@ public class OurTeamActivity extends AppCompatActivity {
 
         if(b != null) {
             teamID = b.getString("teamid");
-            tournamentID = b.getString("tournamentid");
         }
 
-        loadTournament();
+        System.out.println("teamID: " + teamID);
+
+        loadTeam();
     }
 
-    public void loadTournament() {
-        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
+    public void loadTeam() {
+        TeamHandler.info(teamID, new TeamHandler.InfoComplete() {
             @Override
-            public void success(TournamentModel tournament) {
-                OurTeamActivity.this.tournament = tournament;
-                loadTeam();
+            public void success(TeamModel team) {
+                OurTeamActivity.this.team = team;
+                loadTournament();
             }
 
             @Override
@@ -70,11 +70,26 @@ public class OurTeamActivity extends AppCompatActivity {
         });
     }
 
-    public void loadTeam() {
-        TeamHandler.info(teamID, new TeamHandler.InfoComplete() {
+    public void loadTournament() {
+        TournamentHandler.info(team.getTournamentId(), new TournamentHandler.InfoComplete() {
             @Override
-            public void success(TeamModel team) {
-                OurTeamActivity.this.team = team;
+            public void success(TournamentModel tournament) {
+                OurTeamActivity.this.tournament = tournament;
+                loadMe();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    public void loadMe() {
+        UserHandler.me(new UserHandler.MeCompleted() {
+            @Override
+            public void success(UserModel me) {
+                OurTeamActivity.this.me = me;
                 build();
             }
 
@@ -86,96 +101,36 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     private void build() {
-        if(tournament.isPublic()) {
-            DefaultButton button = new DefaultButton(context, "Create");
+        LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
+
+        if(team.getLeader() != null && me.getId().equals(team.getLeader().getId())) {
+            DefaultButton button = new DefaultButton(context, "Manage");
             button.button.setOnClickListener(v -> {
                 Bundle b = new Bundle();
-                b.putString("tournamentid", tournament.getId());
-                Intent intent = new Intent(context, CreateTeamActivity.class);
+                b.putString("teamid", team.getID());
+                Intent intent = new Intent(context, ManageTeamActivity.class);
                 intent.putExtras(b);
                 startActivity(intent);
             });
-            //headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish(), button));
+            headerContainer.addView(new SmallHeader(context, team.getName(), () -> finish(), button));
         }
         else {
-            //headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish()));
+            headerContainer.addView(new SmallHeader(context, team.getName(), () -> finish()));
         }
 
-        /*setManageTeamButton();
-        setTournamentBanner();
-        setTeamIcon();
-        setTeamName();
-        setFirstHeader();
-        setTeamMembers();
-        setSecondHeader();
-        setMatchList();*/
-    }
-
-    public void setManageTeamButton() {
-        manageTeamButton = (LinearLayout) findViewById(R.id.manageButton);
-        DefaultButton theManageButton = new DefaultButton(context, "Manage");
-        manageTeamButton.addView(theManageButton);
-
-        theManageButton.button.setOnClickListener(v -> startActivity(new Intent(OurTeamActivity.this, ManageTeamActivity.class)));
-    }
-
-    public void setTournamentBanner() {
-        tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
+        LinearLayout tournamentBannerLayout = (LinearLayout) findViewById(R.id.banner);
         tournamentBannerLayout.addView( new TournamentSummaryListItem(context, tournament));
-    }
 
-    public void setTeamIcon() {
-        teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
-        teamIconLayout.addView( new ImageListItem(
-                context, ImageLoader.loadImage(team.getIcon(), context)
-        ));
-    }
+        ImageView teamIcon = (ImageView) findViewById(R.id.team_icon);
+        new DownloadImageWorker(image -> teamIcon.setImageBitmap(image)).execute(team.getIcon());
 
-    public void setTeamName() {
-        teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
-        teamNameLayout.addView( new TextEntry(
-                context, team.getName(), false
-        ));
-    }
+        TextView teamName = (TextView) findViewById(R.id.team_name);
+        teamName.setText(team.getName());
 
-    public void setFirstHeader() {
-        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
-        firstHeaderLayout.addView(new DefaultTitle("Members", context));
-    }
+        LinearLayout membersHeaderLayout = (LinearLayout) findViewById(R.id.members_header);
+        membersHeaderLayout.addView(new DefaultTitle("Members", context));
 
-    public void setTeamMembers() {
-        teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
+        LinearLayout teamMemberLayout = (LinearLayout) findViewById(R.id.user_list);
         teamMemberLayout.addView(new UserList(context, team.getMembers(), null, null));
-    }
-
-    public void setSecondHeader() {
-
-        secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-        secondHeaderLayout.addView(new DefaultTitle("Matches", context));
-    }
-
-    public void setMatchList() {
-
-        TeamHandler.listMatches(0, 10, new TeamHandler.ListMatchesComplete() {
-            @Override
-            public void success(List<MatchModel> matches) {
-                OurTeamActivity.this.buildMatchSummaryList(matches, context);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
-
-
-    }
-
-    public void buildMatchSummaryList(List<MatchModel> matches, Context context) {
-        matchList = (LinearLayout) findViewById(R.id.matchList);
-        matchList.addView(new SummaryMatchList(
-                context,
-                matches
-        ));
     }
 }

@@ -8,10 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,14 +24,21 @@ import androidx.appcompat.content.res.AppCompatResources;
 import java.io.IOException;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
+import co.tournam.api.UploadImageWorker;
+import co.tournam.api.UserHandler;
 import co.tournam.models.members.Members;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
+import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonIMG;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
+import co.tournam.ui.list.UserList;
+import co.tournam.ui.stageoptions.StageOptionBody;
 import co.tournam.ui.textentry.TextEntry;
 import co.tournam.ui.title.DefaultTitle;
 import co.tournam.ui.title.SubtextTitle;
@@ -37,39 +47,21 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 public class ManageTeamActivity extends AppCompatActivity {
 
     Context context;
-    private LinearLayout tournamentLogoLayout;
-    private LinearLayout teamIconLayout;
-    private LinearLayout teamNameLayout;
-    private LinearLayout firstHeaderLayout;
     private LinearLayout buttonsLayout;
-    private LinearLayout secondHeaderLayout;
     private LinearLayout membersLayout;
-    private TeamModel yourTeam;
-    private TournamentModel tournModel;
-    private ImageButton button;
+    private TeamModel team;
+    private TournamentModel tournament;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
-    private Bitmap bannerImage;
-    private String bannerID;
+    private Bitmap iconImage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
-        String teamCode = null;
+        String teamId = null;
 
         if (b != null) {
-            teamCode = b.getString("key");
+            teamId = b.getString("teamid");
         }
-        TeamHandler.info(teamCode, new TeamHandler.InfoComplete() {
-            @Override
-            public void success(TeamModel team) {
-                yourTeam = team;
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-
-            }
-        });
 
         // Open Gallery
         someActivityResultLauncher = registerForActivityResult(
@@ -79,8 +71,8 @@ public class ManageTeamActivity extends AppCompatActivity {
                         // There are no request codes
                         Intent data = result.getData();
                         try {
-                            bannerImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                            new BackgroundWorker().execute(bannerImage);
+                            iconImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                            new UploadImageWorker(id -> changeIcon(id)).execute(iconImage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -88,111 +80,133 @@ public class ManageTeamActivity extends AppCompatActivity {
                     }
                 });
 
-        setButtonOne();
-        setTextSaveButton();
+        loadTeam(teamId);
+    }
 
-        String tournID = yourTeam.getTournamentId();
-        TournamentHandler.info(tournID, new TournamentHandler.InfoComplete() {
+    private void loadTeam(String teamId) {
+        TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
             @Override
-            public void success(TournamentModel tournament) {
-                tournModel = tournament;
+            public void success(TeamModel team) {
+                ManageTeamActivity.this.team = team;
+                loadTournament(team.getTournamentId());
             }
 
             @Override
             public void failure(ApiErrors error, String message) {
-
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
+    }
+
+    private void loadTournament(String tournamentId) {
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                ManageTeamActivity.this.tournament = tournament;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    private void build() {
         setContentView(R.layout.activity_manage_team);
         context = this.getApplicationContext();
-        setTournamentLogo();
-        setTeamIcon();
+
+        LinearLayout headerLayout = findViewById(R.id.header);
+        headerLayout.addView(new SmallHeader(context, "Manage Team", () -> finish()));
+
+        setIconLayout();
         setTeamName();
-        setFirstHeader();
+
+        LinearLayout inviteTitle = (LinearLayout) findViewById(R.id.invite_title);
+        inviteTitle.addView(new DefaultTitle("Invite", context));
+
         setButtons();
-        setSecondHeader();
+
+        LinearLayout membersTitle = (LinearLayout) findViewById(R.id.members_title);
+        membersTitle.addView(new SubtextTitle("Members", team.getMembers().size() + "/" + tournament.getTeamSize(), context));
+
         setMembers();
+
+        Button abandonButton = (Button) findViewById(R.id.abandon_button);
+        abandonButton.setOnClickListener(view -> {
+            // TODO: Implement tournament abandon api call
+        });
     }
 
-    private void setTournamentLogo() {
-        tournamentLogoLayout = (LinearLayout) findViewById(R.id.tournamentLogo);
-        tournamentLogoLayout.addView(new TournamentSummaryListItem(
-                context,
-                tournModel));
+    public void setIconLayout() {
+        LinearLayout userIconLayout = (LinearLayout) findViewById(R.id.team_icon_image);
+
+        ImageListItem image = new ImageListItem(context, null);
+        userIconLayout.addView(image);
+
+        try{
+            new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(team.getIcon());
+        } catch (NullPointerException e) {
+            Log.w("User Icon is null", e);
+        }
+
+        ImageButton change = (ImageButton) findViewById(R.id.team_icon_button);
+        change.setOnClickListener(v -> {
+            openGallery();
+        });
     }
 
-    private void setTeamIcon() {
+    public void changeIcon(String iconId) {
+        TeamHandler.changeIcon(iconId, new TeamHandler.ChangeComplete() {
+            @Override
+            public void success() {
+                Toast.makeText(ManageTeamActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
+            }
 
-        teamIconLayout = (LinearLayout) findViewById(R.id.teamIcon);
-        teamIconLayout.addView(new ImageListItem(
-                context, ImageLoader.loadImage(yourTeam.getIcon(), context)
-        ));
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
     }
 
-    private void setTeamName() {
-        teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
-        teamNameLayout.addView(new TextEntry(
-                context, yourTeam.getName(), true
-        ));
-    }
+    public void setTeamName() {
+        LinearLayout nameLayout = (LinearLayout) findViewById(R.id.name_input);
+        StageOptionBody body = new StageOptionBody(context, "Name");
+        body.setEntryText(team.getName());
+        nameLayout.addView(body);
 
-    private void setFirstHeader() {
-        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
-        firstHeaderLayout.addView(new DefaultTitle("Invite", context));
+        ImageButton change = (ImageButton) findViewById(R.id.name_button);
+        change.setOnClickListener(v -> {
+            TeamHandler.changeName(((StageOptionBody) nameLayout.getChildAt(0)).getEntry(),
+                    new TeamHandler.ChangeComplete() {
+                        @Override
+                        public void success() {
+                            Toast.makeText(ManageTeamActivity.this, "Name changed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
+        });
     }
 
     private void setButtons() {
-        Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        Drawable phone_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        ;
-        Drawable link_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        ;
-        buttonsLayout = (LinearLayout) findViewById(R.id.Buttons);
-        buttonsLayout.addView(new DefaultButtonIMG(
-                context,
-                "Use QR",
-                qr_icon
-        ));
-        buttonsLayout.addView(new DefaultButtonIMG(
-                context,
-                "Use link",
-                phone_icon
-        ));
-        buttonsLayout.addView(new DefaultButtonIMG(
-                context,
-                "Use NFC",
-                link_icon
-        ));
-    }
-
-    private void setSecondHeader() {
-        secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-        secondHeaderLayout.addView(new SubtextTitle("Members",
-                yourTeam.getMembers().size() + "/" + tournModel.getTeamSize(), context));
+        buttonsLayout = (LinearLayout) findViewById(R.id.buttons);
+        DefaultButton qrButton = new DefaultButton(context,"Use QR");
+        DefaultButton nfcButton = new DefaultButton(context, "Use NFC");
+        buttonsLayout.addView(qrButton);
+        buttonsLayout.addView(nfcButton);
     }
 
     private void setMembers() {
         membersLayout = (LinearLayout) findViewById(R.id.members);
-        membersLayout.addView(new Members(
-                this.getApplicationContext(),
-                yourTeam, "Remove"));
-    }
-
-    private void setButtonOne() {
-        button = (ImageButton) findViewById(R.id.ChangeButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGallery();
-            }
-        });
-    }
-
-    private void setTextSaveButton() {
-        teamNameLayout = (LinearLayout) findViewById(R.id.teamName);
-        EditText text = (EditText) teamNameLayout.getChildAt(0);
-        String trueText = text.getText().toString();
-        yourTeam.setName(trueText);
+        membersLayout.addView(new UserList(context, team.getMembers(), "Remove", (user) -> {
+            // TODO: Remove user from team api
+        }));
     }
 
     public void openGallery() {
@@ -200,24 +214,6 @@ public class ManageTeamActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         someActivityResultLauncher.launch(intent);
-    }
-
-    private class BackgroundWorker
-            extends AsyncTask<Bitmap, Void, String> {
-
-        @Override
-        protected String doInBackground(Bitmap... params) {
-
-            Bitmap bm = params[0];
-            String result = "";
-            result = ImageLoader.uploadImage(bm);
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            ManageTeamActivity.this.bannerID = result;
-        }
     }
 }
 
