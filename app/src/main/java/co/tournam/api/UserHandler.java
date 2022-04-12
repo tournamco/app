@@ -1,7 +1,6 @@
 package co.tournam.api;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,7 +135,7 @@ public class UserHandler {
     }
 
     public static void changeUsername(String newUsername, ChangeComplete listener) {
-        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/user/change", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -159,7 +158,7 @@ public class UserHandler {
     }
 
     public static void changeEmail(String newEmail, ChangeComplete listener) {
-        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/user/change", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -182,7 +181,7 @@ public class UserHandler {
     }
 
     public static void changeGamertag(String newGamertag, ChangeComplete listener) {
-        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/user/change", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -205,7 +204,7 @@ public class UserHandler {
     }
 
     public static void changeIcon(String newIcon, ChangeComplete listener) {
-        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/user/change", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
@@ -228,7 +227,7 @@ public class UserHandler {
     }
 
     public static void changePassword(String oldPassword, String newPassword, ChangeComplete listener) {
-        RequestHandler.request("/team/change", Request.Method.POST, new RequestHandler.RequestSetup() {
+        RequestHandler.request("/user/changePassword", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();

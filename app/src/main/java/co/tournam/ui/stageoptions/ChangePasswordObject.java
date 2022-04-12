@@ -17,6 +17,7 @@ public class ChangePasswordObject extends LinearLayout {
     EditText newPass;
     EditText confirmNewPass;
     DefaultButtonFilled change;
+    public LinearLayout changePassLayout;
 
     public ChangePasswordObject(Context context) {
         super(context);
@@ -39,8 +40,11 @@ public class ChangePasswordObject extends LinearLayout {
         newPass = (EditText) findViewById(R.id.change_pass_new);
         confirmNewPass = (EditText) findViewById(R.id.change_pass_newconf);
 
+
+
         change = new DefaultButtonFilled(context, "Change");
-        this.addView(change);
+        changePassLayout = findViewById(R.id.change_pass_button);
+        changePassLayout.addView(change);
 
         change.button.setOnClickListener(v -> {
             String oldPassword = oldPass.getText().toString();
@@ -54,7 +58,6 @@ public class ChangePasswordObject extends LinearLayout {
             }
 
         });
-
     }
 
     public void changePassword(Context context, String oldPass, String newPass) {

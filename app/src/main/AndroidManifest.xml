@@ -40,6 +40,9 @@
         <activity
             android:name=".DisputesActivity"
             android:exported="true" />
+        <activity
+            android:name=".MyProfileActivity"
+            android:exported="true" />
 <!--        <activity-->
 <!--            android:name=".Login"-->
 <!--            android:exported="true">-->

@@ -2,6 +2,7 @@ package co.tournam.schedule;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
 import co.tournam.ui.header.header;
@@ -33,35 +33,33 @@ public class MyProfileActivity extends AppCompatActivity {
     private LinearLayout statisticsLayout;
 
     private Context context;
+    private UserModel user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_our_team);
+        setContentView(R.layout.activity_my_profile);
         this.context = this.getApplicationContext();
 
-        setUserIconLayout();
-        setUsernameLayout();
-        setGamerTagLayout();
-        setEmailLayout();
-        setFirstHeaderLayout();
-        setChangePasswordLayout();
-        setSecondHeaderLayout();
-        setStatisticsLayout();
 
+        getUserInfo();
     }
 
-    public void setUserIconLayout() {
-
-        userIconLayout = (LinearLayout) findViewById(R.id.userIcon_mypf);
+    public void getUserInfo() {
 
         UserHandler.me(new UserHandler.MeCompleted() {
             @Override
             public void success(UserModel me) {
-                ImageListItem image = new ImageListItem(context, null);
-                userIconLayout.addView(image);
-
-                new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(me.getIcon());
+                setUserInfo(me);
+                setUserIconLayout();
+                setUsernameLayout();
+                setGamerTagLayout();
+                setEmailLayout();
+                setFirstHeaderLayout();
+                setChangePasswordLayout();
+                setSecondHeaderLayout();
+                setStatisticsLayout();
             }
 
             @Override
@@ -69,6 +67,30 @@ public class MyProfileActivity extends AppCompatActivity {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
+    }
+
+    public void setUserInfo(UserModel me) {
+        this.user = me;
+        Log.w("Username", user.getUsername());
+        Log.w("UserID", user.getId());
+        Log.w("User Gamertag", user.getGamerTag());
+        Log.w("User Email", user.getEmail());
+    }
+
+    public void setUserIconLayout() {
+
+        userIconLayout = (LinearLayout) findViewById(R.id.userIcon_mypf);
+
+        ImageListItem image = new ImageListItem(context, null);
+        userIconLayout.addView(image);
+
+        try{
+            new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(user.getIcon());
+        } catch (NullPointerException e) {
+            Log.w("User Icon is null", e);
+        }
+
+
         ImageButton change = (ImageButton) findViewById(R.id.change_userIcon);
         change.setOnClickListener(v -> {
             //TODO open gallery to change icon
@@ -78,21 +100,9 @@ public class MyProfileActivity extends AppCompatActivity {
     public void setUsernameLayout() {
 
         usernameLayout = (LinearLayout) findViewById(R.id.username_mypf);
-
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                StageOptionBody body = new StageOptionBody(context, "Username");
-                body.setEntryText(me.getUsername());
-                usernameLayout.addView(body);
-
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        StageOptionBody body = new StageOptionBody(context, "Username");
+        body.setEntryText(user.getUsername());
+        usernameLayout.addView(body);
 
         ImageButton change = (ImageButton) findViewById(R.id.change_username);
         change.setOnClickListener(v -> {
@@ -114,21 +124,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setGamerTagLayout() {
         gamerTagLayout = (LinearLayout) findViewById(R.id.gamerTag_mypf);
-
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                StageOptionBody body = new StageOptionBody(context, "Gamertag");
-                body.setEntryText(me.getGamerTag());
-                usernameLayout.addView(body);
-
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        StageOptionBody body = new StageOptionBody(context, "Gamertag");
+        body.setEntryText(user.getGamerTag());
+        gamerTagLayout.addView(body);
 
         ImageButton change = (ImageButton) findViewById(R.id.change_gamerTag);
         change.setOnClickListener(v -> {
@@ -150,21 +148,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setEmailLayout() {
         emailLayout = (LinearLayout) findViewById(R.id.email_mypf);
-
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                StageOptionBody body = new StageOptionBody(context, "Email");
-                body.setEntryText(me.getEmail());
-                emailLayout.addView(body);
-
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        StageOptionBody body = new StageOptionBody(context, "Email");
+        body.setEntryText(user.getEmail());
+        emailLayout.addView(body);
 
         ImageButton change = (ImageButton) findViewById(R.id.change_email);
         change.setOnClickListener(v -> {
@@ -214,17 +200,7 @@ public class MyProfileActivity extends AppCompatActivity {
     public void setStatisticsLayout() {
 
         statisticsLayout = (LinearLayout) findViewById(R.id.statistics_table_mypf);
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                statisticsLayout.addView(setUpTable(context, me));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        statisticsLayout.addView(setUpTable(context, user));
 
     }
 

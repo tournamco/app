@@ -12,8 +12,7 @@ public class headerTournament extends LinearLayout {
 
     private TextView title;
     private String headerText;
-
-    private Button button;
+    public Button profileButton;
 
 
 
@@ -39,10 +38,11 @@ public class headerTournament extends LinearLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.tournament_header, this, true);
 
-        title = (TextView) findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.title_tournament_header);
         title.setText(headerText);
 
-        button = (Button) findViewById(R.id.button_profile);
+        profileButton = (Button) findViewById(R.id.button_profile_tournament);
+        profileButton.setText("Profile");
 
 
     }
