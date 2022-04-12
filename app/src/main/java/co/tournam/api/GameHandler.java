@@ -21,8 +21,19 @@ public class GameHandler {
         for (Iterator<String> it = scoresData.keys(); it.hasNext(); ) {
             String key = it.next();
 
-            scores.put(key, scoresData.getInt(key));
-            proofs.put(key, proofsData.getString(key));
+            if(!scoresData.isNull(key)) {
+                scores.put(key, scoresData.getInt(key));
+            }
+            else {
+                scores.put(key, 0);
+            }
+
+            if(!proofsData.isNull(key)) {
+                proofs.put(key, proofsData.getString(key));
+            }
+            else {
+                proofs.put(key, null);
+            }
         }
 
         return new GameModel(scores, proofs);
