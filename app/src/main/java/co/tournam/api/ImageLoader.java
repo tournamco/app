@@ -63,6 +63,7 @@ public class ImageLoader {
             java.net.URL url = new java.net.URL(DOWNLOAD_PATH);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
+            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setDoInput(true);
             String jsonInputString = "{\"id\":\""+imageId+"\"}";
