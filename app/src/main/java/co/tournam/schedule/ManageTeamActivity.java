@@ -28,10 +28,10 @@ import co.tournam.models.members.Members;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButtonIMG;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.textentry.TextEntry;
+import co.tournam.ui.title.DefaultTitle;
+import co.tournam.ui.title.SubtextTitle;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class ManageTeamActivity extends AppCompatActivity {
@@ -138,11 +138,7 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     private void setFirstHeader() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
-        firstHeaderLayout.addView(new header(
-                context,
-                null,
-                headerTitle.INVITE
-        ));
+        firstHeaderLayout.addView(new DefaultTitle("Invite", context));
     }
 
     private void setButtons() {
@@ -171,11 +167,8 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     private void setSecondHeader() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-        secondHeaderLayout.addView(new header(
-                context,
-                yourTeam,
-                headerTitle.MEMBERS
-        ));
+        secondHeaderLayout.addView(new SubtextTitle("Members",
+                yourTeam.getMembers().size() + "/" + tournModel.getTeamSize(), context));
     }
 
     private void setMembers() {

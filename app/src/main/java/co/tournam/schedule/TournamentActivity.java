@@ -18,7 +18,7 @@ import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.filterdropdown.FilterDropdown;
-import co.tournam.ui.header.headerTournament;
+import co.tournam.ui.header.TournamentHeader;
 import co.tournam.ui.tournament_summary.TournamentSummaryList;
 
 public class TournamentActivity extends AppCompatActivity {
@@ -45,9 +45,9 @@ public class TournamentActivity extends AppCompatActivity {
 
     public void setMainTournamentHeaderLayout() {
         LinearLayout headerContainer = (LinearLayout) findViewById(R.id.tournament_main_header);
-        headerTournament header = new headerTournament(context, "Tournament");
+        TournamentHeader header = new TournamentHeader(context);
         headerContainer.addView(header);
-        header.profileButton.setOnClickListener(v -> context.startActivity(new Intent(context,
+        header.getProfileButton().setOnClickListener(v -> context.startActivity(new Intent(context,
                 MyProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
 
     }

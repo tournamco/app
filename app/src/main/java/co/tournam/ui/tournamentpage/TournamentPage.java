@@ -6,28 +6,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Header;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.ImageLoader;
-import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
-import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.stage.StageModel;
 import co.tournam.schedule.R;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
-import co.tournam.ui.header.headerTournament;
-import co.tournam.ui.header.teamsInTournamentHeader;
 import co.tournam.ui.list.TeamList;
 import co.tournam.ui.matchlist.SummaryMatchList;
 import co.tournam.ui.stagelist.StageList;
-import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
+import co.tournam.ui.title.DefaultTitle;
+import co.tournam.ui.title.SubtextTitle;
 
 public class TournamentPage extends AbstractTournamentPage{
 
@@ -58,15 +51,15 @@ public class TournamentPage extends AbstractTournamentPage{
         setGameName(context);
         firstHeader = findViewById(R.id.stageHeader);
         stages = findViewById(R.id.stages);
-        firstHeader.addView(new header(context, null, headerTitle.STAGES));
+        firstHeader.addView(new DefaultTitle("Stages", context));
         setStages(context);
         secondHeader = findViewById(R.id.teamsHeader);
         teams = findViewById(R.id.teams);
-        secondHeader.addView(new teamsInTournamentHeader(context, tournament ));
+        secondHeader.addView(new SubtextTitle("Teams", 1 + "/" + 1, context));
         setTeams(context);
         matchesHeader = findViewById(R.id.matchesHeader);
         matchView = findViewById(R.id.matchView);
-        matchesHeader.addView(new header(context, null, headerTitle.MATCHES));
+        matchesHeader.addView(new DefaultTitle("Matches", context));
         setMatches(context);
     }
 

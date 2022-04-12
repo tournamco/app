@@ -22,13 +22,12 @@ import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.ChangePasswordObject;
 import co.tournam.ui.stageoptions.StageOptionBody;
 import co.tournam.ui.table.Table;
 import co.tournam.ui.table.TableRow;
+import co.tournam.ui.title.DefaultTitle;
 
 public class MyProfileActivity extends AppCompatActivity {
 
@@ -127,7 +126,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void changeIcon() {
-        Log.w("User Icon value:", );
+        //Log.w("User Icon value:");
 
         UserHandler.changeIcon(this.newUserIconID, new UserHandler.ChangeComplete() {
             @Override
@@ -224,11 +223,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setFirstHeaderLayout() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.first_header_mypf);
-        firstHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.CHANGE_PASSWORD
-        ));
+        firstHeaderLayout.addView(new DefaultTitle("Change Password", context));
     }
 
     public void setChangePasswordLayout() {
@@ -242,11 +237,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setSecondHeaderLayout() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.second_header_mypf);
-        secondHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.STATISTICS
-        ));
+        secondHeaderLayout.addView(new DefaultTitle("Statistics", context));
     }
 
     public void setStatisticsLayout() {

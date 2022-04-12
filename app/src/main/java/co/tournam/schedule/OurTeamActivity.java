@@ -15,12 +15,11 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.matchlist.SummaryMatchList;
 import co.tournam.ui.team_members.TeamMembers;
 import co.tournam.ui.textentry.TextEntry;
+import co.tournam.ui.title.DefaultTitle;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class OurTeamActivity extends AppCompatActivity {
@@ -128,11 +127,7 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setFirstHeader() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
-        firstHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.MEMBERS
-        ));
+        firstHeaderLayout.addView(new DefaultTitle("Members", context));
     }
 
     public void setTeamMembers() {
@@ -158,11 +153,7 @@ public class OurTeamActivity extends AppCompatActivity {
     public void setSecondHeader() {
 
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo);
-        secondHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.MATCHES
-        ));
+        secondHeaderLayout.addView(new DefaultTitle("Matches", context));
     }
 
     public void setMatchList() {

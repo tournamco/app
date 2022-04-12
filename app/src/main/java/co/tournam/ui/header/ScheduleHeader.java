@@ -7,21 +7,17 @@ import android.widget.TextView;
 
 import co.tournam.schedule.R;
 
-public class headerSchedule extends LinearLayout {
-
-    private String title;
+public class ScheduleHeader extends BigHeader {
     private TextView textview;
 
-    public headerSchedule(Context context, String title) {
-        super(context);
-
-        this.title = title;
+    public ScheduleHeader(Context context) {
+        super(context, "Schedule");
 
         build(context);
     }
 
     private void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+        setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
 
@@ -31,14 +27,13 @@ public class headerSchedule extends LinearLayout {
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.schedule_header, this, true);
+        inflater.inflate(R.layout.big_schedule_header, this, true);
 
         this.textview = (TextView) findViewById(R.id.title_schedule);
-        setTitle(this.title);
+        setTitle(getName());
     }
 
     public void setTitle(String title) {
         this.textview.setText(title);
     }
-
 }

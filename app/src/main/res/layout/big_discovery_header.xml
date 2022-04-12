@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Discovery"
+        android:textAllCaps="false"
+        android:textColor="#A23BC6"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/button_create"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:background="@drawable/gradient_spinner"
+        android:padding="0dp"
+        android:text="Create"
+        android:textAllCaps="false"
+        android:textColor="#A23BC6"
+        android:textSize="16sp" />
+</merge>

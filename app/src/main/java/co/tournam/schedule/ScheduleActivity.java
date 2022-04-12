@@ -19,7 +19,7 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.SliderSchedule;
 import co.tournam.ui.filterdropdown.FilterDropdown;
-import co.tournam.ui.header.headerSchedule;
+import co.tournam.ui.header.ScheduleHeader;
 import co.tournam.ui.matchlist.SummaryMatchList;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -49,7 +49,7 @@ public class ScheduleActivity extends AppCompatActivity {
     public void setMainHeaderLayout() {
 
         mainHeaderLayout = (LinearLayout) findViewById(R.id.schedule_main_header);
-        headerSchedule header = new headerSchedule(context, "Schedule");
+        ScheduleHeader header = new ScheduleHeader(context);
         mainHeaderLayout.addView(header);
     }
 

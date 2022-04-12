@@ -24,13 +24,12 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.imagelist.ImageListHorizontal;
 import co.tournam.ui.table.Table;
 import co.tournam.ui.table.TableRow;
 import co.tournam.ui.team_members.TeamMembers;
 import co.tournam.ui.teamscore.TeamScore;
+import co.tournam.ui.title.DefaultTitle;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class MatchDetailActivity extends AppCompatActivity {
@@ -82,11 +81,11 @@ public class MatchDetailActivity extends AppCompatActivity {
 
         setTournamentLogoLayout();
         setTeamScoreLayout();
-        setFirstHeaderLayout();
+        setFirstTitleLayout();
         setTableLayout();
-        setSecondHeaderLayout();
+        setSecondTitleLayout();
         setMembersLayout();
-        setThirdHeaderLayout();
+        setThirdTitleLayout();
         setProofOfScoreLayout();
     }
 
@@ -124,13 +123,9 @@ public class MatchDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void setFirstHeaderLayout() {
+    public void setFirstTitleLayout() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.first_header_information);
-        firstHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.INFORMATION
-        ));
+        firstHeaderLayout.addView(new DefaultTitle("Information", context));
     }
 
     public void setTableLayout() {
@@ -147,13 +142,9 @@ public class MatchDetailActivity extends AppCompatActivity {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
-
-
-
     }
 
     public Table setUpTable(Context context, MatchModel match) {
-
         Table matchInfo = new Table(this.context, 4);
         setTableRow(matchInfo, 0, "Name", match.getName());
         setTableRow(matchInfo, 1, "Start Date", match.getStartDate().toString());
@@ -164,18 +155,13 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     public void setTableRow(Table table, int index, String title, String data) {
-
         ((TableRow) table.getChildAt(index)).setTitleText(title);
         ((TableRow) table.getChildAt(index)).setDataText(data);
     }
 
-    public void setSecondHeaderLayout() {
+    public void setSecondTitleLayout() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.second_header_teams);
-        secondHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.TEAMS
-        ));
+        secondHeaderLayout.addView(new DefaultTitle("Teams", context));
     }
 
     public void setMembersLayout() {
@@ -197,13 +183,9 @@ public class MatchDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void setThirdHeaderLayout() {
+    public void setThirdTitleLayout() {
         thirdHeaderLayout = (LinearLayout) findViewById(R.id.third_header_proof_of_score);
-        thirdHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.PROOF_OF_SCORE
-        ));
+        thirdHeaderLayout.addView(new DefaultTitle("Proof of score", context));
     }
 
     public void setProofOfScoreLayout() {

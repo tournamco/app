@@ -8,25 +8,19 @@ import android.widget.TextView;
 
 import co.tournam.schedule.R;
 
-public class headerDiscovery extends LinearLayout {
+public class TournamentHeader extends BigHeader {
 
     private TextView title;
-    private String headerText;
-    public Button button;
+    private Button profileButton;
 
-
-
-    public headerDiscovery(Context context, String headerText) {
-        super(context);
-
-        this.headerText = headerText;
-
+    public TournamentHeader(Context context) {
+        super(context, "Tournaments");
 
         build(context);
     }
 
     private void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+        setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
 
@@ -36,13 +30,15 @@ public class headerDiscovery extends LinearLayout {
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.sample_big_header, this, true);
+        inflater.inflate(R.layout.tournament_header, this, true);
 
-        title = (TextView) findViewById(R.id.title);
-        title.setText(headerText);
+        title = (TextView) findViewById(R.id.title_tournament_header);
+        title.setText(getName());
 
-        button = (Button) findViewById(R.id.button_create);
+        profileButton = (Button) findViewById(R.id.button_profile_tournament);
+    }
 
-
+    public Button getProfileButton() {
+        return profileButton;
     }
 }

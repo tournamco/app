@@ -2,30 +2,25 @@ package co.tournam.ui.header;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import co.tournam.models.TeamModel;
 import co.tournam.schedule.R;
 
-
-public class headerDefault extends LinearLayout{
-
+public class DiscoveryHeader extends BigHeader {
     private TextView title;
-    private String headerText;
-    private TextView useless;
+    public Button button;
 
-
-    public headerDefault(Context context, String headerText) {
-        super(context);
-
-        this.headerText = headerText;
+    public DiscoveryHeader(Context context) {
+        super(context, "Discovery");
 
         build(context);
     }
 
     private void build(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
+        setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
 
@@ -35,12 +30,15 @@ public class headerDefault extends LinearLayout{
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.header, this, true);
+        inflater.inflate(R.layout.sample_big_header, this, true);
 
-        title = (TextView) findViewById(R.id.teamsOrMembers);
-        title.setText(headerText);
+        title = (TextView) findViewById(R.id.title);
+        title.setText(getName());
 
-        useless = findViewById(R.id.memberNumber);
-        useless.setText("");
+        button = (Button) findViewById(R.id.button_create);
+    }
+
+    public View getButton() {
+        return button;
     }
 }

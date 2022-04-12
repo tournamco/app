@@ -21,7 +21,7 @@ import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
 import co.tournam.ui.button.DefaultButtonIMG;
-import co.tournam.ui.header.headerDiscovery;
+import co.tournam.ui.header.DiscoveryHeader;
 import co.tournam.ui.textentry.Text;
 import co.tournam.ui.tournament_summary.TournamentSummaryListJoin;
 
@@ -61,36 +61,28 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void setMainDiscoveryHeaderLayout() {
-
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
-        headerDiscovery header = new headerDiscovery(context, "Discovery");
-        header.button.setOnClickListener(v -> context.startActivity(new Intent(context,
+        DiscoveryHeader header = new DiscoveryHeader(context);
+        header.getButton().setOnClickListener(v -> context.startActivity(new Intent(context,
                 CreateTournamentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         mainDiscoveryHeaderLayout.addView(header);
-
     }
 
     public void setJoinWithQRLayout() {
-
         joinWithQRLayout = (LinearLayout) findViewById(R.id.discovery_join_qr);
         DefaultButtonIMG qrJoin = new DefaultButtonIMG(context,
                 "              Join using QR code              ", qr);
         joinWithQRLayout.addView(qrJoin);
-
     }
 
     public void setJoinWithNFCLayout() {
-
         joinWithNFCLayout = (LinearLayout) findViewById(R.id.discovery_join_nfc);
         DefaultButtonIMG nfcJoin = new DefaultButtonIMG(context,
                 "                  Join using NFC                  ", nfc);
         joinWithNFCLayout.addView(nfcJoin);
-
-
     }
 
     public void setLocalOnlineSliderLayout() {
-
         localOnlineSliderLayout = (LinearLayout) findViewById(R.id.discovery_slider);
         Slider slider = new Slider(context, true);
         localOnlineSliderLayout.addView(slider);
@@ -107,27 +99,20 @@ public class DiscoveryActivity extends AppCompatActivity {
         });
 
         this.isLocal = slider.getBool();
-
-
-
     }
 
     public void setTournamentHeaderLayout() {
-
         tournamentHeaderLayout = (LinearLayout) findViewById(R.id.discovery_tourn_header);
         Text text = new Text(context, "tournaments");
         tournamentHeaderLayout.addView(text);
-
     }
 
     public void setTournamentListLayout() {
-
         tournamentListLayout = (LinearLayout) findViewById(R.id.discovery_tourn_list);
         updateList();
 
         Thelist = new TournamentSummaryListJoin(context, tournamentList);
         tournamentListLayout.addView(Thelist);
-
     }
 
     public void setTournaments(List<TournamentModel> tournaments) {
@@ -137,7 +122,6 @@ public class DiscoveryActivity extends AppCompatActivity {
 
 
     public void getOnline(Context context) {
-
         this.tournamentList.clear();
         TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
             @Override
@@ -157,7 +141,6 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void getOffline(Context context, String location) {
-
         this.tournamentList.clear();
         TournamentHandler.discoveryLocal(location, 1, 0, 10,
                 new TournamentHandler.DiscoverComplete() {
@@ -176,7 +159,6 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void updateList() {
-
         if(this.isLocal) {
             getOffline(context, "TODO LOCATION");
         } else {
@@ -185,7 +167,6 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void setNavigationBar() {
-
         BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_discovery);
         bottomNav.setOnItemSelectedListener(item -> {

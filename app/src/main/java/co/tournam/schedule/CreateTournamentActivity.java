@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -30,11 +29,10 @@ import co.tournam.api.UploadImageWorker;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
-import co.tournam.ui.header.header;
-import co.tournam.ui.header.headerTitle;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
+import co.tournam.ui.title.DefaultTitle;
 
 public class CreateTournamentActivity extends AppCompatActivity {
 
@@ -264,11 +262,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setFirstHeader() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne_create_tournament);
-        firstHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.STAGES
-        ));
+        firstHeaderLayout.addView( new DefaultTitle("Stages", context));
     }
 
     public void setStageOption() {
