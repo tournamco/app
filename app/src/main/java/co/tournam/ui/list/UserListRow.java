@@ -42,10 +42,9 @@ public class UserListRow extends LinearLayout {
     }
 
     public void buildContents(Context context) {
-
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.row_team, this, true);
+        inflater.inflate(R.layout.row_user, this, true);
 
         userIcon = (ImageView) findViewById(R.id.imaget);
         userIcon.setOnClickListener(view -> {
@@ -58,14 +57,18 @@ public class UserListRow extends LinearLayout {
         });
         userName = (TextView) findViewById(R.id.namet);
         actionButton = (Button) findViewById(R.id.button2);
-        actionButton.setOnClickListener(view -> {
-            listener.onUserSelected(user);
-        });
-        setButtonText(buttonText);
+        if(buttonText != null) {
+            actionButton.setOnClickListener(view -> {
+                listener.onUserSelected(user);
+            });
+            setButtonText(buttonText);
+        }
+        else {
+            actionButton.setVisibility(GONE);
+        }
 
         new DownloadImageWorker(icon -> userIcon.setImageBitmap(icon)).execute(user.getIcon());
         userName.setText(user.getUsername());
-
     }
 
     public void setButtonText(String text) {

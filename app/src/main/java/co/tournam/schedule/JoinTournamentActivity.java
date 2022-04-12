@@ -28,7 +28,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
     private TournamentModel tournament;
 
     private LinearLayout tournamentBannerLayout;
-    private ScrollView teamsListLayout;
+    private LinearLayout teamsListLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
         tournamentBannerLayout = (LinearLayout)findViewById(R.id.banner);
         tournamentBannerLayout.addView(new TournamentSummaryListItem(context, tournament));
 
-        teamsListLayout = (ScrollView)findViewById(R.id.teams_list);
+        teamsListLayout = (LinearLayout)findViewById(R.id.teams_list);
 
         LinearLayout title1 = (LinearLayout)findViewById(R.id.title1);
         title1.addView(new DefaultTitle("Teams", context));

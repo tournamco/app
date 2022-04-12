@@ -15,6 +15,7 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.list.UserList;
 import co.tournam.ui.matchlist.SummaryMatchList;
@@ -85,14 +86,29 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     private void build() {
-        setManageTeamButton();
+        if(tournament.isPublic()) {
+            DefaultButton button = new DefaultButton(context, "Create");
+            button.button.setOnClickListener(v -> {
+                Bundle b = new Bundle();
+                b.putString("tournamentid", tournament.getId());
+                Intent intent = new Intent(context, CreateTeamActivity.class);
+                intent.putExtras(b);
+                startActivity(intent);
+            });
+            //headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish(), button));
+        }
+        else {
+            //headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish()));
+        }
+
+        /*setManageTeamButton();
         setTournamentBanner();
         setTeamIcon();
         setTeamName();
         setFirstHeader();
         setTeamMembers();
         setSecondHeader();
-        setMatchList();
+        setMatchList();*/
     }
 
     public void setManageTeamButton() {
@@ -129,7 +145,7 @@ public class OurTeamActivity extends AppCompatActivity {
 
     public void setTeamMembers() {
         teamMemberLayout = (LinearLayout) findViewById(R.id.teamMembers);
-        //teamMemberLayout.addView(new UserList());
+        teamMemberLayout.addView(new UserList(context, team.getMembers(), null, null));
     }
 
     public void setSecondHeader() {
