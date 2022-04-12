@@ -88,11 +88,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         setMembersLayout();
         setThirdHeaderLayout();
         setProofOfScoreLayout();
-
-
-
     }
-
 
     public void setTournamentLogoLayout() {
         tournamentLogoLayout = (LinearLayout) findViewById(R.id.tournamentLogo_match_details);
@@ -126,7 +122,6 @@ public class MatchDetailActivity extends AppCompatActivity {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
-
     }
 
     public void setFirstHeaderLayout() {

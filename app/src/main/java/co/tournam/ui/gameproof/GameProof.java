@@ -61,7 +61,7 @@ public class GameProof extends AbstractGameProof {
             }
         });
         List<Bitmap> proofMap = new ArrayList<>();
-        for ( String proofImage : proofImages) {
+        for (String proofImage : proofImages) {
              proofMap.add(ImageLoader.loadImage(proofImage, context));
         }
         ImageListAppendable imageList = new ImageListAppendable(context, proofMap);

@@ -1,5 +1,6 @@
 package co.tournam.models;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -158,6 +159,18 @@ public class TournamentModel {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public String getStartDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM");
+
+        return formatter.format(stages.get(0).getMinimalDate());
+    }
+
+    public String getEndDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM");
+
+        return formatter.format(stages.get(stages.size()-1).getMaximalDate());
     }
 
     public static class CreateStageModel {

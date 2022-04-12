@@ -19,6 +19,7 @@ import java.util.List;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
+import co.tournam.api.TournamentHandler;
 import co.tournam.models.FakeData;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
@@ -29,10 +30,6 @@ import co.tournam.ui.list.TeamList;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class JoinTournamentActivity extends AppCompatActivity {
-
-    public JoinTournamentActivity(TournamentModel tournament) {
-        this.tournament = tournament;
-    }
 
     Context context;
     private LinearLayout tournamentBannerLayout;
@@ -45,65 +42,31 @@ public class JoinTournamentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_tournament);
 
-        context = this.getApplicationContext();
+        Bundle b = getIntent().getExtras();
 
-        setBackButton();
-        setTournamentBanner();
-        setFirstHeader();
-        setTeams();
-    }
-
-    public void setBackButton() {
-
-        Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        backButton = (LinearLayout) findViewById(R.id.backButton);
-        backButton.addView( new DefaultButtonIMG(
-                context,
-                "",
-                qr_icon
-        ));
-
-    }
-
-    public void setTournamentBanner() {
-
-        tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner);
-        tournamentBannerLayout.addView( new TournamentSummaryListItem(
-                context,
-                tournament));
-    }
-
-    public void setFirstHeader() {
-        firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne);
-        firstHeaderLayout.addView( new header(
-                context,
-                null,
-                headerTitle.TEAMS
-        ));
-    }
-
-    public void setTeams() {
-        List<TeamModel> teamList = new ArrayList<TeamModel>();
-        teamsListLayout = (LinearLayout) findViewById(R.id.teamlist);
-        for (String team : tournament.getTeams()) {
-            TeamHandler.info(team, new TeamHandler.InfoComplete() {
-                @Override
-                public void success(TeamModel response) {
-                    teamList.add(response);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    Toast.makeText(JoinTournamentActivity.this, "Error setting Teams:" + message, Toast.LENGTH_SHORT).show();
-                }
-            });
+        String tournamentID = null;
+        if(b != null) {
+            tournamentID = b.getString("tournamentid");
         }
 
-        teamsListLayout.addView( new TeamList(
-                context,
-                tournament.getTeams(),
-                "Join"
-        ));
+        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                JoinTournamentActivity.this.tournament = tournament;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+
+        context = this.getApplicationContext();
+    }
+
+    private void build() {
+
     }
 
 

@@ -25,23 +25,27 @@ public class MatchProofActivity extends AppCompatActivity {
 
     Context context;
     private LinearLayout matchProofLayout;
-    private MatchModel match;
-    private boolean inTeam;
-    private String id;
+    private String matchId;
+    private String teamId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
-        String matchCode = null;
 
         if(b != null) {
-            matchCode = b.getString("key");
+            matchId = b.getString("key");
+            teamId = b.getString("team");
         }
+        else {
+            return;
+        }
+
         setContentView(R.layout.activity_match_proof);
-        TeamHandler.matchInfo(matchCode, new TeamHandler.MatchInfoComplete() {
+
+        TeamHandler.matchInfo(matchId, new TeamHandler.MatchInfoComplete() {
             @Override
             public void success(MatchModel response) {
-                match = response;
+                createProofsFromMatch(response);
             }
 
             @Override
@@ -49,34 +53,24 @@ public class MatchProofActivity extends AppCompatActivity {
                 Toast.makeText(MatchProofActivity.this, "Error initializing activity:" + message, Toast.LENGTH_SHORT).show();
             }
         });
+
         context = this.getApplicationContext();
-        setDisputes();
     }
 
-    private void setDisputes() {
-        matchProofLayout = (LinearLayout) findViewById(R.id.proof);
-        List<GameModel> games = match.getGames();
-        inTeam = false;
-        Map<String, TeamModel> teams = match.getTeams();
-        for (TeamModel team : teams.values()) {
-            UserHandler.isUserInTeam(team.getID(), new UserHandler.IsUserInTeamComplete() {
-                @Override
-                public void success(boolean isInTeam) {
-                    inTeam = isInTeam;
-                }
+    public void createProofsFromMatch(MatchModel match) {
+        List<String> proofIds = getProofIdsFromMatch(match);
 
-                @Override
-                public void failure(ApiErrors error, String message) {
 
-                }
-            });
-            if(inTeam == true) {
-                id = team.getID();
-                for (GameModel game : games) {
-                    matchProofLayout.addView(new GameProof(context, game, match, id ));
-                }
-            }
+    }
+
+    public List<String> getProofIdsFromMatch(MatchModel match) {
+        List<String> proofIds = new ArrayList<>();
+
+        for(GameModel game : match.getGames()) {
+            proofIds.add(game.getProofs().get(teamId));
         }
+
+        return proofIds;
     }
 
 

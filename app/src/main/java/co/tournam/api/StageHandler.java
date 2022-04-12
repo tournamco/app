@@ -4,7 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.tournam.models.RoundModel;
@@ -26,12 +31,32 @@ public class StageHandler {
             winners.add(winnersData.getString(i));
         }
 
+        Date maximalDate = null;
+        Date minimalDate = null;
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        LocalTime maximalTime = LocalTime.parse(json.getString("maximalTime"), timeFormatter);
+        LocalTime minimalTime = LocalTime.parse(json.getString("minimalTime"), timeFormatter);
+
+        try {
+            maximalDate = dateFormatter.parse(json.getString("maximalDate"));
+            minimalDate = dateFormatter.parse(json.getString("minimalDate"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return new StageModel(
                 json.getString("type"),
                 json.getString("name"),
                 json.getInt("numberOfParticipants"),
                 rounds,
-                winners
+                winners,
+                minimalDate,
+                maximalDate,
+                minimalTime,
+                maximalTime
         );
     }
 }

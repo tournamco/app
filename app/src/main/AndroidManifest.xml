@@ -38,6 +38,9 @@
             android:name=".TournamentActivity"
             android:exported="true" />
         <activity
+            android:name=".JoinTournamentActivity"
+            android:exported="true" />
+        <activity
             android:name=".DisputesActivity"
             android:exported="true" />
         <activity
