@@ -1,6 +1,7 @@
 package co.tournam.ui.tournament_summary;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,7 +46,7 @@ public class TournamentSummaryListJoinItem extends LinearLayout{
         tournamentBanner = (ImageButton)findViewById(R.id.banner);
         SetTournamentBanner(tournament, context);
 
-        icon = (ImageView)findViewById(R.id.icon);
+//        icon = (ImageView)findViewById(R.id.icon);
         //SetIcon(tournament);
 
         gameName = (TextView)findViewById(R.id.gameName);
@@ -61,8 +62,10 @@ public class TournamentSummaryListJoinItem extends LinearLayout{
         button.setText("Join");
     }
 
-    private void SetTournamentBanner(TournamentModel tournament, Context context)
-    {tournamentBanner.setImageBitmap(ImageLoader.loadImage(tournament.getBanner(), context));}
+    private void SetTournamentBanner(TournamentModel tournament, Context context) {
+        Log.wtf("Tournament Banner ID", tournament.getBanner());
+        tournamentBanner.setImageBitmap(ImageLoader.loadImage(tournament.getBanner(), context));
+    }
 
     //private void SetIcon(TournamentModel tournament)
     //{icon.setImageResource(tournament.getTournamentIcon());}
@@ -70,9 +73,14 @@ public class TournamentSummaryListJoinItem extends LinearLayout{
     private void SetName(TournamentModel tournament)
     {gameName.setText(tournament.getGame());}
 
-    private void setParticipants(TournamentModel tournament)
-    {participants.setText(tournament.getCurrentAmountOfTeams() + " / " +
-            tournament.getStages().get(0).getNumberOfParticipants());}
+    private void setParticipants(TournamentModel tournament) {
+
+        Log.wtf("Stagelist length", String.valueOf(tournament.getStages().size()));
+
+        participants.setText(
+            tournament.getCurrentAmountOfTeams() + " / " +
+            tournament.getStages().get(0).getNumberOfParticipants());
+    }
 
     private void setLocation(TournamentModel tournament) { location.setText(tournament.getLocation());}
 }

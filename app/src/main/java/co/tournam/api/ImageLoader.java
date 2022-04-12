@@ -8,18 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ImageLoader {
     public static final String DOWNLOAD_PATH = RequestHandler.url + "/image/download";
@@ -27,7 +22,7 @@ public class ImageLoader {
 
     public static Bitmap loadImage(String imageId, Context context) {
         /*File cacheDir = context.getCacheDir();
-        Path imagesDir = Paths.get(cacheDir.getPath(), "./images");
+        Path imagesDir = Paths.get(cacheDir.getPath(), "images");
 
         try {
             ensureFolderExists(imagesDir);
@@ -35,9 +30,11 @@ public class ImageLoader {
             e.printStackTrace();
         }
 
-        Path child = imagesDir.resolveSibling("./" + imageId);
+        Path child = imagesDir.resolve(imageId);
 
         if(Files.exists(child)) {
+            Log.wtf("Cached Banner ID", "I exist when I shouldnt");
+            Log.wtf("Cached Banner Path", child.toFile().getPath());
             return BitmapFactory.decodeFile(child.toFile().getPath());
         }*/
 
