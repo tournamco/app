@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
@@ -57,9 +58,10 @@ public class MyProfileActivity extends AppCompatActivity {
         UserHandler.me(new UserHandler.MeCompleted() {
             @Override
             public void success(UserModel me) {
-                userIconLayout.addView( new ImageListItem(
-                        context, ImageLoader.loadImage(me.getIcon(), context)
-                ));
+                ImageListItem image = new ImageListItem(context, null);
+                userIconLayout.addView(image);
+
+                new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(me.getIcon());
             }
 
             @Override

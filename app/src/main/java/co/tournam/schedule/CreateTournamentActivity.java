@@ -26,6 +26,7 @@ import java.util.List;
 import co.tournam.api.ApiErrors;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.TournamentHandler;
+import co.tournam.api.UploadImageWorker;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
@@ -66,9 +67,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     private Bitmap bannerImage;
 
-
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tournament);
@@ -84,7 +82,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         try {
                             bannerImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                            new BackgroundWorker().execute(bannerImage);
+                            new UploadImageWorker(imageId -> this.bannerID = imageId).execute(bannerImage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -313,26 +311,4 @@ public class CreateTournamentActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         someActivityResultLauncher.launch(intent);
     }
-
-    private class BackgroundWorker
-            extends AsyncTask<Bitmap, Void, String> {
-
-        @Override
-        protected String doInBackground(Bitmap... params) {
-
-            Bitmap bm = params[0];
-            String result = "";
-            result = ImageLoader.uploadImage(bm);
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            CreateTournamentActivity.this.bannerID = result;
-        }
-
-
-    }
-
-
 }

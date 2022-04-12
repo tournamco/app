@@ -33,6 +33,13 @@ public class ImageListItem extends LinearLayout {
         inflater.inflate(R.layout.imagelist_base, this, true);
 
         mainView = findViewById(R.id.imagelist_base);
+
+        if(image != null) {
+            mainView.setImageBitmap(image);
+        }
+    }
+
+    public void setImage(Bitmap image) {
         mainView.setImageBitmap(image);
     }
 }

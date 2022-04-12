@@ -104,7 +104,6 @@ public class JoinTournamentActivity extends AppCompatActivity {
                 tournament.getTeams(),
                 "Join"
         ));
-
     }
 
 
