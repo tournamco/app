@@ -25,7 +25,7 @@ public class TournamentHandler {
         List<StageModel> stages = new ArrayList<>();
         JSONArray stagesData = tournament.getJSONArray("stages");
 
-        for(int i = 0; i < teamsData.length(); i++) {
+        for(int i = 0; i < stagesData.length(); i++) {
             stages.add(StageHandler.fromJSON(stagesData.getJSONObject(i)));
         }
 

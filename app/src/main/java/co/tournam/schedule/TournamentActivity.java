@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,13 +28,20 @@ public class TournamentActivity extends AppCompatActivity {
     private Slider slider;
     private DefaultButtonFilled button;
     private LinearLayout tournamentsLayout;
-
+    private final int pageSize = 10;
+    private int pageIndex = 0;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tournament);
         context = this.getApplicationContext();
-        TeamHandler.listTournaments(0, 10, new TeamHandler.ListTournamentsComplete() {
+
+
+        setNavigationBar();
+    }
+
+    private void listMoreTournaments() {
+        TeamHandler.listTournaments(pageIndex, pageSize, new TeamHandler.ListTournamentsComplete() {
             @Override
             public void success(List<TournamentModel> matches) {
                 TournamentActivity.this.buildTournamentSummaryList(matches, context);
@@ -54,7 +63,7 @@ public class TournamentActivity extends AppCompatActivity {
     public void setNavigationBar() {
 
         BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
-        bottomNav.setSelectedItemId(R.id.navigation_tournament);
+        bottomNav.setSelectedItemId(R.id.navigation_discovery);
         bottomNav.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
