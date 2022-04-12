@@ -246,16 +246,16 @@ public class TournamentHandler {
     /**
      * Get the list of all tournaments that are at a location nearby.
      * @param location The location to search for tournaments.
-     * @param radius The radius to search for tournaments in degrees.
+     * @param distance The radius to search for tournaments in degrees.
      * @param listener The listener to call when the request is complete.
      */
-    public static void discoveryLocal(String location, int radius, int pageNumber, int pageSize, DiscoverComplete listener) {
+    public static void discoveryLocal(String location, int distance, int pageNumber, int pageSize, DiscoverComplete listener) {
         RequestHandler.request("/tournament/discovery", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
                 json.put("location", location);
-                json.put("radius", radius);
+                json.put("distance", distance);
                 json.put("local", true);
                 json.put("pageNumber", pageNumber);
                 json.put("pageSize", pageSize);
