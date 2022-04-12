@@ -10,57 +10,11 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-
-
-
         <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/Main_Text_Layout_mypf"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.022">
-
-            <TextView
-                android:id="@+id/My_Profile_Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="My Profile"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                />
-
-            <LinearLayout
-                android:id="@+id/logoutButton_mypf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.0"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            android:id="@+id/header"
-            android:background="@drawable/gradient"
-            android:padding="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="2:2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Main_Text_Layout_mypf"
-            app:layout_constraintTop_toBottomOf="@+id/Main_Text_Layout_mypf"
-            app:layout_constraintVertical_bias="0.02" />
+            android:orientation="horizontal" />
 
         <LinearLayout
             android:id="@+id/userIcon_Container"

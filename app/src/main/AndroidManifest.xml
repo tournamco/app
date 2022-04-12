@@ -47,6 +47,9 @@
             android:name=".MyProfileActivity"
             android:exported="true" />
         <activity
+            android:name=".CreateTeamActivity"
+            android:exported="true" />
+        <activity
             android:name=".TournamentPageActivity"
             android:exported="true" />
 <!--        <activity-->

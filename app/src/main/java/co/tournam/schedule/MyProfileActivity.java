@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
+import co.tournam.ui.button.DefaultButton;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.ChangePasswordObject;
 import co.tournam.ui.stageoptions.StageOptionBody;
@@ -70,6 +73,13 @@ public class MyProfileActivity extends AppCompatActivity {
                 });
 
         getUserInfo();
+
+        LinearLayout header = findViewById(R.id.header);
+        DefaultButton button = new DefaultButton(context, "Logout");
+        button.button.setOnClickListener(v -> {
+            // TODO: Logout
+        });
+        header.addView(new SmallHeader(context, "My Profile", () -> this.finish(), button));
     }
 
     public void getUserInfo() {

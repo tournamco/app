@@ -11,7 +11,6 @@ public class SubtextTitle extends AbstractTitle {
     private TextView titleText;
     private String subtext;
 
-
     public SubtextTitle(String name, String subtext, Context context) {
         super(name, context);
 

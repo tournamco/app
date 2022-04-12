@@ -29,6 +29,7 @@ import co.tournam.api.UploadImageWorker;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
@@ -39,6 +40,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     Context context;
     private LinearLayout tournamentBannerLayout;
     private LinearLayout firstHeaderLayout;
+    private LinearLayout secondHeaderLayout;
     private LinearLayout tournamentNameLayout;
     private LinearLayout tournamentGameNameLayout;
     private LinearLayout tournamentTeamSizeLayout;
@@ -88,8 +90,18 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     }
                 });
 
-        setBackButton();
-        setCreateButton();
+
+        LinearLayout header = findViewById(R.id.header);
+        DefaultButtonFilled button = new DefaultButtonFilled(context, "Create");
+
+        button.button.setOnClickListener(v -> {
+            infoUpdate();
+            createTournament();
+            startActivity(new Intent(CreateTournamentActivity.this, DiscoveryActivity.class));
+        });
+
+        header.addView(new SmallHeader(context, "Create Tournament", () -> finish(), button));
+
         setTournamentBanner();
         setTournamentName();
         setTournamentGameName();
@@ -97,6 +109,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setTournamentColorPicker();
         setFirstHeader();
         setStageOption();
+        setSecondHeader();
         setAddButton();
         setLocation();
 
@@ -104,34 +117,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
         publicBox = findViewById(R.id.isPublic_checkbox_create_tournament);
 
         
-    }
-
-    public void setBackButton() {
-
-        Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
-        backButtonLayout = (LinearLayout) findViewById(R.id.backButton_create_tournament);
-        DefaultButton back = new DefaultButton(context, "Back");
-        backButtonLayout.addView(back);
-        back.button.setOnClickListener(v -> startActivity(new Intent(context, MainActivity.class)));
-
-
-    }
-
-    public void setCreateButton() {
-
-        createButtonLayout = (LinearLayout) findViewById(R.id.createButton_create_tournament);
-        createButtonLayout.addView(new DefaultButtonFilled(
-                context,
-                "Create"
-        ));
-
-        ((DefaultButtonFilled) createButtonLayout.getChildAt(0)).button.setOnClickListener(v -> {
-            infoUpdate();
-            createTournament();
-            startActivity(new Intent(CreateTournamentActivity.this, DiscoveryActivity.class));
-        });
-
-
     }
     
     public void createTournament() {
@@ -207,7 +192,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
 
     public void setTournamentBanner() {
-
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner_create_tournament);
         ImageListItem image;
         if (this.bannerID.equals("")) {
@@ -278,6 +262,11 @@ public class CreateTournamentActivity extends AppCompatActivity {
         StageOption stage = new StageOption(context);
         stageOptionLayout.addView(stage);
 
+    }
+
+    public void setSecondHeader() {
+        secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo_create_tournament);
+        secondHeaderLayout.addView( new DefaultTitle("Location", context));
     }
 
     public void setAddButton() {

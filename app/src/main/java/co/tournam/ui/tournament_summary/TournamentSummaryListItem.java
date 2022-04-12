@@ -46,7 +46,7 @@ public class TournamentSummaryListItem extends LinearLayout {
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.tournament_summary_button, this, true);
+        inflater.inflate(R.layout.tournament_summary, this, true);
 
         tournamentBanner = (ImageView)findViewById(R.id.banner);
         setTournamentBanner(tournament);

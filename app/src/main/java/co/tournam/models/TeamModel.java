@@ -52,4 +52,8 @@ public class TeamModel {
     public String getIcon() { return icon;}
 
     public String getTournamentId() { return tournamentId; }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
 }

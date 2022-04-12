@@ -5,16 +5,22 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import co.tournam.models.TeamModel;
+
 public class TeamList extends LinearLayout {
 
-    private List<String> teamIDs;
+    private List<TeamModel> teams;
     private String buttonText;
+    private TeamListActionListener listener;
+    private Context context;
 
-    public TeamList(Context context, List<String> teamIDs, String buttonText) {
+    public TeamList(Context context, List<TeamModel> teams, String buttonText, TeamListActionListener listener) {
         super(context);
 
-        this.teamIDs = teamIDs;
+        this.listener = listener;
+        this.teams = teams;
         this.buttonText = buttonText;
+        this.context = context;
     }
 
     public void build(Context context) {
@@ -24,15 +30,17 @@ public class TeamList extends LinearLayout {
     }
 
     public void buildContents(Context context) {
-
-        for (String teamID : teamIDs) {
-            TeamListRow row = new TeamListRow(context, teamID, buttonText);
-            this.addView(row);
+        for (TeamModel team : teams) {
+            this.addTeam(team);
         }
-
     }
 
-    public List<String> getTeams() {
-        return this.teamIDs;
+    public void addTeam(TeamModel team) {
+        TeamListRow row = new TeamListRow(context, team, buttonText, listener);
+        this.addView(row);
+    }
+
+    public interface TeamListActionListener {
+        void onTeamSelected(TeamModel team);
     }
 }

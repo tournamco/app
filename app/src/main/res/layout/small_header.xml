@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:src="@drawable/arrow_left"/>
+
+        <LinearLayout
+            android:id="@+id/header_titles"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/header_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_600"
+                android:textStyle="italic"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_weight="0"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/header"/>
+</merge>
