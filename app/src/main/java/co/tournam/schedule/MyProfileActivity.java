@@ -1,16 +1,25 @@
 package co.tournam.schedule;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
+import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
 import co.tournam.ui.header.header;
@@ -31,9 +40,11 @@ public class MyProfileActivity extends AppCompatActivity {
     private LinearLayout changePasswordLayout;
     private LinearLayout secondHeaderLayout;
     private LinearLayout statisticsLayout;
-
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
     private Context context;
     private UserModel user;
+    private Bitmap newUserIcon;
+    private String newUserIconID;
 
 
     @Override
@@ -42,6 +53,22 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
         this.context = this.getApplicationContext();
 
+        // Open Gallery
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        try {
+                            newUserIcon = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                            new UploadImageWorker(imageId -> this.newUserIconID = imageId).execute(newUserIcon);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    }
+                });
 
         getUserInfo();
     }
@@ -94,7 +121,32 @@ public class MyProfileActivity extends AppCompatActivity {
         ImageButton change = (ImageButton) findViewById(R.id.change_userIcon);
         change.setOnClickListener(v -> {
             //TODO open gallery to change icon
+            openGallery();
+            changeIcon();
         });
+    }
+
+    public void changeIcon() {
+        Log.w("User Icon value:", );
+
+        UserHandler.changeIcon(this.newUserIconID, new UserHandler.ChangeComplete() {
+            @Override
+            public void success() {
+                Toast.makeText(MyProfileActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    public void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        someActivityResultLauncher.launch(intent);
     }
 
     public void setUsernameLayout() {
