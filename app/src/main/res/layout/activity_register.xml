@@ -124,7 +124,7 @@
         android:background="@drawable/gradient_spinner"
         android:ems="10"
         android:hint="Repeat Password"
-        android:inputType="textVisiblePassword"
+        android:inputType="textPassword"
         android:padding="10dp"
         android:text=""
         android:textSize="14sp"

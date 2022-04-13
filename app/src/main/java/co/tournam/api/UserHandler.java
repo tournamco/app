@@ -26,7 +26,7 @@ public class UserHandler {
                 JSONObject json = new JSONObject();
                 json.put("username", username);
                 json.put("password", password);
-                json.put("gamerTag", gamerTag);
+                json.put("gamertag", gamerTag);
                 json.put("email", email);
 
                 return json;

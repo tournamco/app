@@ -35,7 +35,7 @@ public class MatchHandler {
             String key = keysData.getString(i);
             keys.add(key);
             scores.put(key, scoresData.getInt(key));
-            if(teamsData.has(key)) {
+            if(!teamsData.isNull(key)) {
                 teams.put(key, TeamHandler.fromJSON(teamsData.getJSONObject(key)));
             }
             else {

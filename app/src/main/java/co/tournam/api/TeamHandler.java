@@ -18,15 +18,22 @@ public class TeamHandler {
     public static TeamModel fromJSON(JSONObject team) throws JSONException {
         List<UserModel> members = new ArrayList<>();
         JSONArray membersData = team.getJSONArray("members");
+        UserModel leader = null;
 
         for(int i = 0; i < membersData.length(); i++) {
+            if(membersData.isNull(i)) continue;
+
             members.add(UserHandler.fromJSON(membersData.getJSONObject(i)));
+        }
+
+        if(!team.isNull("leader")) {
+            leader = UserHandler.fromJSON(team.getJSONObject("leader"));
         }
 
         return new TeamModel(
                 team.getString("id"),
                 team.getString("name"),
-                UserHandler.fromJSON(team.getJSONObject("leader")),
+                leader,
                 members,
                 team.getBoolean("isPublic"),
                 team.getString("icon"),
