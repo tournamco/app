@@ -62,7 +62,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
         this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.drawable.nfc_icon, null);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -71,6 +71,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                     new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, 101);
 
         }
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
