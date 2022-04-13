@@ -17,9 +17,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
+import co.tournam.api.PersistentCookieStore;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
 import co.tournam.models.UserModel;
@@ -78,12 +82,24 @@ public class MyProfileActivity extends AppCompatActivity {
         DefaultButton button = new DefaultButton(context, "Logout");
         button.button.setOnClickListener(v -> {
             // TODO: Logout
+            UserHandler.logout(new UserHandler.LogoutCompleted() {
+                @Override
+                public void success() {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    getApplicationContext().getSharedPreferences(PersistentCookieStore.COOKIE_PREFS, 0).edit().clear().apply();
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+
+                }
+            });
         });
         header.addView(new SmallHeader(context, "My Profile", () -> this.finish(), button));
     }
 
     public void getUserInfo() {
-
         UserHandler.me(new UserHandler.MeCompleted() {
             @Override
             public void success(UserModel me) {
