@@ -1,6 +1,8 @@
 package co.tournam.ui.dispute;
 
 import android.content.Context;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DisputeHandler;
 import co.tournam.models.DisputeModel;
@@ -19,21 +22,29 @@ import co.tournam.ui.table.Score;
 
 public class DisputeColumn extends LinearLayout {
     private ProofModel proof;
-    private String dispute;
+    private String disputeId;
+    private String key;
 
-    public DisputeColumn(Context context, ProofModel proof, String disputeID) {
+    private Dispute.DisputeResolvedListener listener;
+    private Dispute dispute;
+
+    public DisputeColumn(Context context, ProofModel proof, String disputeId, String key, Dispute dispute, Dispute.DisputeResolvedListener listener) {
         super(context);
 
         this.proof = proof;
-        this.dispute = disputeID;
+        this.disputeId = disputeId;
+        this.key = key;
+        this.listener = listener;
+        this.dispute = dispute;
 
         build(context);
     }
 
     private void build(Context context) {
         setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                0, ViewGroup.LayoutParams.MATCH_PARENT, (float) 1
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, (float) 1
         ));
+        setGravity(Gravity.CENTER);
         setOrientation(LinearLayout.VERTICAL);
         buildContents(context);
     }
@@ -42,22 +53,25 @@ public class DisputeColumn extends LinearLayout {
         this.addView(new Score(context, new ArrayList<>(this.proof.getScores().values())));
         this.addView(new ImageListVertical(context, new ArrayList<>()));
         DefaultButton button = new DefaultButton(context, "Agree");
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setPadding(dpToPx(context, 10), dpToPx(context, 10), dpToPx(context, 10), dpToPx(context, 10));
+        button.setOnClickListener(view -> DisputeHandler.resolve(disputeId, key, new DisputeHandler.ResolveComplete() {
             @Override
-            public void onClick(View view) {
-                DisputeHandler.resolve(dispute, proof.getTeamId(), new DisputeHandler.ResolveComplete() {
-                    @Override
-                    public void success() {
-
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-
-                    }
-                });
+            public void success() {
+                listener.disputeResolved(dispute);
             }
-        });
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        }));
         this.addView(button);
+    }
+
+    private int dpToPx(Context context, int dp) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                context.getResources().getDisplayMetrics());
     }
 }

@@ -51,7 +51,7 @@ public class GameProofScore extends LinearLayout {
         inflater.inflate(R.layout.game_proof_scoreline, this, true);
 
         team1 = findViewById(R.id.game_proof_team1);
-        team1.setText(match.getKeys().get(0).equals(key) ? "us" : "them");
+        team1.setText(match.getKeys().get(0).equals(key) ? "them" : "us");
 
         EditText score1 = findViewById(R.id.score1);
         score1.setText(Integer.toString(proof.getScores().get(match.getKeys().get(0))));
@@ -88,7 +88,7 @@ public class GameProofScore extends LinearLayout {
         });
 
         team2 = findViewById(R.id.game_proof_team2);
-        team2.setText(match.getKeys().get(1).equals(key) ? "us" : "them");
+        team2.setText(match.getKeys().get(1).equals(key) ? "them" : "us");
     }
 
     private void updateScores(String key, int value) {

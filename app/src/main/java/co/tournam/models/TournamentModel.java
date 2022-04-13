@@ -14,7 +14,6 @@ public class TournamentModel {
     private String id;
     private List<StageModel> stages;
     private List<String> teams;
-    private List<DisputeModel> disputes;
     private UserModel organizer;
     private String game;
     private int color;
@@ -60,14 +59,6 @@ public class TournamentModel {
     }
 
     public int getCurrentAmountOfTeams() { return (int) teams.stream().count(); }
-
-    public List<DisputeModel> getDisputes() {
-        return disputes;
-    }
-
-    public void setDisputes(List<DisputeModel> disputes) {
-        this.disputes = disputes;
-    }
 
     public UserModel getOrganizer() {
         return organizer;

@@ -63,7 +63,7 @@ public class DisputeHandler {
             @Override
             public void success(JSONObject response) throws JSONException {
                 List<DisputeModel> disputes = new ArrayList<>();
-                JSONArray disputesData = response.getJSONArray("matches");
+                JSONArray disputesData = response.getJSONArray("disputes");
 
                 for(int i = 0; i < disputesData.length(); i++) {
                     disputes.add(DisputeHandler.fromJSON(disputesData.getJSONObject(i)));

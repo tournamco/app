@@ -17,9 +17,11 @@ import java.util.List;
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
+import co.tournam.api.UserHandler;
 import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
+import co.tournam.models.UserModel;
 import co.tournam.models.stage.StageModel;
 import co.tournam.ui.header.TournamentPageHeader;
 import co.tournam.ui.list.TeamList;
@@ -31,6 +33,7 @@ import co.tournam.ui.title.SubtextTitle;
 public class TournamentPageActivity extends AppCompatActivity {
 
     private TournamentModel tournamentModel;
+    private UserModel meModel;
     private Context context;
 
     private LinearLayout customHeaderLayout;
@@ -55,10 +58,29 @@ public class TournamentPageActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         setContentView(R.layout.activity_tournament_page);
 
-        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
+        loadTournament(tournamentID);
+    }
+
+    private void loadTournament(String tournamentId) {
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
             @Override
             public void success(TournamentModel tournament) {
                 tournamentModel = tournament;
+                loadMe();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    private void loadMe() {
+        UserHandler.me(new UserHandler.MeCompleted() {
+            @Override
+            public void success(UserModel me) {
+                meModel = me;
                 setup();
             }
 
@@ -84,8 +106,8 @@ public class TournamentPageActivity extends AppCompatActivity {
 
     public void setCustomHeader() {
         customHeaderLayout = findViewById(R.id.tournament_page_custom_header);
-        TournamentPageHeader customHeader = new TournamentPageHeader(context, "", tournamentModel);
-        customHeader.backButton.setOnClickListener(v -> startActivity(new Intent(TournamentPageActivity.this, DiscoveryActivity.class)));
+        TournamentPageHeader customHeader = new TournamentPageHeader(context, "", tournamentModel, meModel);
+        customHeader.backButton.setOnClickListener(v -> finish());
         customHeaderLayout.addView(customHeader);
     }
 
