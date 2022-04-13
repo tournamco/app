@@ -13,8 +13,8 @@ public class UserHandler {
         return new UserModel(
                 user.getString("id"),
                 user.getString("username"),
-                user.getString("email"),
                 user.getString("gamertag"),
+                user.getString("email"),
                 user.getString("icon")
         );
     }
