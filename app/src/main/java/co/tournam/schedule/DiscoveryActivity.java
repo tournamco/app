@@ -74,7 +74,7 @@ public class DiscoveryActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 DiscoveryActivity.this.currentLocation = location.getLatitude() + ", " + location.getLongitude();
-                DiscoveryActivity.this.location = new TournamentModel.TournamentLocation((float)location.getLatitude(), (float)location.getLongitude());
+                DiscoveryActivity.this.location = new TournamentModel.TournamentLocation((float)location.getLongitude(), (float)location.getLatitude());
             }
             @Override
             public void onProviderEnabled(@NonNull String provider) {
