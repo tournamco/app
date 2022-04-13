@@ -103,7 +103,7 @@ public class GameProof extends AbstractGameProof {
 
     private void build() {
         GameProofHeader header = new GameProofHeader(context, gameIndex);
-        GameProofScore scoreLine = new GameProofScore(context, this.match, this.key);
+        GameProofScore scoreLine = new GameProofScore(context, this.match, this.key, proofModel);
         imageList = new ImageListAppendable(context, this.gameIndex, new ArrayList<>(), listener);
 
         for (String proofImage : proofImages) {

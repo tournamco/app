@@ -204,7 +204,7 @@ public class TeamHandler {
         void success();
     }
 
-    public static void listMatches(boolean future, int pageNumber, int pageSize, ListMatchesComplete listener) {
+    public static void listMatches(boolean future, boolean personal, int pageNumber, int pageSize, ListMatchesComplete listener) {
         RequestHandler.request("/team/match/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
@@ -212,6 +212,7 @@ public class TeamHandler {
                 json.put("pageNumber", pageNumber);
                 json.put("pageSize", pageSize);
                 json.put("future", future);
+                json.put("personal", personal);
 
                 return json;
             }

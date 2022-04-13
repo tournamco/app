@@ -113,21 +113,17 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void loadMatches() {
-        if (this.isPersonal) {
-            // TODO: Get Personal Matches api call
-        } else {
-            TeamHandler.listMatches(this.future,0, 10, new TeamHandler.ListMatchesComplete() {
-                @Override
-                public void success(List<MatchModel> matches) {
+        TeamHandler.listMatches(this.future, this.isPersonal, 0, 10, new TeamHandler.ListMatchesComplete() {
+             @Override
+            public void success(List<MatchModel> matches) {
                     matchList.addMatches(matches);
                 }
 
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
-        }
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
     }
 
     public void setNavigationBar() {
