@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -112,7 +113,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void setNameField() {
         nameLayout = findViewById(R.id.name);
-        nameLayout.addView( new StageOptionBody(context, "Name"));
+        nameLayout.addView( new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
     }
 
     private void infoUpdate() {

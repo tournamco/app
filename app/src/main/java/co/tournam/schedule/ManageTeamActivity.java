@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -162,7 +163,7 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     public void setTeamName() {
         LinearLayout nameLayout = (LinearLayout) findViewById(R.id.name_input);
-        StageOptionBody body = new StageOptionBody(context, "Name");
+        StageOptionBody body = new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT);
         body.setEntryText(team.getName());
         nameLayout.addView(body);
 

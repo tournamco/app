@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -177,7 +178,7 @@ public class MyProfileActivity extends AppCompatActivity {
     public void setUsernameLayout() {
 
         usernameLayout = (LinearLayout) findViewById(R.id.username_mypf);
-        StageOptionBody body = new StageOptionBody(context, "Username");
+        StageOptionBody body = new StageOptionBody(context, "Username", InputType.TYPE_CLASS_TEXT);
         body.setEntryText(user.getUsername());
         usernameLayout.addView(body);
 
@@ -201,7 +202,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setGamerTagLayout() {
         gamerTagLayout = (LinearLayout) findViewById(R.id.gamerTag_mypf);
-        StageOptionBody body = new StageOptionBody(context, "Gamertag");
+        StageOptionBody body = new StageOptionBody(context, "Gamertag", InputType.TYPE_CLASS_TEXT);
         body.setEntryText(user.getGamerTag());
         gamerTagLayout.addView(body);
 
@@ -225,7 +226,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void setEmailLayout() {
         emailLayout = (LinearLayout) findViewById(R.id.email_mypf);
-        StageOptionBody body = new StageOptionBody(context, "Email");
+        StageOptionBody body = new StageOptionBody(context, "Email", InputType.TYPE_CLASS_TEXT);
         body.setEntryText(user.getEmail());
         emailLayout.addView(body);
 

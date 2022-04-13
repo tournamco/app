@@ -13,11 +13,13 @@ public class StageOptionBody extends LinearLayout {
     private TextView titleText;
     private String title;
     public EditText entryText;
+    private int type;
 
-
-    public StageOptionBody(Context context, String title) {
+    public StageOptionBody(Context context, String title, int type) {
         super(context);
         this.title = title;
+
+        this.type = type;
 
         build(context);
     }
@@ -37,6 +39,7 @@ public class StageOptionBody extends LinearLayout {
         titleText.setText(this.title);
 
         entryText = (EditText) findViewById(R.id.editTextEntry);
+        entryText.setInputType(this.type);
 
     }
 

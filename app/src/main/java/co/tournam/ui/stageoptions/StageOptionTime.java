@@ -1,6 +1,7 @@
 package co.tournam.ui.stageoptions;
 
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,16 +13,18 @@ public class StageOptionTime extends LinearLayout {
 
     private TextView titleText;
     private String title;
+    private int type;
 //    private boolean thresholdType;
 //
     private EditText fromEdit;
     private EditText toEdit;
 
 
-    public StageOptionTime(Context context, String title) {
+    public StageOptionTime(Context context, String title, int type) {
         super(context);
 
         this.title = title;
+        this.type = type;
 //        this.thresholdType = thresholdType;
         build(context);
     }
@@ -41,7 +44,9 @@ public class StageOptionTime extends LinearLayout {
         titleText.setText(this.title);
 
         fromEdit = findViewById(R.id.textentry_threshold_from);
+        fromEdit.setInputType(type);
         toEdit = findViewById(R.id.textentry_threshold_to);
+        toEdit.setInputType(type);
 
 
     }

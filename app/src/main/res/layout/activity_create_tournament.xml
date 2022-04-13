@@ -124,7 +124,7 @@
             app:layout_constraintVertical_bias="0.0"/>
 
         <LinearLayout
-            android:id="@+id/headerTwo_create_tournament"
+            android:id="@+id/numberOfWinners"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -132,6 +132,20 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addStageOptionButton_create_tournament"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <LinearLayout
+            android:id="@+id/headerTwo_create_tournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/numberOfWinners"
             app:layout_constraintVertical_bias="0.0"/>
 
         <LinearLayout
