@@ -33,7 +33,10 @@ import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
+import co.tournam.ui.stageoptions.StageOptionColorPicker;
 import co.tournam.ui.title.DefaultTitle;
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 
 public class CreateTournamentActivity extends AppCompatActivity {
 
@@ -158,8 +161,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
 
-        this.color = Integer.parseInt(((StageOptionBody) tournamentColorPickerLayout.getChildAt(0)).getEntry());
-
         this.game = ((StageOptionBody) tournamentGameNameLayout.getChildAt(0)).getEntry();
 
         this.teamSize = Integer.parseInt(((StageOptionBody) tournamentTeamSizeLayout.getChildAt(0)).getEntry());
@@ -239,9 +240,33 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void setTournamentColorPicker() {
 
         tournamentColorPickerLayout = (LinearLayout) findViewById(R.id.tournamentColorPicker_create_tournament);
-        tournamentColorPickerLayout.addView( new StageOptionBody(
-                context,
-                "Color"));
+        StageOptionColorPicker colorPicker = new StageOptionColorPicker(context);
+        colorPicker.colorButton.setOnClickListener(v -> {
+            openColorPicker();
+        });
+
+        tournamentColorPickerLayout.addView(colorPicker);
+    }
+
+    public void openColorPicker() {
+
+        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, R.color.gray_400, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                ((StageOptionColorPicker) tournamentColorPickerLayout.getChildAt(0)).setColor(color);
+                setGlobalColor(color);
+            }
+        });
+        ambilWarnaDialog.show();
+    }
+
+    private void setGlobalColor(int color) {
+        this.color = color;
     }
 
     public void setFirstHeader() {

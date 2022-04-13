@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/header"/>
+            android:id="@+id/header"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:id="@+id/tournamentBanner_create_tournament"
@@ -111,17 +112,6 @@
             app:layout_constraintVertical_bias="0.03"/>
 
         <LinearLayout
-            android:id="@+id/headerTwo_create_tournament"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stageOptions_create_tournament"
-            app:layout_constraintVertical_bias="0.0"/>
-
-        <LinearLayout
             android:id="@+id/addStageOptionButton_create_tournament"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,6 +124,17 @@
             app:layout_constraintVertical_bias="0.0"/>
 
         <LinearLayout
+            android:id="@+id/headerTwo_create_tournament"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addStageOptionButton_create_tournament"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <LinearLayout
             android:id="@+id/extrainfo_Container_create_tournament"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,7 +143,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addStageOptionButton_create_tournament"
+            app:layout_constraintTop_toBottomOf="@+id/headerTwo_create_tournament"
             app:layout_constraintVertical_bias="0.0">
 
 
