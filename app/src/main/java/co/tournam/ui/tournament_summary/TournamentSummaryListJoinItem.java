@@ -116,7 +116,7 @@ public class TournamentSummaryListJoinItem extends LinearLayout {
 
     private void setLocation(TournamentModel tournament) {
         double distance = this.distance(locationModel.getLatitude(), locationModel.getLongitude(),
-                tournament.getLocation().getLatitude(), tournament.getLocation().getLongitude(), 'K');
+                tournament.getLocation().getLongitude(), tournament.getLocation().getLatitude(), 'K');
         System.out.println(locationModel.getLatitude() + " " + locationModel.getLongitude() + " " + tournament.getLocation().getLatitude() + " " + tournament.getLocation().getLongitude());
 
         location.setText(String.format("%.2f", distance) + " kilometers away");
