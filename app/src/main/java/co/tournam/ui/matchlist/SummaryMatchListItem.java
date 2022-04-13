@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import co.tournam.models.MatchModel;
@@ -57,7 +56,7 @@ public class SummaryMatchListItem extends LinearLayout {
         });
 
         colorView = (View)findViewById(R.id.color);
-        //setColor(match.getTournament().getColor());
+        setColor(match.getTournament().getColor());
 
         timeText = (TextView)findViewById(R.id.time);
         setTime(match.getStartDate());
