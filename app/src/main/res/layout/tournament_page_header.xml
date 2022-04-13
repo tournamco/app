@@ -44,6 +44,16 @@
                     android:gravity="end" >
 
                     <Button
+                        android:id="@+id/tournament_page_header_create_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_gravity="end"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:background="@drawable/dispute_button_border"
+                        android:orientation="horizontal"/>
+
+                    <Button
                         android:id="@+id/tournament_page_header_dispute_button"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"

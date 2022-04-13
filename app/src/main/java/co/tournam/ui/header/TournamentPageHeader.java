@@ -10,10 +10,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
+import co.tournam.api.TeamHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
 import co.tournam.schedule.DisputesActivity;
+import co.tournam.schedule.QRGenActivity;
 import co.tournam.schedule.R;
 
 public class TournamentPageHeader extends AbstractHeader {
@@ -22,6 +25,7 @@ public class TournamentPageHeader extends AbstractHeader {
     private Bitmap banner;
     private TextView tournamentName;
     public Button disputeButton;
+    public Button createButton;
     public ImageButton backButton;
     private TextView dateSubText;
     private ImageView background;
@@ -49,6 +53,27 @@ public class TournamentPageHeader extends AbstractHeader {
         //Get the back button
         backButton = findViewById(R.id.tournament_page_header_back_button);
 
+        createButton = findViewById(R.id.tournament_page_header_create_button);
+        createButton.setText("Create");
+        createButton.setOnClickListener(v -> {
+            TeamHandler.createEmptyTeam(tournament.getId(), false, new TeamHandler.CreateEmptyTeamComplete() {
+                @Override
+                public void success(String teamId, String inviteToken) {
+                    Bundle b = new Bundle();
+                    b.putString("token", inviteToken);
+                    Intent intent = new Intent(context, QRGenActivity.class);
+                    intent.putExtras(b);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        });
+
         //Get and set the dispute button
         disputeButton = findViewById(R.id.tournament_page_header_dispute_button);
         disputeButton.setText("Disputes");
@@ -63,6 +88,7 @@ public class TournamentPageHeader extends AbstractHeader {
 
         if(!tournament.getOrganizer().getId().equals(me.getId())) {
             disputeButton.setVisibility(GONE);
+            createButton.setVisibility(GONE);
         }
 
         //Get tournament Banner
