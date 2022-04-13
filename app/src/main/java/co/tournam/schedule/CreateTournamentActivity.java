@@ -372,16 +372,15 @@ public class CreateTournamentActivity extends AppCompatActivity {
         });
     }
 
-    }
-
     public void setLocation() {
         locationLayout = findViewById(R.id.location_create_tournament);
         DefaultButton locationEntry = new DefaultButton(context, "Pick Location");
         locationLayout.addView(locationEntry);
         locationEntry.button.setOnClickListener(v -> {
-                startActivity(new Intent(CreateTournamentActivity.this,
-                        MapSelectActivity.class));
+            startActivity(new Intent(CreateTournamentActivity.this,
+                    MapSelectActivity.class));
         });
+    }
 
     @Override
     public void onResume() {
