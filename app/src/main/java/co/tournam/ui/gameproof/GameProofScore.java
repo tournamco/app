@@ -14,12 +14,14 @@ public class GameProofScore extends LinearLayout {
     private TextView team1;
     private TextView team2;
     private MatchModel match;
+    private String key;
     private View score;
 
-    public GameProofScore(Context context, MatchModel match) {
+    public GameProofScore(Context context, MatchModel match, String key) {
         super(context);
 
         this.match = match;
+        this.key = key;
 
         build(context);
     }
@@ -36,16 +38,16 @@ public class GameProofScore extends LinearLayout {
         inflater.inflate(R.layout.game_proof_scoreline, this, true);
 
         team1 = findViewById(R.id.game_proof_team1);
-        team1.setText(match.getTeams().get(0).getName());
+        team1.setText(match.getKeys().get(0).equals(key) ? "us" : "them");
 
         score = findViewById(R.id.game_proof_score);
         TextView score1 = findViewById(R.id.score1);
-        score1.setText(match.getScore(match.getKeys().get(0)));
+        score1.setText(Integer.toString(match.getScore(match.getKeys().get(0))));
 
         TextView score2 = findViewById(R.id.score2);
-        score2.setText(match.getScore(match.getKeys().get(1)));
+        score2.setText(Integer.toString(match.getScore(match.getKeys().get(1))));
 
         team2 = findViewById(R.id.game_proof_team2);
-        team2.setText(match.getTeams().get(1).getName());
+        team2.setText(match.getKeys().get(1).equals(key) ? "us" : "them");
     }
 }

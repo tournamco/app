@@ -1,6 +1,8 @@
 package co.tournam.ui.matchlist;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
+import co.tournam.schedule.MatchDetailActivity;
 import co.tournam.schedule.R;
 
 public class SummaryMatchListItem extends LinearLayout {
@@ -44,8 +47,17 @@ public class SummaryMatchListItem extends LinearLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.match_list_item, this, true);
 
+        setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("matchid", match.getId());
+            Intent intent = new Intent(context, MatchDetailActivity.class);
+            intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
+
         colorView = (View)findViewById(R.id.color);
-        setColor(match.getTournament().getColor());
+        //setColor(match.getTournament().getColor());
 
         timeText = (TextView)findViewById(R.id.time);
         setTime(match.getStartDate());

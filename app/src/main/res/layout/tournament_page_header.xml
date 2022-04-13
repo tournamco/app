@@ -14,7 +14,7 @@
             android:id="@+id/tournament_page_header_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:foreground="#44000000"/>
 
         <LinearLayout

@@ -166,7 +166,7 @@ public class ProofHandler {
 
             @Override
             public void success(JSONObject response) throws JSONException {
-                listener.success(ProofHandler.fromJSON(response));
+                listener.success(ProofHandler.fromJSON(response.getJSONObject("proof")));
             }
 
             @Override

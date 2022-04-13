@@ -23,6 +23,7 @@ public class SummaryMatchList extends AbstractMatchList {
 
     private void build(Context context) {
         buildContents(context);
+
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 

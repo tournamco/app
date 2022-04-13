@@ -21,7 +21,8 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@color/gray_400"
-            android:background="@drawable/rounded_corners" />
+            android:background="@drawable/rounded_corners"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/teamscore_icon_name"

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.models.TeamModel;
 import co.tournam.schedule.R;
 
@@ -17,6 +19,7 @@ public class SummaryMatchListItemTeam extends LinearLayout {
 
     private TextView nameText;
     private TextView scoreText;
+    private ImageView iconImage;
 
     public SummaryMatchListItemTeam(Context context, TeamModel team, int score, boolean winner) {
         super(context);
@@ -43,10 +46,12 @@ public class SummaryMatchListItemTeam extends LinearLayout {
 
         nameText = (TextView) findViewById(R.id.name);
         scoreText = (TextView) findViewById(R.id.score);
+        iconImage = (ImageView) findViewById(R.id.logo);
 
         if (team == null) {
             setName("Awaiting opponent");
         } else {
+            new DownloadImageWorker(image -> iconImage.setImageBitmap(image)).execute(team.getIcon());
             setName(team.getName());
         }
 

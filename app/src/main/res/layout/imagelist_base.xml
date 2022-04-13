@@ -19,7 +19,8 @@
             android:background="@drawable/rounded_corners"
             android:clipToOutline="true"
             android:src="@color/gray_400"
-            app:backgroundTint="@null"/>
+            app:backgroundTint="@null"
+            android:scaleType="centerCrop"/>
 
     </LinearLayout>
 

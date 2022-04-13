@@ -38,10 +38,12 @@ public class Score extends LinearLayout{
         inflater.inflate(R.layout.score_cells, this, true);
 
         TextView score1Text = findViewById(R.id.score1);
-        score1Text.setText(scores.get(0));
+        System.out.println("score1Text " + scores.get(0));
+        System.out.println("score2Text " + scores.get(1));
+        score1Text.setText(Integer.toString(scores.get(0)));
 
         TextView score2Text= findViewById(R.id.score2);
-        score2Text.setText(scores.get(1));
+        score2Text.setText(Integer.toString(scores.get(1)));
     }
 
     private int dpToPx(Context context, int dp) {

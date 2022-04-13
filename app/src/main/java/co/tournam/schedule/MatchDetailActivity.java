@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,17 +14,28 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.sql.Array;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.ImageLoader;
+import co.tournam.api.ProofHandler;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
+import co.tournam.api.UserHandler;
+import co.tournam.models.GameModel;
 import co.tournam.models.MatchModel;
+import co.tournam.models.ProofModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
+import co.tournam.models.UserModel;
 import co.tournam.ui.button.DefaultButton;
+import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListHorizontal;
 import co.tournam.ui.table.Table;
 import co.tournam.ui.table.TableRow;
@@ -34,70 +46,31 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class MatchDetailActivity extends AppCompatActivity {
 
-    private final String tournamentID;
-    private final String matchID;
-    Context context;
-    private LinearLayout tournamentLogoLayout;
-    private LinearLayout teamScoreLayout;
-    private LinearLayout firstHeaderLayout;
-    private LinearLayout tableLayout;
-    private LinearLayout secondHeaderLayout;
-    private LinearLayout membersLayout;
-    private LinearLayout thirdHeaderLayout;
-    private LinearLayout proofOfScoreLayout;
+    private Context context;
 
-    private Bitmap bm;
-    private List<Bitmap> proofs = new ArrayList<>();
+    private ImageListHorizontal imageList;
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
-
-    public MatchDetailActivity(String tournamentID, String matchID) {
-        this.tournamentID = tournamentID;
-        this.matchID = matchID;
-    }
+    private TournamentModel tournament;
+    private MatchModel match;
+    private UserModel me;
+    private String teamKey;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
         context = this.getApplicationContext();
 
-        // Open Gallery
-        someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        try {
-                            bm = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                            String id = ImageLoader.uploadImage(bm);
-                            proofs.add(bm);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
-                    }
-                });
+        String matchId = getIntent().getStringExtra("matchid");
 
-        setTournamentLogoLayout();
-        setTeamScoreLayout();
-        setFirstTitleLayout();
-        setTableLayout();
-        setSecondTitleLayout();
-        setMembersLayout();
-        setThirdTitleLayout();
-        setProofOfScoreLayout();
+        loadMatch(matchId);
     }
 
-    public void setTournamentLogoLayout() {
-        tournamentLogoLayout = (LinearLayout) findViewById(R.id.tournamentLogo_match_details);
-
-        TournamentHandler.info(this.tournamentID, new TournamentHandler.InfoComplete() {
+    private void loadMatch(String matchId) {
+        TeamHandler.matchInfo(matchId, new TeamHandler.MatchInfoComplete() {
             @Override
-            public void success(TournamentModel tournament) {
-                tournamentLogoLayout.addView( new TournamentSummaryListItem(
-                        context,
-                        tournament));
+            public void success(MatchModel match) {
+                MatchDetailActivity.this.match = match;
+                loadTournament(match.getTournament().getId());
             }
 
             @Override
@@ -105,51 +78,93 @@ public class MatchDetailActivity extends AppCompatActivity {
                 System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
+    }
+
+    private void loadTournament(String tournamentId) {
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                MatchDetailActivity.this.tournament = tournament;
+                loadMe();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    private void loadMe() {
+        UserHandler.me(new UserHandler.MeCompleted() {
+            @Override
+            public void success(UserModel user) {
+                MatchDetailActivity.this.me = user;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    private void build() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd'th of' MMMM, HH:mm");
+        LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
+        headerContainer.addView(new SmallHeader(context, formatter.format(match.getStartDate()), match.getName(), () -> finish()));
+
+        LinearLayout tournamentBannerLayout = (LinearLayout) findViewById(R.id.banner);
+        tournamentBannerLayout.addView( new TournamentSummaryListItem(context, tournament));
+
+        setTeamScoreLayout();
+
+        LinearLayout membersTitleLayout = (LinearLayout) findViewById(R.id.information_title);
+        membersTitleLayout.addView(new DefaultTitle("Information", context));
+
+        LinearLayout tableLayout = (LinearLayout) findViewById(R.id.information_table);
+        tableLayout.addView(setUpTable(context, match));
+
+        LinearLayout teamsTitleLayout = (LinearLayout) findViewById(R.id.teams_title);
+        teamsTitleLayout.addView(new DefaultTitle("Teams", context));
+
+        setMembersLayout();
+
+        if(isLeaderInMatch()) {
+            LinearLayout proofOfScoreTitleLayout = (LinearLayout) findViewById(R.id.proof_of_score_title);
+            proofOfScoreTitleLayout.addView(new DefaultTitle("Proof of score", context));
+
+            setProofOfScoreLayout();
+        }
+    }
+
+    public boolean isLeaderInMatch() {
+        for(Map.Entry<String, TeamModel> entry : match.getTeams().entrySet()) {
+            if(entry.getValue() == null || entry.getValue().getLeader() == null
+                    || !entry.getValue().getLeader().getId().equals(me.getId())) {
+                continue;
+            }
+
+            this.teamKey = entry.getKey();
+
+            return true;
+        }
+
+        return false;
     }
 
     public void setTeamScoreLayout() {
-        teamScoreLayout = (LinearLayout) findViewById(R.id.matchPoints);
-
-        TeamHandler.matchInfo(this.matchID, new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel match) {
-                teamScoreLayout.addView( new TeamScore(context, match));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
-    }
-
-    public void setFirstTitleLayout() {
-        firstHeaderLayout = (LinearLayout) findViewById(R.id.first_header_information);
-        firstHeaderLayout.addView(new DefaultTitle("Information", context));
-    }
-
-    public void setTableLayout() {
-        tableLayout = (LinearLayout) findViewById(R.id.information_table);
-
-        TeamHandler.matchInfo(this.matchID, new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel match) {
-                tableLayout.addView(setUpTable(context, match));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        LinearLayout teamScoreLayout = (LinearLayout) findViewById(R.id.score);
+        teamScoreLayout.addView( new TeamScore(context, match));
     }
 
     public Table setUpTable(Context context, MatchModel match) {
-        Table matchInfo = new Table(this.context, 4);
-        setTableRow(matchInfo, 0, "Name", match.getName());
-        setTableRow(matchInfo, 1, "Start Date", match.getStartDate().toString());
-        setTableRow(matchInfo, 2, "End Data", match.getEndDate().toString());
-        setTableRow(matchInfo, 3, "Games?", match.getGames().toString()); //TODO The f?
+        Table matchInfo = new Table(this.context, 3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        setTableRow(matchInfo, 0, "Start date", formatter.format(match.getStartDate()));
+        setTableRow(matchInfo, 1, "End date", formatter.format(match.getEndDate()));
+        setTableRow(matchInfo, 2, "Format", "Best of " + match.getGames().size());
 
         return matchInfo;
     }
@@ -159,60 +174,55 @@ public class MatchDetailActivity extends AppCompatActivity {
         ((TableRow) table.getChildAt(index)).setDataText(data);
     }
 
-    public void setSecondTitleLayout() {
-        secondHeaderLayout = (LinearLayout) findViewById(R.id.second_header_teams);
-        secondHeaderLayout.addView(new DefaultTitle("Teams", context));
-    }
-
     public void setMembersLayout() {
-        membersLayout = (LinearLayout) findViewById(R.id.team_members);
-        List<TeamModel> teams = new ArrayList<>();
-
-        TeamHandler.matchInfo(this.matchID, new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel match) {
-                teams.add(match.getTeams().get(0));
-                teams.add(match.getTeams().get(1));
-                membersLayout.addView(new TeamMembers(context, teams));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
-    }
-
-    public void setThirdTitleLayout() {
-        thirdHeaderLayout = (LinearLayout) findViewById(R.id.third_header_proof_of_score);
-        thirdHeaderLayout.addView(new DefaultTitle("Proof of score", context));
+        LinearLayout membersLayout = (LinearLayout) findViewById(R.id.team_members);
+        List<TeamModel> teams = match.getTeams().values().stream().collect(Collectors.toList());
+        membersLayout.addView(new TeamMembers(context, teams));
+        System.out.println("TEAM A: " + teams.get(0));
+        System.out.println("TEAM B: " + teams.get(1));
     }
 
     public void setProofOfScoreLayout() {
-        proofOfScoreLayout = (LinearLayout) findViewById(R.id.proof_of_score);
-
-
-        ImageListHorizontal imageList = new ImageListHorizontal(context, this.proofs);
-        DefaultButton addImage = new DefaultButton(context, "Add Proof");
-
-        proofOfScoreLayout.addView(imageList);
-        proofOfScoreLayout.addView(addImage);
-
-        addImage.button.setOnClickListener(v -> {
-            // Perform action on click
-            openGallery();
+        LinearLayout addProofButtonLayout = (LinearLayout) findViewById(R.id.proof_of_score_button);
+        DefaultButton button = new DefaultButton(context, "Add proof");
+        button.button.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("matchid", match.getId());
+            bundle.putString("teamkey", teamKey);
+            Intent intent = new Intent(context, MatchProofActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
+        addProofButtonLayout.addView(button);
 
+        LinearLayout proofListLayout = (LinearLayout) findViewById(R.id.proof_of_score_list);
+        imageList = new ImageListHorizontal(context, new ArrayList<>());
+        proofListLayout.addView(imageList);
+
+        getProofIds(match.getGames());
     }
 
+    public void getProofIds(List<GameModel> games) {
+        for(GameModel game : games) {
+            if(game.getProofs().get(teamKey) == null) continue;
 
+            ProofHandler.info(game.getProofs().get(teamKey), new ProofHandler.InfoComplete() {
+                @Override
+                public void success(ProofModel proof) {
+                    loadImages(proof.getImages());
+                }
 
-    public void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        someActivityResultLauncher.launch(intent);
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        }
     }
 
-
+    public void loadImages(List<String> images) {
+        for(String imageId : images) {
+            new DownloadImageWorker(image -> imageList.addImage(image)).execute(imageId);
+        }
+    }
 }

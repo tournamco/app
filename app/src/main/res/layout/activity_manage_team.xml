@@ -45,7 +45,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:background="@drawable/change2"
-                android:scaleType="fitXY"/>
+                android:scaleType="centerCrop"/>
 
         </LinearLayout>
 

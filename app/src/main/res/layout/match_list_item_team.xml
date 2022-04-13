@@ -5,7 +5,8 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@color/black"
-        android:foreground="@drawable/rounded_fg"/>
+        android:foreground="@drawable/rounded_fg"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/name"

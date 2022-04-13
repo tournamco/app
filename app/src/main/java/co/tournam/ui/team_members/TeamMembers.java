@@ -34,13 +34,13 @@ public class TeamMembers extends AbstractTeamMembers{
                 teamOne = (TextView)findViewById(R.id.teamOne);
                 LinearLayout leftTeam = (LinearLayout) findViewById(R.id.leftTeam);
                 TeamMembersItem item = new TeamMembersItem(context, team, isItTeamOne, leftTeam);
-                setName(teamOne, team.getName());
+                //setName(teamOne, team.getName());
                 this.addView(item);
             } else {
                 teamTwo = (TextView)findViewById(R.id.teamTwo);
                 LinearLayout rightTeam = (LinearLayout) findViewById(R.id.rightTeam);
                 TeamMembersItem item = new TeamMembersItem(context, team, isItTeamOne, rightTeam);
-                setName(teamTwo, team.getName());
+                //setName(teamTwo, team.getName());
                 this.addView(item);
             }
             isItTeamOne = false;

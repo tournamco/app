@@ -28,17 +28,13 @@ public class TeamMembersItem extends LinearLayout {
     }
 
     private void build(Context context) {
+        if(team == null){
+            return;
+        }
 
-        if(isItTeamOne) {
-            for(UserModel user: team.getMembers()) {
-                TeamMembersItemUser teamMember = new TeamMembersItemUser(context, user, isItTeamOne);
-                specificTeam.addView(teamMember);
-            }
-        } else {
-            for(UserModel user: team.getMembers()) {
-                TeamMembersItemUser teamMember = new TeamMembersItemUser(context, user, isItTeamOne);
-                specificTeam.addView(teamMember);
-            }
+        for(UserModel user : team.getMembers()) {
+            TeamMembersItemUser teamMember = new TeamMembersItemUser(context, user, isItTeamOne);
+            specificTeam.addView(teamMember);
         }
     }
 }

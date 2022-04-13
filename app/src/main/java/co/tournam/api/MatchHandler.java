@@ -19,7 +19,7 @@ import co.tournam.models.TeamModel;
 
 public class MatchHandler {
     public static MatchModel fromJSON(JSONObject match) throws JSONException {
-        JSONObject tournamentData = match.getJSONObject("tournament");;
+        JSONObject tournamentData = match.getJSONObject("tournament");
 
         Map<String, Integer> scores = new ArrayMap<>();
         Map<String, TeamModel> teams = new ArrayMap<>();

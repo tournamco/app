@@ -20,11 +20,11 @@ public class TeamScore extends AbstractTeamScore {
     }
 
     public void buildContents(Context context) {
-        TeamScoreIconItem team1 = new TeamScoreIconItem(context, this.match.getTeams().get(0));
+        TeamScoreIconItem team1 = new TeamScoreIconItem(context, this.match.getTeams().get(this.match.getKeys().get(0)));
         Score score = new Score(context, Arrays.asList(
                 this.match.getScore(this.match.getKeys().get(0)),
                 this.match.getScore(this.match.getKeys().get(1))));
-        TeamScoreIconItem team2 = new TeamScoreIconItem(context, this.match.getTeams().get(1));
+        TeamScoreIconItem team2 = new TeamScoreIconItem(context, this.match.getTeams().get(this.match.getKeys().get(1)));
 
         this.addView(team1);
         this.addView(score);

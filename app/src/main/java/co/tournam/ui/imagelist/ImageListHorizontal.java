@@ -8,7 +8,6 @@ import java.util.List;
 public class ImageListHorizontal extends AbstractImageList {
 
     public ImageListHorizontal(Context context, List<Bitmap> images) {
-
         super(context, images);
 
         build(context);
@@ -26,5 +25,11 @@ public class ImageListHorizontal extends AbstractImageList {
 
             this.addView(item);
         }
+    }
+
+    public void addImage(Bitmap image) {
+        ImageListItem item = new ImageListItem(context, image);
+
+        this.addView(item);
     }
 }

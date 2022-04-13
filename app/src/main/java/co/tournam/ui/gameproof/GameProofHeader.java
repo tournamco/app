@@ -11,12 +11,12 @@ import co.tournam.schedule.R;
 public class GameProofHeader extends LinearLayout {
 
     private TextView textView;
-    private MatchModel match;
+    private int gameIndex;
 
-    public GameProofHeader(Context context, MatchModel match) {
+    public GameProofHeader(Context context, int gameIndex) {
         super(context);
 
-        this.match = match;
+        this.gameIndex = gameIndex;
 
         build(context);
     }
@@ -33,6 +33,6 @@ public class GameProofHeader extends LinearLayout {
         inflater.inflate(R.layout.game_proof_header, this, true);
 
         textView = findViewById(R.id.game_proof_header);
-        textView.setText(match.getName());
+        textView.setText("Game " + (gameIndex + 1));
     }
 }
