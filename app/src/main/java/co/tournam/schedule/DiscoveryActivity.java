@@ -12,11 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import co.tournam.api.ApiErrors;
+import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.Slider;
@@ -50,6 +53,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
         this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.drawable.nfc_icon, null);
 
+
         setMainDiscoveryHeaderLayout();
         setJoinWithQRLayout();
         setJoinWithNFCLayout();
@@ -59,6 +63,30 @@ public class DiscoveryActivity extends AppCompatActivity {
         setNavigationBar();
 
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+
+        if (result != null) {
+            TeamHandler.joinByToken(result.getContents(), new TeamHandler.JoinCompleted() {
+                @Override
+                public void success(String teamId, boolean isLeader) {
+                    Toast.makeText(DiscoveryActivity.this, "You have joined a new team.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        }
+    }
+
+
+
+
 
     public void setMainDiscoveryHeaderLayout() {
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
@@ -73,6 +101,12 @@ public class DiscoveryActivity extends AppCompatActivity {
         DefaultButtonIMG qrJoin = new DefaultButtonIMG(context,
                 "              Join using QR code              ", qr);
         joinWithQRLayout.addView(qrJoin);
+        qrJoin.button.setOnClickListener(v -> {
+            //QR Code scanner
+            IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+            intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+            intentIntegrator.initiateScan();
+        });
     }
 
     public void setJoinWithNFCLayout() {

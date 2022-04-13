@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -19,30 +15,23 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 
 import java.io.IOException;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.api.UploadImageWorker;
-import co.tournam.api.UserHandler;
-import co.tournam.models.members.Members;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.ui.button.DefaultButton;
-import co.tournam.ui.button.DefaultButtonIMG;
 import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.list.UserList;
 import co.tournam.ui.stageoptions.StageOptionBody;
-import co.tournam.ui.textentry.TextEntry;
 import co.tournam.ui.title.DefaultTitle;
 import co.tournam.ui.title.SubtextTitle;
-import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class ManageTeamActivity extends AppCompatActivity {
 
@@ -200,6 +189,26 @@ public class ManageTeamActivity extends AppCompatActivity {
         DefaultButton nfcButton = new DefaultButton(context, "Use NFC");
         buttonsLayout.addView(qrButton);
         buttonsLayout.addView(nfcButton);
+
+        qrButton.button.setOnClickListener(v -> {
+
+            TeamHandler.createInvite(tournament.getId(), team.getID(), new TeamHandler.CreateInviteComplete() {
+                @Override
+                public void success(String token) {
+                    Bundle b = new Bundle();
+                    b.putString("token", token);
+                    Intent intent = new Intent(context, QRGenActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+
+        });
     }
 
     private void setMembers() {

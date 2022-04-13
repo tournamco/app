@@ -3,6 +3,7 @@
     package="co.tournam.schedule">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -63,6 +64,9 @@
             android:exported="true" />
         <activity
             android:name=".MatchProofActivity"
+            android:exported="true" />
+        <activity
+            android:name=".QRGenActivity"
             android:exported="true" />
 <!--        <activity-->
 <!--            android:name=".Login"-->
