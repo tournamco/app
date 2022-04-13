@@ -75,6 +75,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 });
 
         LinearLayout header = findViewById(R.id.header);
+        joinBox = findViewById(R.id.join_box);
         DefaultButtonFilled button = new DefaultButtonFilled(context, "Create");
 
         button.button.setOnClickListener(v -> {
@@ -111,7 +112,6 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void setJoinCheckBox() {
-        joinBox = findViewById(R.id.join_box);
         joinBox.setVisibility(View.VISIBLE);
     }
 
