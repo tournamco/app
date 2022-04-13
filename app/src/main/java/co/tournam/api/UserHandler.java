@@ -19,7 +19,7 @@ public class UserHandler {
         );
     }
 
-    public static void create(String username, String password, String gamerTag, String email, CreateCompleted listener) {
+    public static void create(String icon, String username, String password, String gamerTag, String email, CreateCompleted listener) {
         RequestHandler.request("/user/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
@@ -28,6 +28,7 @@ public class UserHandler {
                 json.put("password", password);
                 json.put("gamertag", gamerTag);
                 json.put("email", email);
+                json.put("icon", icon);
 
                 return json;
             }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -18,9 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
@@ -69,7 +65,12 @@ public class MyProfileActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         try {
                             newUserIcon = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                            new UploadImageWorker(imageId -> this.newUserIconID = imageId).execute(newUserIcon);
+                            new UploadImageWorker(imageId -> {
+                                this.newUserIconID = imageId;
+                                changeIcon();
+                            }).execute(newUserIcon);
+                            ((ImageListItem) userIconLayout.getChildAt(0)).setImage(newUserIcon);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -146,9 +147,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
         ImageButton change = (ImageButton) findViewById(R.id.change_userIcon);
         change.setOnClickListener(v -> {
-            //TODO open gallery to change icon
             openGallery();
-            changeIcon();
+
         });
     }
 

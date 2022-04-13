@@ -91,6 +91,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                         try {
                             bannerImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                             new UploadImageWorker(imageId -> this.bannerID = imageId).execute(bannerImage);
+                            ((ImageListItem) tournamentBannerLayout.getChildAt(0)).setImage(bannerImage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -240,7 +241,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         tournamentGameLengthLayout = (LinearLayout) findViewById(R.id.tournamentGameLength_create_tournament);
         tournamentGameLengthLayout.addView( new StageOptionBody(
                 context,
-                "Game Length    (in min.)", InputType.TYPE_CLASS_TEXT));
+                "Game Length\n(in min.)", InputType.TYPE_CLASS_NUMBER));
     }
 
     public void setTournamentTeamSize() {
