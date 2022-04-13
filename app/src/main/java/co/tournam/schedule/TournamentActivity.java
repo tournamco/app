@@ -49,7 +49,6 @@ public class TournamentActivity extends AppCompatActivity {
         headerContainer.addView(header);
         header.getProfileButton().setOnClickListener(v -> context.startActivity(new Intent(context,
                 MyProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
-
     }
 
     private void listMoreTournaments() {

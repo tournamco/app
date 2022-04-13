@@ -52,9 +52,10 @@ public class TournamentSummaryListItem extends LinearLayout {
         setTournamentBanner(tournament);
         tournamentBanner.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("tournamentId", tournament.getId());
+            bundle.putString("tournamentid", tournament.getId());
             Intent intent = new Intent(getContext(), TournamentPageActivity.class);
             intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(intent);
         });
 

@@ -13,12 +13,16 @@ public class SliderSchedule extends LinearLayout{
     public Button buttonPersonal;
     public Button buttonAll;
     private boolean personalBool;
+    private String valueA;
+    private String valueB;
 
-    public SliderSchedule(Context context, boolean newLocalBool)
+    public SliderSchedule(Context context, boolean newLocalBool, String valueA, String valueB)
     {
         super(context);
 
         this.personalBool = newLocalBool;
+        this.valueA = valueA;
+        this.valueB = valueB;
 
         build(context);
     }
@@ -37,7 +41,9 @@ public class SliderSchedule extends LinearLayout{
         inflater.inflate(R.layout.sample_ui_slider_schedule, this, true);
 
         buttonPersonal = (Button) findViewById(R.id.firstButton_schedule);
+        buttonPersonal.setText(valueA);
         buttonAll = (Button) findViewById(R.id.secondButton_schedule);
+        buttonAll.setText(valueB);
 
         setButtons(personalBool);
     }

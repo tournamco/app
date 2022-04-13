@@ -49,7 +49,7 @@ public class TournamentPageActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         String tournamentID = null;
         if(b != null) {
-            tournamentID = b.getString("tournamentID");
+            tournamentID = b.getString("tournamentid");
         }
         super.onCreate(savedInstanceState);
         context = this.getApplicationContext();

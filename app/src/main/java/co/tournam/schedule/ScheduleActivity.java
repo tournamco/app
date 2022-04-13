@@ -26,12 +26,15 @@ public class ScheduleActivity extends AppCompatActivity {
 
     Context context;
     private LinearLayout mainHeaderLayout;
-    private LinearLayout sliderLayout;
+    private LinearLayout selectSliderLayout;
+    private LinearLayout timeSliderLayout;
     private LinearLayout filterDropdownLayout;
     private LinearLayout matchListLayout;
+    private SummaryMatchList matchList;
     private List<MatchModel> allMatchList;
 
     private boolean isPersonal;
+    private boolean future = true;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +42,16 @@ public class ScheduleActivity extends AppCompatActivity {
         this.context = this.getApplicationContext();
 
         setMainHeaderLayout();
-        setSliderLayout();
+        setSelectSliderLayout();
+        setTimeSliderLayout();
         setFilterDropdownLayout();
-        setMatchListLayout();
         setNavigationBar();
 
+        matchListLayout = (LinearLayout) findViewById(R.id.schedule_match_list);
+        matchList = new SummaryMatchList(context, new ArrayList<>());
+        matchListLayout.addView(matchList);
+
+        loadMatches();
     }
 
     public void setMainHeaderLayout() {
@@ -53,23 +61,48 @@ public class ScheduleActivity extends AppCompatActivity {
         mainHeaderLayout.addView(header);
     }
 
-    public void setSliderLayout() {
-
-        sliderLayout = (LinearLayout) findViewById(R.id.schedule_slider);
-        SliderSchedule slider = new SliderSchedule(context, false);
-        sliderLayout.addView(slider);
+    public void setSelectSliderLayout() {
+        selectSliderLayout = (LinearLayout) findViewById(R.id.schedule_slider);
+        SliderSchedule slider = new SliderSchedule(context, false, "Personal", "All");
+        selectSliderLayout.addView(slider);
 
         slider.buttonAll.setOnClickListener(v -> {
             slider.setButtons(false);
             this.isPersonal = slider.getBool();
+            matchList.clear();
+            loadMatches();
         });
 
         slider.buttonPersonal.setOnClickListener(v -> {
             slider.setButtons(true);
             this.isPersonal = slider.getBool();
+            matchList.clear();
+            loadMatches();
         });
 
         this.isPersonal = slider.getBool();
+    }
+
+    public void setTimeSliderLayout() {
+        timeSliderLayout = (LinearLayout) findViewById(R.id.time_slider);
+        SliderSchedule slider = new SliderSchedule(context, true, "Upcoming", "Results");
+        timeSliderLayout.addView(slider);
+
+        slider.buttonAll.setOnClickListener(v -> {
+            slider.setButtons(false);
+            this.future = slider.getBool();
+            matchList.clear();
+            loadMatches();
+        });
+
+        slider.buttonPersonal.setOnClickListener(v -> {
+            slider.setButtons(true);
+            this.future = slider.getBool();
+            matchList.clear();
+            loadMatches();
+        });
+
+        this.future = slider.getBool();
     }
 
     public void setFilterDropdownLayout() {
@@ -77,21 +110,16 @@ public class ScheduleActivity extends AppCompatActivity {
         filterDropdownLayout = (LinearLayout) findViewById(R.id.schedule_filter_dropdown);
         FilterDropdown filter = new FilterDropdown(context);
         filterDropdownLayout.addView(filter);
-
     }
 
-    public void setMatchListLayout() {
-
-        matchListLayout = (LinearLayout) findViewById(R.id.schedule_match_list);
-
-
+    public void loadMatches() {
         if (this.isPersonal) {
-
-            TeamHandler.listMatches(0, 10, new TeamHandler.ListMatchesComplete() {
+            // TODO: Get Personal Matches api call
+        } else {
+            TeamHandler.listMatches(this.future,0, 10, new TeamHandler.ListMatchesComplete() {
                 @Override
                 public void success(List<MatchModel> matches) {
-                    SummaryMatchList matchList  = new SummaryMatchList(context, matches);
-                    matchListLayout.addView(matchList);
+                    matchList.addMatches(matches);
                 }
 
                 @Override
@@ -99,35 +127,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     System.err.println("API_ERROR: " + error.name() + " - " + message);
                 }
             });
-
-        } else {
-            allMatchList = new ArrayList<>();
-            TeamHandler.listTournaments(0, 10, new TeamHandler.ListTournamentsComplete() {
-                @Override
-                public void success(List<TournamentModel> tournaments) {
-                    for (TournamentModel tournament : tournaments) {
-                        TournamentHandler.listMatches(tournament.getId(), true, new TournamentHandler.ListMatchesComplete() {
-                            @Override
-                            public void success(List<MatchModel> matches) {
-                                allMatchList.addAll(matches);
-                            }
-
-                            @Override
-                            public void failure(ApiErrors error, String message) {
-                                System.err.println("API_ERROR: " + error.name() + " - " + message);
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
-            SummaryMatchList matchList  = new SummaryMatchList(context, allMatchList);
-            matchListLayout.addView(matchList);
-
         }
     }
 

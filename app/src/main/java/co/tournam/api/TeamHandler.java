@@ -204,13 +204,14 @@ public class TeamHandler {
         void success();
     }
 
-    public static void listMatches(int pageNumber, int pageSize, ListMatchesComplete listener) {
+    public static void listMatches(boolean future, int pageNumber, int pageSize, ListMatchesComplete listener) {
         RequestHandler.request("/team/match/list", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
                 json.put("pageNumber", pageNumber);
                 json.put("pageSize", pageSize);
+                json.put("future", future);
 
                 return json;
             }

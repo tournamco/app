@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ public class SummaryMatchList extends AbstractMatchList {
 
     private void build(Context context) {
         buildContents(context);
+        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
     private void buildContents(Context context) {
@@ -30,5 +32,19 @@ public class SummaryMatchList extends AbstractMatchList {
 
             this.addView(item);
         }
+    }
+
+    public void addMatches(List<MatchModel> matches) {
+        for(MatchModel match : matches) {
+            this.matches.add(match);
+            SummaryMatchListItem item = new SummaryMatchListItem(this.getContext(), match);
+
+            this.addView(item);
+        }
+    }
+
+    public void clear() {
+        this.matches.clear();
+        this.removeAllViews();
     }
 }
