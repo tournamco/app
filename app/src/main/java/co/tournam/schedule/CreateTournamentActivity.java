@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -278,6 +280,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         stageOptionLayout = (LinearLayout) findViewById(R.id.stageOptions_create_tournament);
         StageOption stage = new StageOption(context);
+        stage.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                stage.setOptions(context);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
         stageOptionLayout.addView(stage);
 
     }
@@ -285,6 +297,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
     public void addStageOption() {
 
         StageOption stage = new StageOption(context);
+        stage.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                stage.setOptions(context);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
         stageOptionLayout.addView(stage);
 
     }
@@ -308,9 +330,17 @@ public class CreateTournamentActivity extends AppCompatActivity {
     }
 
     public void setLocation() {
+
+        
         locationLayout = findViewById(R.id.location_create_tournament);
-        locationLayout.addView(new StageOptionBody(context, "Location"));
-        ((StageOptionBody) locationLayout.getChildAt(0)).setEntryHint("If not online...");
+        DefaultButton locationEntry = new DefaultButton(context, "Select Location");
+//        StageOptionBody locationEntry = new StageOptionBody(context, "Location");
+        locationLayout.addView(locationEntry);
+        locationEntry.button.setOnClickListener(v -> {
+            startActivity(new Intent(CreateTournamentActivity.this, MapSelectActivity.class));
+        });
+
+//        ((StageOptionBody) locationLayout.getChildAt(0)).setEntryHint("If not online...");
     }
 
     public void openGallery() {

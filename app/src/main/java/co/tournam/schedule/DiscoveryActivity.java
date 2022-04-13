@@ -1,14 +1,18 @@
 package co.tournam.schedule;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,6 +39,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     Drawable nfc;
     Drawable qr;
+    protected LocationManager locationManager;
     private LinearLayout mainDiscoveryHeaderLayout;
     private LinearLayout joinWithQRLayout;
     private LinearLayout joinWithNFCLayout;
@@ -42,7 +47,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     private LinearLayout tournamentHeaderLayout;
     private LinearLayout tournamentListLayout;
     private boolean isLocal;
-
+    private String currentLocation = "0, 0";
     private TournamentSummaryListJoin Thelist;
 
 
@@ -53,6 +58,18 @@ public class DiscoveryActivity extends AppCompatActivity {
         this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
         this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.drawable.nfc_icon, null);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            ActivityCompat.requestPermissions(DiscoveryActivity.this,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, 12);
+
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, location -> {
+            this.currentLocation = location.getLatitude() + ", " + location.getLongitude();
+
+        });
 
         setMainDiscoveryHeaderLayout();
         setJoinWithQRLayout();
@@ -61,6 +78,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         setTournamentHeaderLayout();
         setTournamentListLayout();
         setNavigationBar();
+
 
     }
 
@@ -83,10 +101,6 @@ public class DiscoveryActivity extends AppCompatActivity {
             });
         }
     }
-
-
-
-
 
     public void setMainDiscoveryHeaderLayout() {
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
@@ -118,7 +132,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void setLocalOnlineSliderLayout() {
         localOnlineSliderLayout = (LinearLayout) findViewById(R.id.discovery_slider);
-        Slider slider = new Slider(context, true);
+        Slider slider = new Slider(context, false);
         localOnlineSliderLayout.addView(slider);
         slider.buttonLocal.setOnClickListener(v -> {
             slider.setButtons(true);
@@ -150,7 +164,6 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void setTournaments(List<TournamentModel> tournaments) {
-        Log.wtf("Set Tournaments was called.", "Executed");
         Thelist.clearList();
         Thelist.addTournaments(tournaments);
     }
@@ -161,9 +174,6 @@ public class DiscoveryActivity extends AppCompatActivity {
         TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {
-
-                Toast.makeText(context, "Successful retrieval", Toast.LENGTH_LONG).show();
-                Log.wtf("Gotten List length", String.valueOf(tournaments.size()));
                 setTournaments(tournaments);
             }
 
@@ -181,7 +191,6 @@ public class DiscoveryActivity extends AppCompatActivity {
                 new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {
-                Toast.makeText(context, "Successful retrieval", Toast.LENGTH_LONG).show();
                 setTournaments(tournaments);
             }
 
@@ -195,7 +204,8 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void updateList() {
         if(this.isLocal) {
-            getOffline(context, "TODO LOCATION");
+            Log.wtf("Current Location", this.currentLocation);
+            getOffline(context, this.currentLocation);
         } else {
             getOnline(context);
         }

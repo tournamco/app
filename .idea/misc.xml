@@ -164,6 +164,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_login.xml" value="0.20923913043478262" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_main.xml" value="0.17046605876393112" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_manage_team.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_map_select.xml" value="0.254981884057971" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_match_details.xml" value="0.20923913043478262" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_match_proof.xml" value="0.37395833333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_my_profile.xml" value="0.3625" />
@@ -171,6 +172,7 @@
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_register.xml" value="0.3625" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_schedule.xml" value="0.4300884955752212" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_stage_view.xml" value="0.35052083333333334" />
+        <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_test_location.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_tournament.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/activity_tournament_page.xml" value="0.1" />
         <entry key="..\:/Users/Leo/Documents/Code/DBL App Dev/app/app/src/main/res/layout/change_password_object.xml" value="0.37395833333333334" />

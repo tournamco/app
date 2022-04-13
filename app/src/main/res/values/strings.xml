@@ -13,6 +13,8 @@
     <string name="title_Tournament">Tournament</string>
     <string name="title_Schedule">Schedule</string>
 
+    <string name="map_api_key" translatable="false">AIzaSyAkIgN4iPquFuwncUBo4sN7C8U-Hv6UbcU</string>
+
 
     <string-array name="stage_options">
         <item>Pools</item>
