@@ -42,12 +42,10 @@ import co.tournam.ui.stageoptions.StageOptionColorPicker;
 import co.tournam.ui.title.DefaultTitle;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-
 public class CreateTournamentActivity extends AppCompatActivity {
 
-    //Declarations
-    Context context;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
+    private Context context;
     private LinearLayout tournamentBannerLayout;
     private LinearLayout firstHeaderLayout;
     private LinearLayout secondHeaderLayout;
@@ -142,6 +140,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
 
     public void createTournament() {
+        System.out.println("Tournament " + this.isOnline + " - " + onlineBox.isChecked());
         if (this.isOnline) {
             TournamentHandler.createOnline(this.bannerID, this.name, this.color, this.game, this.teamSize,
                     this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
@@ -150,7 +149,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
-
                 @Override
                 public void failure(ApiErrors error, String message) {
                     Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
@@ -165,14 +163,12 @@ public class CreateTournamentActivity extends AppCompatActivity {
                     Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
-
                 @Override
                 public void failure(ApiErrors error, String message) {
                     Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
                     System.err.println("API_ERROR: " + error.name() + " - " + message);
                 }
             });
-
         }
     }
 
@@ -200,13 +196,15 @@ public class CreateTournamentActivity extends AppCompatActivity {
 //        Log.w("Game Length", String.valueOf(this.gameLength));
         Log.w("isOnline:", String.valueOf(this.isOnline));
         Log.w("isPublic:", String.valueOf(this.isPublic));
-
+//        Log.w("isOnline:", String.valueOf(this.isOnline));
+//        Log.w("isPublic:", String.valueOf(this.isPublic));
     }
 
 
     public void setTournamentBanner() {
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner_create_tournament);
         ImageListItem image;
+
         if (this.bannerID.equals("")) {
             image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.imagelist_add_plus));
@@ -220,21 +218,16 @@ public class CreateTournamentActivity extends AppCompatActivity {
         selectImage.button.setOnClickListener(v -> {
             openGallery();
         });
-
     }
 
     public void setTournamentName() {
         tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName_create_tournament);
-        tournamentNameLayout.addView( new StageOptionBody(
-                context,
-                "Name",  InputType.TYPE_CLASS_TEXT));
+        tournamentNameLayout.addView( new StageOptionBody(context,"Name", InputType.TYPE_CLASS_TEXT));
     }
 
     public void setTournamentGameName() {
         tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName_create_tournament);
-        tournamentGameNameLayout.addView( new StageOptionBody(
-                context,
-                "Game Name", InputType.TYPE_CLASS_TEXT));
+        tournamentGameNameLayout.addView( new StageOptionBody(context,"Game Name", InputType.TYPE_CLASS_TEXT));
     }
 
     private void setTournamentGameLength() {
@@ -246,9 +239,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setTournamentTeamSize() {
         tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize_create_tournament);
-        tournamentTeamSizeLayout.addView( new StageOptionBody(
-                context,
-                "Team Size", InputType.TYPE_CLASS_TEXT));
+        tournamentTeamSizeLayout.addView( new StageOptionBody(context,"Team Size", InputType.TYPE_CLASS_TEXT));
     }
 
     public void setTournamentColorPicker() {
@@ -265,9 +256,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, R.color.gray_400, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
-
-            }
+            public void onCancel(AmbilWarnaDialog dialog) {}
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
@@ -354,8 +343,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
         stageOptionLayout.addView(stage);
         updateParticipants();

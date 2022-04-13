@@ -85,7 +85,6 @@ public class TournamentHandler {
                 json.put("teamSize", teamSize);
                 json.put("isPublic", isPublic);
                 json.put("gameLength", gameLength);
-                json.put("online", true);
                 JSONArray stagesData = new JSONArray();
 
                 for(TournamentModel.CreateStageModel stage : stages) {
