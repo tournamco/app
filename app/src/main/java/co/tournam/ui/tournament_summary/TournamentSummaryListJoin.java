@@ -22,16 +22,16 @@ public class TournamentSummaryListJoin extends AbstractTournamentSummary{
 
     private void buildContents(Context context) {
         for(TournamentModel tournament : this.tournaments) {
-            TournamentSummaryListJoinItem item = new TournamentSummaryListJoinItem(context, tournament);
+            TournamentSummaryListJoinItem item = new TournamentSummaryListJoinItem(context, tournament, null);
 
             this.addView(item);
         }
     }
 
 
-    public void addTournaments(List<TournamentModel> Newtournaments) {
+    public void addTournaments(List<TournamentModel> Newtournaments, TournamentModel.TournamentLocation location) {
         for(TournamentModel tournament : Newtournaments) {
-            TournamentSummaryListJoinItem item = new TournamentSummaryListJoinItem(this.context, tournament);
+            TournamentSummaryListJoinItem item = new TournamentSummaryListJoinItem(this.context, tournament, location);
 
             this.addView(item);
         }

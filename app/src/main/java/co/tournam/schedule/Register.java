@@ -39,11 +39,7 @@ public class Register extends AppCompatActivity {
         registerButton = findViewById(R.id.SignUp);
         loginButton = findViewById(R.id.LogIn);
 
-
         progressBar = findViewById(R.id.progressBar);
-
-
-
 
         registerButton.setOnClickListener(view -> {
             String sEmail = email.getText().toString().trim();

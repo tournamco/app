@@ -49,6 +49,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     private LinearLayout localOnlineSliderLayout;
     private LinearLayout tournamentHeaderLayout;
     private LinearLayout tournamentListLayout;
+    private TournamentModel.TournamentLocation location;
     private boolean isLocal;
     private String currentLocation = "0, 0";
     private TournamentSummaryListJoin Thelist;
@@ -73,7 +74,7 @@ public class DiscoveryActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 DiscoveryActivity.this.currentLocation = location.getLatitude() + ", " + location.getLongitude();
-
+                DiscoveryActivity.this.location = new TournamentModel.TournamentLocation((float)location.getLatitude(), (float)location.getLongitude());
             }
             @Override
             public void onProviderEnabled(@NonNull String provider) {
@@ -186,7 +187,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void setTournaments(List<TournamentModel> tournaments) {
         Thelist.clearList();
-        Thelist.addTournaments(tournaments);
+        Thelist.addTournaments(tournaments, location);
     }
 
 

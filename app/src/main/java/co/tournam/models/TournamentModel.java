@@ -20,12 +20,12 @@ public class TournamentModel {
     private int teamSize;
     private boolean isPublic;
     private String name;
-    private String location;
+    private TournamentLocation location;
 
     public TournamentModel(String id, String name, String game, List<String> teams,
                            List<StageModel> stages, UserModel organizer, boolean isPublic,
                            int color, int teamSize, int gameLength, int currentStage, String banner,
-                           String location, boolean online) {
+                           TournamentLocation location, boolean online) {
         this.id = id;
         this.name = name;
         this.game = game;
@@ -108,9 +108,7 @@ public class TournamentModel {
         this.name = name;
     }
 
-    public String getLocation() { return location; }
-
-    public void setLocation(String location){ this.location = location;}
+    public TournamentLocation getLocation() { return location; }
 
     public int getCurrentStage() {
         return currentStage;
@@ -162,6 +160,24 @@ public class TournamentModel {
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM");
 
         return formatter.format(stages.get(stages.size()-1).getMaximalDate());
+    }
+
+    public static class TournamentLocation {
+        private float longitude;
+        private float latitude;
+
+        public TournamentLocation(float longitude, float latitude) {
+            this.longitude = longitude;
+            this.latitude = latitude;
+        }
+
+        public float getLongitude() {
+            return longitude;
+        }
+
+        public float getLatitude() {
+            return latitude;
+        }
     }
 
     public static class CreateStageModel {
