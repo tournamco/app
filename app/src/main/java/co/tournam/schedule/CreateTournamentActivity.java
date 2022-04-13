@@ -45,7 +45,9 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateTournamentActivity extends AppCompatActivity {
 
+    //Declarations
     Context context;
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
     private LinearLayout tournamentBannerLayout;
     private LinearLayout firstHeaderLayout;
     private LinearLayout secondHeaderLayout;
@@ -54,15 +56,13 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private LinearLayout tournamentTeamSizeLayout;
     private LinearLayout tournamentColorPickerLayout;
     private LinearLayout stageOptionLayout;
-    private LinearLayout createButtonLayout;
+    private LinearLayout tournamentGameLengthLayout;
     private LinearLayout addButtonLayout;
-    private LinearLayout backButtonLayout;
     private LinearLayout locationLayout;
     private TextView numberOfWinners;
     private boolean participantsHasError;
-
     private String bannerID = "";
-    private boolean isOnline;
+    private boolean isOnline = false;
     private String name;
     private int color;
     private String game;
@@ -71,10 +71,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private int gameLength;
     private List<TournamentModel.CreateStageModel> stages;
     private String location = "no location";
-
     private CheckBox onlineBox;
     private CheckBox publicBox;
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
     private Bitmap bannerImage;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +124,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setTournamentBanner();
         setTournamentName();
         setTournamentGameName();
+        setTournamentGameLength();
         setTournamentTeamSize();
         setTournamentColorPicker();
         setFirstHeader();
@@ -138,7 +137,9 @@ public class CreateTournamentActivity extends AppCompatActivity {
         onlineBox = findViewById(R.id.isOnline_checkbox_create_tournament);
         publicBox = findViewById(R.id.isPublic_checkbox_create_tournament);
     }
-    
+
+
+
     public void createTournament() {
         if (this.isOnline) {
             TournamentHandler.createOnline(this.bannerID, this.name, this.color, this.game, this.teamSize,
@@ -178,14 +179,11 @@ public class CreateTournamentActivity extends AppCompatActivity {
         this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
         this.game = ((StageOptionBody) tournamentGameNameLayout.getChildAt(0)).getEntry();
         this.teamSize = Integer.parseInt(((StageOptionBody) tournamentTeamSizeLayout.getChildAt(0)).getEntry());
-        this.location = ((StageOptionBody) locationLayout.getChildAt(0)).getEntry();
+        this.gameLength = Integer.parseInt(((StageOptionBody) tournamentGameLengthLayout.getChildAt(0)).getEntry());
 
         for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
             this.stages.add(((StageOption) stageOptionLayout.getChildAt(i)).createStageFromEntry());
         }
-
-        //TODO Change once we understand what game length means
-        this.gameLength = 20;
 
         this.isOnline = onlineBox.isChecked();
         this.isPublic = publicBox.isChecked();
@@ -199,8 +197,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
 //        Log.w("Location:", this.location);
 //        Log.w("Stage Count:", String.valueOf(this.stages.size()));
 //        Log.w("Game Length", String.valueOf(this.gameLength));
-//        Log.w("isOnline:", String.valueOf(this.isOnline));
-//        Log.w("isPublic:", String.valueOf(this.isPublic));
+        Log.w("isOnline:", String.valueOf(this.isOnline));
+        Log.w("isPublic:", String.valueOf(this.isPublic));
 
     }
 
@@ -236,6 +234,13 @@ public class CreateTournamentActivity extends AppCompatActivity {
         tournamentGameNameLayout.addView( new StageOptionBody(
                 context,
                 "Game Name", InputType.TYPE_CLASS_TEXT));
+    }
+
+    private void setTournamentGameLength() {
+        tournamentGameLengthLayout = (LinearLayout) findViewById(R.id.tournamentGameLength_create_tournament);
+        tournamentGameLengthLayout.addView( new StageOptionBody(
+                context,
+                "Game Length    (in min.)", InputType.TYPE_CLASS_TEXT));
     }
 
     public void setTournamentTeamSize() {

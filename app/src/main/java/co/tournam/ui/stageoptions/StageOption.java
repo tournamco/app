@@ -57,9 +57,11 @@ public class StageOption extends LinearLayout {
         this.addView(noOfParticipants);
 
         dateSpan = new StageOptionTime(context, "Date", InputType.TYPE_DATETIME_VARIATION_DATE);
+        dateSpan.setHints("2022-04-20");
         this.addView(dateSpan);
 
         timeSpan = new StageOptionTime(context, "Time", InputType.TYPE_DATETIME_VARIATION_TIME);
+        timeSpan.setHints("06:00");
         this.addView(timeSpan);
 
         this.addView(options);

@@ -1,7 +1,6 @@
 package co.tournam.ui.stageoptions;
 
 import android.content.Context;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -54,4 +53,9 @@ public class StageOptionTime extends LinearLayout {
     public String getFirstEntry() { return this.fromEdit.getText().toString(); }
 
     public String getSecondEntry() { return this.toEdit.getText().toString(); }
+
+    public void setHints(String hint) {
+        fromEdit.setHint(hint);
+        toEdit.setHint(hint);
+    }
 }
