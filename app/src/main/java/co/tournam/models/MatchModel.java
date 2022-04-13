@@ -19,11 +19,13 @@ public class MatchModel {
     private LocalDateTime endDate;
     private MatchTournamentModel tournament;
     private Map<String, Integer> scores;
+    private Map<String, Boolean> finished;
     private List<String> keys;
 
     public MatchModel(String id, String name, LocalDateTime startDate, LocalDateTime endDate,
                       MatchTournamentModel tournament, Map<String, Integer> scores,
-                      List<String> keys, List<GameModel> games, Map<String, TeamModel> teams) {
+                      List<String> keys, List<GameModel> games, Map<String, Boolean> finished,
+                      Map<String, TeamModel> teams) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -33,6 +35,7 @@ public class MatchModel {
         this.keys = keys;
         this.games = games;
         this.teams = teams;
+        this.finished = finished;
     }
 
     public int getScore(String key) {
@@ -155,6 +158,10 @@ public class MatchModel {
 
     public void setGames(List<GameModel> games) {
         this.games = games;
+    }
+
+    public Map<String, Boolean> getFinished() {
+        return finished;
     }
 
     public static class MatchTournamentModel {

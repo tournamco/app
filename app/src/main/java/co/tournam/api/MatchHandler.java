@@ -23,11 +23,13 @@ public class MatchHandler {
 
         Map<String, Integer> scores = new ArrayMap<>();
         Map<String, TeamModel> teams = new ArrayMap<>();
+        Map<String, Boolean> finished = new ArrayMap<>();
         List<String> keys = new ArrayList<>();
 
         JSONArray keysData = match.getJSONArray("keys");
         JSONObject scoresData = match.getJSONObject("scores");
         JSONObject teamsData = match.getJSONObject("teams");
+        JSONObject finishedData = match.getJSONObject("finished");
 
         for(int i = 0; i < keysData.length(); i++) {
             String key = keysData.getString(i);
@@ -39,6 +41,7 @@ public class MatchHandler {
             else {
                 teams.put(key, null);
             }
+            finished.put(key, finishedData.getBoolean(key));
         }
 
         List<GameModel> games = new ArrayList<>();
@@ -58,7 +61,7 @@ public class MatchHandler {
                         tournamentData.getString("name"),
                         tournamentData.getInt("color")
                 ),
-                scores, keys, games, teams
+                scores, keys, games, finished, teams
         );
     }
 }

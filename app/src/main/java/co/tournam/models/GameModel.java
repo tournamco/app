@@ -37,12 +37,18 @@ public class GameModel {
         List<String> winners = new ArrayList<>();
         int topScore = -1;
 
+        boolean allZeros = true;
+
         if(scores == null) {
             return winners;
         }
 
         for(String team : scores.keySet()) {
             int score = scores.get(team);
+
+            if(score > 0) {
+                allZeros = false;
+            }
 
             if(score == topScore) {
                 winners.add(team);
@@ -51,6 +57,10 @@ public class GameModel {
                 winners.clear();
                 winners.add(team);
             }
+        }
+
+        if(allZeros) {
+            winners.clear();
         }
 
         return winners;

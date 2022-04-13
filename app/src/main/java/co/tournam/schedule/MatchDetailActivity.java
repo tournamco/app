@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import co.tournam.api.ApiErrors;
@@ -63,6 +65,19 @@ public class MatchDetailActivity extends AppCompatActivity {
         String matchId = getIntent().getStringExtra("matchid");
 
         loadMatch(matchId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LinearLayout addProofButtonLayout = (LinearLayout) findViewById(R.id.proof_of_score_button);
+        if(match != null && teamKey != null && match.getFinished().get(teamKey)) {
+            addProofButtonLayout.removeAllViews();
+            TextView alreadyFinished = new TextView(context);
+            alreadyFinished.setText("Already finished");
+            addProofButtonLayout.addView(alreadyFinished);
+        }
     }
 
     private void loadMatch(String matchId) {
@@ -184,16 +199,23 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     public void setProofOfScoreLayout() {
         LinearLayout addProofButtonLayout = (LinearLayout) findViewById(R.id.proof_of_score_button);
-        DefaultButton button = new DefaultButton(context, "Add proof");
-        button.button.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("matchid", match.getId());
-            bundle.putString("teamkey", teamKey);
-            Intent intent = new Intent(context, MatchProofActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        });
-        addProofButtonLayout.addView(button);
+        if(match.getFinished().get(teamKey)) {
+            TextView alreadyFinished = new TextView(context);
+            alreadyFinished.setText("Already finished");
+            addProofButtonLayout.addView(alreadyFinished);
+        }
+        else {
+            DefaultButton button = new DefaultButton(context, "Add proof");
+            button.button.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString("matchid", match.getId());
+                bundle.putString("teamkey", teamKey);
+                Intent intent = new Intent(context, MatchProofActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            });
+            addProofButtonLayout.addView(button);
+        }
 
         LinearLayout proofListLayout = (LinearLayout) findViewById(R.id.proof_of_score_list);
         imageList = new ImageListHorizontal(context, new ArrayList<>());

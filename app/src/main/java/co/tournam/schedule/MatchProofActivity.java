@@ -110,8 +110,7 @@ public class MatchProofActivity extends AppCompatActivity {
 
         DefaultButton finishButton = new DefaultButton(context, "Finish");
         finishButton.button.setOnClickListener(v -> {
-            // TODO: send finish match call
-            finish();
+            finishMatch();
         });
 
         LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
@@ -133,6 +132,20 @@ public class MatchProofActivity extends AppCompatActivity {
 
             checkGameProofSize();
         }
+    }
+
+    private void finishMatch() {
+        TeamHandler.finishMatch(match.getId(), new TeamHandler.FinishMatchComplete() {
+            @Override
+            public void success() {
+                finish();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
     }
 
     private void createProof(int gameIndex) {
