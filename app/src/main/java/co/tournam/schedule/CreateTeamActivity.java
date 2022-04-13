@@ -113,7 +113,6 @@ public class CreateTeamActivity extends AppCompatActivity {
     private void setJoinCheckBox() {
         joinBox = findViewById(R.id.join_box);
         joinBox.setVisibility(View.VISIBLE);
-        willJoin = joinBox.isChecked();
     }
 
     private void compareWithMe() {
@@ -132,11 +131,11 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void createTeam() {
         if (iconId != null) {
+            willJoin = joinBox.isChecked();
             TeamHandler.createNormalTeam(tournamentId, willJoin, iconId, isPublic, teamName, new TeamHandler.CreateNormalTeamComplete() {
                 @Override
                 public void success(String teamId) {
                     Toast.makeText(context, "Team Created", Toast.LENGTH_LONG).show();
-                    finish();
                     Bundle bundle = new Bundle();
                     bundle.putString("teamid", teamId);
                     Intent intent = new Intent(context, OurTeamActivity.class);
