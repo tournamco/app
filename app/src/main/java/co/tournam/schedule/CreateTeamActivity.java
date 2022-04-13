@@ -8,25 +8,23 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+
 import co.tournam.api.ApiErrors;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.imagelist.ImageListItem;
-import co.tournam.ui.stageoptions.StageOption;
 import co.tournam.ui.stageoptions.StageOptionBody;
 
 public class CreateTeamActivity extends AppCompatActivity {
@@ -35,7 +33,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private String tournamentId;
     private Bitmap iconImage;
-
+    private LinearLayout iconLayout;
     private LinearLayout nameLayout;
 
     private String iconId;
@@ -60,6 +58,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                         try {
                             iconImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                             new UploadImageWorker(imageId -> this.iconId = imageId).execute(iconImage);
+                            ((ImageListItem) iconLayout.getChildAt(0)).setImage(iconImage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -102,7 +101,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void setIconField() {
-        LinearLayout iconLayout = findViewById(R.id.icon);
+        iconLayout = findViewById(R.id.icon);
         ImageListItem image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.imagelist_add_plus));
         DefaultButton selectImage = new DefaultButton(context, "Upload");

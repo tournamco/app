@@ -9,7 +9,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -226,7 +225,6 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void updateList() {
         if(this.isLocal) {
-            Log.wtf("Current Location", this.currentLocation);
             getOffline(context, this.currentLocation);
         } else {
             getOnline(context);
