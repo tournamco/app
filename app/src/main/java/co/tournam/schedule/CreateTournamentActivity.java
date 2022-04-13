@@ -3,6 +3,7 @@ package co.tournam.schedule;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -69,7 +70,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private boolean isPublic;
     private int gameLength;
     private List<TournamentModel.CreateStageModel> stages;
-    private String location;
+    private String location = "no location";
 
     private CheckBox onlineBox;
     private CheckBox publicBox;
@@ -189,17 +190,17 @@ public class CreateTournamentActivity extends AppCompatActivity {
         this.isOnline = onlineBox.isChecked();
         this.isPublic = publicBox.isChecked();
 
-        Log.w("Updated:", "True");
-        Log.w("Banner ID:", this.bannerID);
-        Log.w("Name:", this.name);
-        Log.w("Color:", String.valueOf(this.color));
-        Log.w("Game:", this.game);
-        Log.w("Team Size:", String.valueOf(this.teamSize));
-        Log.w("Location:", this.location);
-        Log.w("Stage Count:", String.valueOf(this.stages.size()));
-        Log.w("Game Length", String.valueOf(this.gameLength));
-        Log.w("isOnline:", String.valueOf(this.isOnline));
-        Log.w("isPublic:", String.valueOf(this.isPublic));
+//        Log.w("Updated:", "True");
+//        Log.w("Banner ID:", this.bannerID);
+//        Log.w("Name:", this.name);
+//        Log.w("Color:", String.valueOf(this.color));
+//        Log.w("Game:", this.game);
+//        Log.w("Team Size:", String.valueOf(this.teamSize));
+//        Log.w("Location:", this.location);
+//        Log.w("Stage Count:", String.valueOf(this.stages.size()));
+//        Log.w("Game Length", String.valueOf(this.gameLength));
+//        Log.w("isOnline:", String.valueOf(this.isOnline));
+//        Log.w("isPublic:", String.valueOf(this.isPublic));
 
     }
 
@@ -369,21 +370,34 @@ public class CreateTournamentActivity extends AppCompatActivity {
         button.button.setOnClickListener(v -> {
             addStageOption();
         });
+    }
 
     }
 
     public void setLocation() {
-
-        
         locationLayout = findViewById(R.id.location_create_tournament);
-        DefaultButton locationEntry = new DefaultButton(context, "Select Location");
-//        StageOptionBody locationEntry = new StageOptionBody(context, "Location");
+        DefaultButton locationEntry = new DefaultButton(context, "Pick Location");
         locationLayout.addView(locationEntry);
         locationEntry.button.setOnClickListener(v -> {
-            startActivity(new Intent(CreateTournamentActivity.this, MapSelectActivity.class));
+                startActivity(new Intent(CreateTournamentActivity.this,
+                        MapSelectActivity.class));
         });
 
-//        ((StageOptionBody) locationLayout.getChildAt(0)).setEntryHint("If not online...");
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = getSharedPreferences("LocationInfo", 0);
+        this.location = sp.getString("location", "no location");
+        Log.wtf("Gotten Location", this.location);
+        setLocationButton(sp.getString("location", "no location"));
+    }
+
+    public void setLocationButton(String text) {
+        if (!text.equals("no location")) {
+            ((DefaultButton) locationLayout.getChildAt(0)).button.setText("Loc. Picked");
+        } else {
+            ((DefaultButton) locationLayout.getChildAt(0)).button.setText("Pick Location.");
+        }
     }
 
     public void openGallery() {

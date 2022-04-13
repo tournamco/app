@@ -1,9 +1,11 @@
 package co.tournam.schedule;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,18 +24,36 @@ import com.google.android.gms.tasks.Task;
 
 public class MapSelectActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    GoogleMap gMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     public static final int REQUEST_CODE = 101;
+    String location;
+
+    Button selectLocation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_select);
 
+        selectLocation = findViewById(R.id.map_select_button);
+        selectLocation.setOnClickListener(v -> {
+            onBackPressed();
+            finish();
+        });
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        String data = this.location;
+        SharedPreferences sp = getSharedPreferences("LocationInfo", 0);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("location", data);
+        editor.commit();
     }
 
     private void fetchLastLocation() {
@@ -54,12 +74,18 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
-                .title("You are here.");
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
-        googleMap.addMarker(markerOptions);
+        gMap = googleMap;
+        LatLng currPos = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(currPos));
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currPos, 12));
+
+        gMap.setOnMapClickListener(latLng -> {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            this.location = latLng.latitude + ", " + latLng.longitude;
+            gMap.clear();
+            gMap.addMarker(markerOptions);
+        });
     }
 
     @Override
