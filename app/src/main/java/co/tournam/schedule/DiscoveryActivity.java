@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -208,7 +209,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void getOffline(Context context, String location) {
         this.tournamentList.clear();
-        TournamentHandler.discoveryLocal(location, 1, 0, 10,
+        TournamentHandler.discoveryLocal(location, 100000, 0, 10,
                 new TournamentHandler.DiscoverComplete() {
             @Override
             public void success(List<TournamentModel> tournaments) {
@@ -226,6 +227,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     public void updateList() {
         if(this.isLocal) {
             getOffline(context, this.currentLocation);
+            Log.wtf("Location", this.currentLocation);
         } else {
             getOnline(context);
         }

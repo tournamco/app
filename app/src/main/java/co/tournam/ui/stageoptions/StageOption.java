@@ -165,7 +165,7 @@ public class StageOption extends LinearLayout {
         HashMap<String, Integer> optionsMap = new HashMap<>();
         if (type == TournamentModel.StageTypes.POOLS) {
             optionsMap.put("bestOf", getOptionValue(0));
-            optionsMap.put("numberOfRounds", getOptionValue(1));
+            optionsMap.put("matchesPerPool", getOptionValue(1));
             optionsMap.put("poolSize", getOptionValue(2));
             optionsMap.put("numberOfWinners", getOptionValue(3));
 

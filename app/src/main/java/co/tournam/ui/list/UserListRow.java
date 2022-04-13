@@ -1,8 +1,6 @@
 package co.tournam.ui.list;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,10 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
+
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.models.TeamModel;
 import co.tournam.models.UserModel;
-import co.tournam.schedule.OurTeamActivity;
 import co.tournam.schedule.R;
 
 public class UserListRow extends LinearLayout {
@@ -60,7 +57,7 @@ public class UserListRow extends LinearLayout {
         }
 
         new DownloadImageWorker(icon -> userIcon.setImageBitmap(icon)).execute(user.getIcon());
-        userName.setText(user.getUsername());
+        userName.setText(user.getGamerTag());
     }
 
     public void setButtonText(String text) {

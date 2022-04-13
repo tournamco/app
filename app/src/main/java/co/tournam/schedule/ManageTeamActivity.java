@@ -43,6 +43,7 @@ public class ManageTeamActivity extends AppCompatActivity {
     private TournamentModel tournament;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private Bitmap iconImage;
+    private LinearLayout userIconLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public class ManageTeamActivity extends AppCompatActivity {
                         try {
                             iconImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                             new UploadImageWorker(id -> changeIcon(id)).execute(iconImage);
+                            ((ImageListItem) userIconLayout.getChildAt(0)).setImage(iconImage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -130,7 +132,7 @@ public class ManageTeamActivity extends AppCompatActivity {
     }
 
     public void setIconLayout() {
-        LinearLayout userIconLayout = (LinearLayout) findViewById(R.id.team_icon_image);
+        userIconLayout = (LinearLayout) findViewById(R.id.team_icon_image);
 
         ImageListItem image = new ImageListItem(context, null);
         userIconLayout.addView(image);

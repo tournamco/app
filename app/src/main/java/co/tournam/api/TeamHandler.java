@@ -71,7 +71,7 @@ public class TeamHandler {
         void success(String teamId, String inviteToken);
     }
 
-    public static void createNormalTeam(String tournamentId, String iconId, boolean isPublic, String name, CreateNormalTeamComplete listener) {
+    public static void createNormalTeam(String tournamentId, boolean join, String iconId, boolean isPublic, String name, CreateNormalTeamComplete listener) {
         RequestHandler.request("/team/create", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
@@ -80,6 +80,7 @@ public class TeamHandler {
                 json.put("isPublic", isPublic);
                 json.put("icon", iconId);
                 json.put("name", name);
+                json.put("join", join);
 
                 return json;
             }
