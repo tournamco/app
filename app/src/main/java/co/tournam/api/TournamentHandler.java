@@ -29,6 +29,16 @@ public class TournamentHandler {
             stages.add(StageHandler.fromJSON(stagesData.getJSONObject(i)));
         }
 
+        TournamentModel.TournamentLocation location = null;
+
+        if(!tournament.getBoolean("online")) {
+            JSONArray locationData = tournament.getJSONArray("location");
+            location = new TournamentModel.TournamentLocation(
+                    (float)locationData.getDouble(0),
+                    (float)locationData.getDouble(1)
+            );
+        }
+
         return new TournamentModel(
                 tournament.getString("id"),
                 tournament.getString("name"),
@@ -42,7 +52,7 @@ public class TournamentHandler {
                 tournament.getInt("gameLength"),
                 tournament.getInt("currentStage"),
                 tournament.getString("banner"),
-                tournament.getString("location"),
+                location,
                 tournament.getBoolean("online")
         );
     }
