@@ -79,16 +79,20 @@ public class TournamentActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.tournament_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_tournament);
         bottomNav.setOnItemSelectedListener(item -> {
-
+            Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_tournament:
-                    startActivity(new Intent(TournamentActivity.this, TournamentActivity.class));
+                    //startActivity(new Intent(TournamentActivity.this, TournamentActivity.class));
                     break;
                 case R.id.navigation_discovery:
-                    startActivity(new Intent(TournamentActivity.this, DiscoveryActivity.class));
+                    intent = new Intent(this, DiscoveryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
                 case R.id.navigation_schedule:
-                    startActivity(new Intent(TournamentActivity.this, ScheduleActivity.class));
+                    intent = new Intent(this, ScheduleActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
             }
 

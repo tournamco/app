@@ -66,14 +66,16 @@ public class TeamListRow extends LinearLayout {
         actionButton.setOnClickListener(view -> {
             listener.onTeamSelected(team);
         });
-        setButtonText(buttonText);
+
+        if(buttonText == null) {
+            actionButton.setVisibility(View.GONE);
+        }
+        else {
+            actionButton.setText(buttonText);
+        }
 
         new DownloadImageWorker(icon -> teamIcon.setImageBitmap(icon)).execute(team.getIcon());
         teamName.setText(team.getName());
 
-    }
-
-    public void setButtonText(String text) {
-        actionButton.setText(text);
     }
 }

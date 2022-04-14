@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Sample"
         android:textAllCaps="false"
+        android:layout_marginStart="16dp"
         android:textColor="#A23BC6"
         android:textSize="40sp"
         tools:ignore="MissingConstraints" />

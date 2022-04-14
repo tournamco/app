@@ -1,6 +1,7 @@
 package co.tournam.schedule;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -148,10 +149,10 @@ public class DiscoveryActivity extends AppCompatActivity {
     }
 
     public void setJoinWithNFCLayout() {
-        joinWithNFCLayout = (LinearLayout) findViewById(R.id.discovery_join_nfc);
-        DefaultButtonIMG nfcJoin = new DefaultButtonIMG(context,
-                "                  Join using NFC                  ", nfc);
-        joinWithNFCLayout.addView(nfcJoin);
+        //joinWithNFCLayout = (LinearLayout) findViewById(R.id.discovery_join_nfc);
+        //DefaultButtonIMG nfcJoin = new DefaultButtonIMG(context,
+        //        "                  Join using NFC                  ", nfc);
+        //joinWithNFCLayout.addView(nfcJoin);
     }
 
     public void setLocalOnlineSliderLayout() {
@@ -239,16 +240,20 @@ public class DiscoveryActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_discovery);
         bottomNav.setOnItemSelectedListener(item -> {
-
+            Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_tournament:
-                    startActivity(new Intent(DiscoveryActivity.this, TournamentActivity.class));
+                    intent = new Intent(this, TournamentActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
                 case R.id.navigation_discovery:
-                    startActivity(new Intent(DiscoveryActivity.this, DiscoveryActivity.class));
+                    //startActivity(new Intent(DiscoveryActivity.this, DiscoveryActivity.class));
                     break;
                 case R.id.navigation_schedule:
-                    startActivity(new Intent(DiscoveryActivity.this, ScheduleActivity.class));
+                    intent = new Intent(this, ScheduleActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
             }
 

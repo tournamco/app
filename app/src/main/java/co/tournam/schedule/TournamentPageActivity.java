@@ -92,7 +92,6 @@ public class TournamentPageActivity extends AppCompatActivity {
     }
 
     private void setup() {
-
         setCustomHeader();
         setGameName();
         setStagesHeader();
@@ -101,7 +100,6 @@ public class TournamentPageActivity extends AppCompatActivity {
         setTeams();
         setMatchesHeader();
         setMatches();
-
     }
 
     public void setCustomHeader() {
@@ -155,9 +153,26 @@ public class TournamentPageActivity extends AppCompatActivity {
     }
 
     private void setTeamsList(List<TeamModel> teams) {
-        this.teams.addView(new TeamList(context, teams, "Remove", team -> {
-            Toast.makeText(context, "Removed Team", Toast.LENGTH_LONG).show();
-        }));
+        if(meModel.getId().equals(tournamentModel.getOrganizer().getId())) {
+            this.teams.addView(new TeamList(context, teams, "Remove", team -> {
+                Toast.makeText(context, "Removed Team", Toast.LENGTH_LONG).show();
+                TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
+                    @Override
+                    public void success() {
+                        TournamentPageActivity.this.teams.removeAllViews();
+                        setTeams();
+                    }
+
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        System.err.println("API_ERROR: " + error.name() + " - " + message);
+                    }
+                });
+            }));
+        }
+        else {
+            this.teams.addView(new TeamList(context, teams, null, null));
+        }
     }
 
     private void setMatchesHeader() {
@@ -176,7 +191,6 @@ public class TournamentPageActivity extends AppCompatActivity {
                     public void success(List<MatchModel> matches) {
                         setMatchModels(matches);
                         Log.wtf("Match List size", String.valueOf(matches.size()));
-
                     }
 
                     @Override

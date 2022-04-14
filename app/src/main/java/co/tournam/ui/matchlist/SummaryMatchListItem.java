@@ -58,6 +58,9 @@ public class SummaryMatchListItem extends LinearLayout {
         colorView = (View)findViewById(R.id.color);
         setColor(match.getTournament().getColor());
 
+        View color2View = (View)findViewById(R.id.color2);
+        color2View.setBackgroundColor(match.getTournament().getColor());
+
         timeText = (TextView)findViewById(R.id.time);
         setTime(match.getStartDate());
 

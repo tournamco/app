@@ -30,7 +30,7 @@ public class DiscoveryHeader extends BigHeader {
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.sample_big_header, this, true);
+        inflater.inflate(R.layout.big_discovery_header, this, true);
 
         title = (TextView) findViewById(R.id.title);
         title.setText(getName());

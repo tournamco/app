@@ -13,8 +13,10 @@ import android.widget.TextView;
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.TeamHandler;
+import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
+import co.tournam.schedule.DiscoveryActivity;
 import co.tournam.schedule.DisputesActivity;
 import co.tournam.schedule.QRGenActivity;
 import co.tournam.schedule.R;
@@ -26,6 +28,7 @@ public class TournamentPageHeader extends AbstractHeader {
     private TextView tournamentName;
     public Button disputeButton;
     public Button createButton;
+    public Button deleteButton;
     public ImageButton backButton;
     private TextView dateSubText;
     private ImageView background;
@@ -52,6 +55,24 @@ public class TournamentPageHeader extends AbstractHeader {
 
         //Get the back button
         backButton = findViewById(R.id.tournament_page_header_back_button);
+
+        deleteButton = findViewById(R.id.tournament_page_header_delete_button);
+        deleteButton.setText("Delete");
+        deleteButton.setOnClickListener(v -> {
+            TournamentHandler.delete(tournament.getId(), new TournamentHandler.DeleteComplete() {
+                @Override
+                public void success() {
+                    Intent intent = new Intent(context, DiscoveryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
+        });
 
         createButton = findViewById(R.id.tournament_page_header_create_button);
         createButton.setText("Create");
@@ -89,6 +110,7 @@ public class TournamentPageHeader extends AbstractHeader {
         if(!tournament.getOrganizer().getId().equals(me.getId())) {
             disputeButton.setVisibility(GONE);
             createButton.setVisibility(GONE);
+            deleteButton.setVisibility(GONE);
         }
 
         //Get tournament Banner

@@ -127,7 +127,17 @@ public class ManageTeamActivity extends AppCompatActivity {
 
         Button abandonButton = (Button) findViewById(R.id.abandon_button);
         abandonButton.setOnClickListener(view -> {
-            // TODO: Implement tournament abandon api call
+            TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
+                @Override
+                public void success() {
+                    startActivity(new Intent(ManageTeamActivity.this, ScheduleActivity.class));
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
         });
     }
 
@@ -218,6 +228,17 @@ public class ManageTeamActivity extends AppCompatActivity {
         membersLayout = (LinearLayout) findViewById(R.id.members);
         membersLayout.addView(new UserList(context, team.getMembers(), "Remove", (user) -> {
             // TODO: Remove user from team api
+            TeamHandler.leave(team.getID(), user.getId(), new TeamHandler.LeaveComplete() {
+                @Override
+                public void success() {
+                    membersLayout.removeAllViews();
+                    setMembers();
+                }
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
         }));
     }
 

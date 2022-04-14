@@ -107,9 +107,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void setFilterDropdownLayout() {
         //TODO Set up Filter Dropdown
-        filterDropdownLayout = (LinearLayout) findViewById(R.id.schedule_filter_dropdown);
-        FilterDropdown filter = new FilterDropdown(context);
-        filterDropdownLayout.addView(filter);
+        //filterDropdownLayout = (LinearLayout) findViewById(R.id.schedule_filter_dropdown);
+        //FilterDropdown filter = new FilterDropdown(context);
+        //filterDropdownLayout.addView(filter);
     }
 
     public void loadMatches() {
@@ -127,20 +127,22 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void setNavigationBar() {
-
         BottomNavigationView bottomNav = findViewById(R.id.schedule_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_schedule);
         bottomNav.setOnItemSelectedListener(item -> {
-
+            Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_tournament:
-                    startActivity(new Intent(ScheduleActivity.this, TournamentActivity.class));
+                    intent = new Intent(this, TournamentActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
                 case R.id.navigation_discovery:
-                    startActivity(new Intent(ScheduleActivity.this, DiscoveryActivity.class));
+                    intent = new Intent(this, DiscoveryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     break;
                 case R.id.navigation_schedule:
-                    startActivity(new Intent(ScheduleActivity.this, ScheduleActivity.class));
                     break;
             }
 

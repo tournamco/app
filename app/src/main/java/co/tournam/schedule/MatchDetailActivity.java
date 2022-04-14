@@ -193,8 +193,6 @@ public class MatchDetailActivity extends AppCompatActivity {
         LinearLayout membersLayout = (LinearLayout) findViewById(R.id.team_members);
         List<TeamModel> teams = match.getTeams().values().stream().collect(Collectors.toList());
         membersLayout.addView(new TeamMembers(context, teams));
-        System.out.println("TEAM A: " + teams.get(0));
-        System.out.println("TEAM B: " + teams.get(1));
     }
 
     public void setProofOfScoreLayout() {

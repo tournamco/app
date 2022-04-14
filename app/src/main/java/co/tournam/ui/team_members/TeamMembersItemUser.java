@@ -1,11 +1,13 @@
 package co.tournam.ui.team_members;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import co.tournam.api.DownloadImageWorker;
 import co.tournam.models.UserModel;
 import co.tournam.schedule.R;
 
@@ -29,6 +31,7 @@ public class TeamMembersItemUser extends LinearLayout {
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        setGravity(Gravity.RIGHT);
         buildContents(context);
     }
 
@@ -45,7 +48,8 @@ public class TeamMembersItemUser extends LinearLayout {
         memberIcon = (ImageView) findViewById(R.id.Icon);
 
         setName(user.getGamerTag());
-        //setIcon(user.getIcon());
+
+        new DownloadImageWorker(image -> memberIcon.setImageBitmap(image)).execute(user.getIcon());
     }
 
     private void setName(String name) { memberName.setText(name);}

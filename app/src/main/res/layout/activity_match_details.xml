@@ -30,31 +30,31 @@
 
         <LinearLayout
             android:id="@+id/information_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
         <LinearLayout
             android:id="@+id/information_table"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
         <LinearLayout
             android:id="@+id/teams_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
         <LinearLayout
             android:id="@+id/team_members"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
         <LinearLayout
             android:id="@+id/proof_of_score_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 

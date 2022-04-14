@@ -21,30 +21,25 @@ public class TeamMembers extends AbstractTeamMembers{
         build(context);
     }
 
-    private void build(Context context) { buildContents(context); }
+    private void build(Context context) {
+        setOrientation(LinearLayout.VERTICAL);
+        setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        buildContents(context);
+    }
 
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.team_member_total, this, true);
 
-        boolean isItTeamOne = true;
-        for(TeamModel team : this.teams) {
-            if(isItTeamOne) {
-                teamOne = (TextView)findViewById(R.id.teamOne);
-                LinearLayout leftTeam = (LinearLayout) findViewById(R.id.leftTeam);
-                TeamMembersItem item = new TeamMembersItem(context, team, isItTeamOne, leftTeam);
-                //setName(teamOne, team.getName());
-                this.addView(item);
-            } else {
-                teamTwo = (TextView)findViewById(R.id.teamTwo);
-                LinearLayout rightTeam = (LinearLayout) findViewById(R.id.rightTeam);
-                TeamMembersItem item = new TeamMembersItem(context, team, isItTeamOne, rightTeam);
-                //setName(teamTwo, team.getName());
-                this.addView(item);
-            }
-            isItTeamOne = false;
-        }
+        teamOne = (TextView)findViewById(R.id.teamOne);
+        LinearLayout leftTeam = (LinearLayout) findViewById(R.id.leftTeam);
+        new TeamMembersItem(context, this.teams.get(0), true, leftTeam);
+        teamOne.setText(this.teams.get(0).getName());
+
+        teamTwo = (TextView)findViewById(R.id.teamTwo);
+        LinearLayout rightTeam = (LinearLayout) findViewById(R.id.rightTeam);
+        new TeamMembersItem(context, this.teams.get(1), false, rightTeam);
+        teamTwo.setText(this.teams.get(1).getName());
     }
-    private void setName(TextView textview, String name) { textview.setText(name);}
 }

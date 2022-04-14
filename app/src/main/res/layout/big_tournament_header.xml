@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-        android:id="@+id/textView3"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title_tournament_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discovery"
+            android:textAllCaps="false"
+            android:layout_marginStart="16dp"
+            android:textColor="#A23BC6"
+            android:textSize="40sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="center_vertical">
+            <Button
+                android:id="@+id/button_profile_tournament"
+                android:layout_width="50dp"
+                android:layout_height="37dp"
+                android:background="@drawable/gradient"
+                android:padding="0dp"
+                android:text="P"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginEnd="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:background="@drawable/header"/>
-
-    <TextView
-        android:id="@+id/title_tournament_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Discovery"
-        android:textAllCaps="false"
-        android:textColor="#A23BC6"
-        android:textSize="40sp"/>
-
-    <Button
-        android:id="@+id/button_profile_tournament"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:background="@drawable/gradient"
-        android:padding="0dp"
-        android:text="P"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:layout_marginEnd="5dp" />
-</merge>
+</LinearLayout>

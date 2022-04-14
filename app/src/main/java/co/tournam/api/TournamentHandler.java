@@ -163,7 +163,7 @@ public class TournamentHandler {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
-                json.put("id", id);
+                json.put("tournament", id);
 
                 return json;
             }

@@ -372,12 +372,35 @@ public class TeamHandler {
         void success(List<TeamModel> teams);
     }
 
-    public static void leave(String teamId, LeaveComplete listener) {
+    public static void leaveSelf(String teamId, LeaveComplete listener) {
         RequestHandler.request("/team/leave", Request.Method.POST, new RequestHandler.RequestSetup() {
             @Override
             public JSONObject body() throws JSONException {
                 JSONObject json = new JSONObject();
                 json.put("id", teamId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public static void leave(String teamId, String userId, LeaveComplete listener) {
+        RequestHandler.request("/team/leave", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("id", teamId);
+                json.put("user", userId);
 
                 return json;
             }
@@ -528,6 +551,32 @@ public class TeamHandler {
     }
 
     public interface ChangeComplete extends RequestHandler.AbstractCompleted {
+        void success();
+    }
+
+    public static void delete(String teamId, DeleteComplete listener) {
+        RequestHandler.request("/team/delete", Request.Method.POST, new RequestHandler.RequestSetup() {
+            @Override
+            public JSONObject body() throws JSONException {
+                JSONObject json = new JSONObject();
+                json.put("id", teamId);
+
+                return json;
+            }
+
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                listener.success();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                listener.failure(error, message);
+            }
+        });
+    }
+
+    public interface DeleteComplete extends RequestHandler.AbstractCompleted {
         void success();
     }
 }

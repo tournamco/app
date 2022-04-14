@@ -51,7 +51,9 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         if (team == null) {
             setName("Awaiting opponent");
         } else {
-            new DownloadImageWorker(image -> iconImage.setImageBitmap(image)).execute(team.getIcon());
+            if(team.getIcon() != null || team.getIcon().equals("null")) {
+                new DownloadImageWorker(image -> iconImage.setImageBitmap(image)).execute(team.getIcon());
+            }
             setName(team.getName());
         }
 

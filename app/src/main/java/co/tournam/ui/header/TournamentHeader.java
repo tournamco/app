@@ -30,7 +30,7 @@ public class TournamentHeader extends BigHeader {
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.tournament_header, this, true);
+        inflater.inflate(R.layout.big_tournament_header, this, true);
 
         title = (TextView) findViewById(R.id.title_tournament_header);
         title.setText(getName());

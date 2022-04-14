@@ -56,6 +56,8 @@ public class ImageLoader {
     }
 
     public static Bitmap downloadImage(String imageId) {
+        if(imageId == null || imageId.equals("null")) return null;
+
         try {
             java.net.URL url = new java.net.URL(DOWNLOAD_PATH);
             HttpURLConnection connection = (HttpURLConnection) url
