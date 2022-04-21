@@ -13,6 +13,12 @@ public class GameProofHeader extends LinearLayout {
     private TextView textView;
     private int gameIndex;
 
+    /**
+     * Constructor for GameProofHeader
+     *
+     * @param context   the current context
+     * @param gameIndex the index of the game of which proof is needed
+     */
     public GameProofHeader(Context context, int gameIndex) {
         super(context);
 
@@ -21,12 +27,24 @@ public class GameProofHeader extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * BuildContents class takes the context and uses it to inflate the layout create the header.
+     * and set the text for the header
+     *
+     * @param context the current context
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

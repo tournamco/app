@@ -24,6 +24,13 @@ public class StageListItem extends LinearLayout {
     private String tournamentID;
     private int tournamentIndex;
 
+    /**
+     * The constructor for StageListItem
+     *
+     * @param context       the current context
+     * @param stage         the stagemodel of the item.
+     * @param tournamentMod the tournamentModel.
+     */
     public StageListItem(Context context, StageModel stage, TournamentModel tournamentMod) {
         super(context);
 
@@ -33,12 +40,24 @@ public class StageListItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

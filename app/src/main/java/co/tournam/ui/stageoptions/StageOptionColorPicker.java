@@ -13,17 +13,34 @@ public class StageOptionColorPicker extends LinearLayout {
     private TextView titleText;
     public ImageButton colorButton;
 
+    /**
+     * Constructor for StageOptionColorPicker.
+     *
+     * @param context the current context.
+     */
     public StageOptionColorPicker(Context context) {
         super(context);
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,12 +53,12 @@ public class StageOptionColorPicker extends LinearLayout {
 
     }
 
+    /**
+     * Setter for the color of the background
+     *
+     * @param color the color to set the background to.
+     */
     public void setColor(int color) {
         colorButton.setBackgroundColor(color);
     }
-
-
-//    public String getEntry() {
-//        return this.entryText.getText().toString();
-//    }
 }

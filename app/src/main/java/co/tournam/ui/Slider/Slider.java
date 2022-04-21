@@ -9,13 +9,18 @@ import android.widget.LinearLayout;
 
 import co.tournam.schedule.R;
 
-public class Slider extends LinearLayout{
+public class Slider extends LinearLayout {
     public Button buttonLocal;
     public Button buttonOnline;
     private boolean localBool;
 
-    public Slider(Context context, boolean newLocalBool)
-    {
+    /**
+     * The constructor for Slider.
+     *
+     * @param context      the current context
+     * @param newLocalBool the boolean that declares whether local or global is selected
+     */
+    public Slider(Context context, boolean newLocalBool) {
         super(context);
 
         this.localBool = newLocalBool;
@@ -23,6 +28,12 @@ public class Slider extends LinearLayout{
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
@@ -31,6 +42,12 @@ public class Slider extends LinearLayout{
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,13 +59,17 @@ public class Slider extends LinearLayout{
         setButtons(localBool);
     }
 
+    /**
+     * A setter for the locality of the slider.
+     *
+     * @param localBool the boolean that declares whether a tournament is local or global
+     */
     public void setButtons(boolean localBool) {
-        if(localBool == true) {
+        if (localBool == true) {
             buttonOnline.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
             buttonLocal.setBackgroundTintList(null);
-        }
-        else {
+        } else {
             buttonLocal.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
             buttonOnline.setBackgroundTintList(null);
@@ -56,6 +77,11 @@ public class Slider extends LinearLayout{
         this.localBool = localBool;
     }
 
+    /**
+     * a getter for the boolean.
+     *
+     * @return the boolean that declares whether a tournament is local or global
+     */
     public boolean getBool() {
         return this.localBool;
     }

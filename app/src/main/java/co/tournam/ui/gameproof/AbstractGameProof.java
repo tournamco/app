@@ -15,6 +15,13 @@ public class AbstractGameProof extends LinearLayout {
     private GameModel game;
     private MatchModel match;
 
+    /**
+     * Constructor for AbstractGameProof
+     *
+     * @param context the current context
+     * @param game    the gameModel
+     * @param match   the match being visualized
+     */
     public AbstractGameProof(Context context, GameModel game, MatchModel match) {
         super(context);
 
@@ -24,6 +31,9 @@ public class AbstractGameProof extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
     }

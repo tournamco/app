@@ -9,15 +9,22 @@ import android.widget.LinearLayout;
 
 import co.tournam.schedule.R;
 
-public class SliderSchedule extends LinearLayout{
+public class SliderSchedule extends LinearLayout {
     public Button buttonPersonal;
     public Button buttonAll;
     private boolean personalBool;
     private String valueA;
     private String valueB;
 
-    public SliderSchedule(Context context, boolean newLocalBool, String valueA, String valueB)
-    {
+    /**
+     * The constructor for the SliderSchedule.
+     *
+     * @param context      the current context
+     * @param newLocalBool the boolean that declares whether a slider is on global or local
+     * @param valueA
+     * @param valueB
+     */
+    public SliderSchedule(Context context, boolean newLocalBool, String valueA, String valueB) {
         super(context);
 
         this.personalBool = newLocalBool;
@@ -27,6 +34,12 @@ public class SliderSchedule extends LinearLayout{
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -35,6 +48,12 @@ public class SliderSchedule extends LinearLayout{
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,13 +67,17 @@ public class SliderSchedule extends LinearLayout{
         setButtons(personalBool);
     }
 
+    /**
+     * A setter for the locality of the slider.
+     *
+     * @param bool the boolean that declares whether a tournament is local or global
+     */
     public void setButtons(boolean bool) {
-        if(bool == false) {
+        if (bool == false) {
             buttonPersonal.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
             buttonAll.setBackgroundTintList(null);
-        }
-        else {
+        } else {
             buttonAll.setBackgroundTintList(
                     ColorStateList.valueOf(Color.parseColor("#FF757575")));
             buttonPersonal.setBackgroundTintList(null);
@@ -62,6 +85,11 @@ public class SliderSchedule extends LinearLayout{
         this.personalBool = bool;
     }
 
+    /**
+     * a getter for the boolean.
+     *
+     * @return the boolean that declares whether a tournament is local or global
+     */
     public boolean getBool() {
         return this.personalBool;
     }

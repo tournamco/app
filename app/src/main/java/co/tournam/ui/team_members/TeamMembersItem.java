@@ -16,6 +16,14 @@ public class TeamMembersItem extends LinearLayout {
     private Boolean isItTeamOne;
     private LinearLayout specificTeam;
 
+    /**
+     * The constructor of TeamMembersItem
+     *
+     * @param context      the current context
+     * @param team         the teamModel
+     * @param isItTeamOne  Boolean that declares whether it's teamOne
+     * @param specificTeam The layout of a specific team.
+     */
     public TeamMembersItem(Context context, TeamModel team, Boolean isItTeamOne, LinearLayout specificTeam) {
         super(context);
 
@@ -26,16 +34,22 @@ public class TeamMembersItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 0));
         setGravity(Gravity.RIGHT);
 
-        if(team == null){
+        if (team == null) {
             return;
         }
 
-        for(UserModel user : team.getMembers()) {
+        for (UserModel user : team.getMembers()) {
             TeamMembersItemUser teamMember = new TeamMembersItemUser(context, user, isItTeamOne);
             specificTeam.addView(teamMember);
         }

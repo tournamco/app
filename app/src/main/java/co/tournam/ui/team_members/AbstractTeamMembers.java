@@ -11,6 +11,12 @@ public abstract class AbstractTeamMembers extends LinearLayout {
 
     protected List<TeamModel> teams;
 
+    /**
+     * The Constructor for AbstractTeamMembers
+     *
+     * @param context the current context.
+     * @param teams   the list of TeamModels.
+     */
     public AbstractTeamMembers(Context context, List<TeamModel> teams) {
         super(context);
 
@@ -19,5 +25,13 @@ public abstract class AbstractTeamMembers extends LinearLayout {
         build(context);
     }
 
-    private void build(Context context) { setOrientation(LinearLayout.VERTICAL); }
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
+    private void build(Context context) {
+        setOrientation(LinearLayout.VERTICAL);
+    }
 }

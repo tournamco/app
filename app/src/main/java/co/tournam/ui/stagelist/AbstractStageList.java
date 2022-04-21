@@ -13,6 +13,13 @@ public abstract class AbstractStageList extends LinearLayout {
     protected List<StageModel> stages;
     protected TournamentModel tournament;
 
+    /**
+     * The constructor for AbstractStageList.
+     *
+     * @param context    the current context
+     * @param stages     the List of stagemodels
+     * @param tournament the tournamentModel
+     */
     public AbstractStageList(Context context, List<StageModel> stages, TournamentModel tournament) {
         super(context);
 
@@ -22,6 +29,12 @@ public abstract class AbstractStageList extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
     }

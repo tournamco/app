@@ -13,12 +13,23 @@ public class DiscoveryHeader extends BigHeader {
     private TextView title;
     public Button button;
 
+    /**
+     * The constructor for the DiscoveryHeader class.
+     *
+     * @param context the current context
+     */
     public DiscoveryHeader(Context context) {
         super(context, "Discovery");
 
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -27,6 +38,11 @@ public class DiscoveryHeader extends BigHeader {
         buildContents(context);
     }
 
+    /**
+     * BuildContents inflates the header UI element and sets the name of the button
+     *
+     * @param context the current context
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,6 +54,11 @@ public class DiscoveryHeader extends BigHeader {
         button = (Button) findViewById(R.id.button_create);
     }
 
+    /**
+     * Can be used to access the button UI element.
+     *
+     * @return the button element
+     */
     public View getButton() {
         return button;
     }

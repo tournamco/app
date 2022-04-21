@@ -21,6 +21,12 @@ public class TeamScoreIconItem extends LinearLayout {
     private ImageView teamIcon;
     private TextView teamName;
 
+    /**
+     * The constructor for TeamScoreIconItem
+     *
+     * @param context the current context
+     * @param team    the teamModel of the TeamScoreIconItem.
+     */
     public TeamScoreIconItem(Context context, TeamModel team) {
         super(context);
 
@@ -28,12 +34,24 @@ public class TeamScoreIconItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,11 +69,10 @@ public class TeamScoreIconItem extends LinearLayout {
         teamIcon = findViewById(R.id.teamscore_icon_image);
         teamName = findViewById(R.id.teamscore_icon_name);
 
-        if(team != null) {
+        if (team != null) {
             new DownloadImageWorker(image -> teamIcon.setImageBitmap(image)).execute(team.getIcon());
             teamName.setText(this.team.getName());
-        }
-        else {
+        } else {
             teamName.setText("Awaiting opponent");
         }
     }

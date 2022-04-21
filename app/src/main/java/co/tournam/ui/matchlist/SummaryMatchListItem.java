@@ -27,6 +27,12 @@ public class SummaryMatchListItem extends LinearLayout {
 
     private View colorView;
 
+    /**
+     * Constructor for SummaryMatchListItem.
+     *
+     * @param context the current context
+     * @param match   the matchModel being added to the list.
+     */
     public SummaryMatchListItem(Context context, MatchModel match) {
         super(context);
 
@@ -35,12 +41,24 @@ public class SummaryMatchListItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,22 +73,22 @@ public class SummaryMatchListItem extends LinearLayout {
             context.startActivity(intent);
         });
 
-        colorView = (View)findViewById(R.id.color);
+        colorView = (View) findViewById(R.id.color);
         setColor(match.getTournament().getColor());
 
-        View color2View = (View)findViewById(R.id.color2);
+        View color2View = (View) findViewById(R.id.color2);
         color2View.setBackgroundColor(match.getTournament().getColor());
 
-        timeText = (TextView)findViewById(R.id.time);
+        timeText = (TextView) findViewById(R.id.time);
         setTime(match.getStartDate());
 
-        matchnameText = (TextView)findViewById(R.id.matchname);
+        matchnameText = (TextView) findViewById(R.id.matchname);
         setMatchname(match);
 
         LinearLayout teams = (LinearLayout) findViewById(R.id.teamlist);
         teamItems = new ArrayList<>();
 
-        for(String key : match.getTeams().keySet()) {
+        for (String key : match.getTeams().keySet()) {
             TeamModel team = match.getTeams().get(key);
             SummaryMatchListItemTeam teamItem = new SummaryMatchListItemTeam(context, team, match.getScore(key), match.isWinner(team));
             teamItems.add(teamItem);
@@ -78,19 +96,39 @@ public class SummaryMatchListItem extends LinearLayout {
         }
     }
 
+    /**
+     * A function to set a time
+     *
+     * @param time the time to be set.
+     */
     private void setTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
         timeText.setText(time.format(formatter));
     }
 
+    /**
+     * A function to set the matchname
+     *
+     * @param match the match to be set.
+     */
     private void setMatchname(MatchModel match) {
         matchnameText.setText(match.getName());
     }
 
+    /**
+     * A function to set the color of a match
+     *
+     * @param color the color to be set.
+     */
     public void setColor(int color) {
         colorView.setBackgroundColor(color);
     }
 
+    /**
+     * Getter for teamItems.
+     *
+     * @return a list of teamItems.
+     */
     public List<SummaryMatchListItemTeam> getTeamItems() {
         return teamItems;
     }

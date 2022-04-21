@@ -23,6 +23,12 @@ public class AlteredMatchListItem extends LinearLayout {
     private MatchModel match;
     private TextView timeText;
 
+    /**
+     * The constructor for AlteredMatchListItem.
+     *
+     * @param context the current context
+     * @param match   the model of the match being altered.
+     */
     public AlteredMatchListItem(Context context, MatchModel match) {
         super(context);
 
@@ -31,12 +37,24 @@ public class AlteredMatchListItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,13 +69,13 @@ public class AlteredMatchListItem extends LinearLayout {
             context.startActivity(intent);
         });
 
-        timeText = (TextView)findViewById(R.id.time_altered);
+        timeText = (TextView) findViewById(R.id.time_altered);
         setTime(match.getStartDate());
 
         LinearLayout teams = (LinearLayout) findViewById(R.id.teamlist_altered);
         teamItems = new ArrayList<>();
 
-        for(String key : match.getTeams().keySet()) {
+        for (String key : match.getTeams().keySet()) {
             TeamModel team = match.getTeams().get(key);
             SummaryMatchListItemTeam teamItem = new SummaryMatchListItemTeam(context, team, match.getScore(key), match.isWinner(team));
             teamItems.add(teamItem);
@@ -65,11 +83,21 @@ public class AlteredMatchListItem extends LinearLayout {
         }
     }
 
+    /**
+     * Setter for the time
+     *
+     * @param time the time to be set to.
+     */
     private void setTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
         timeText.setText(time.format(formatter));
     }
 
+    /**
+     * A getter for the teamItems.
+     *
+     * @return a list of SummaryMatchListItemTeams.
+     */
     public List<SummaryMatchListItemTeam> getTeamItems() {
         return teamItems;
     }

@@ -12,6 +12,12 @@ public class Text extends LinearLayout {
     private TextView textView;
     private String text;
 
+    /**
+     * The constructor for the Text Class
+     *
+     * @param context the current context
+     * @param text    the text
+     */
     public Text(Context context, String text) {
         super(context);
 
@@ -20,15 +26,29 @@ public class Text extends LinearLayout {
         build(context);
     }
 
-    private void build(Context context) { buildContents(context);}
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
+    private void build(Context context) {
+        buildContents(context);
+    }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.sample_text, this, true);
 
-        textView = (TextView)findViewById(R.id.defaultText);
+        textView = (TextView) findViewById(R.id.defaultText);
         textView.setText(text);
     }
 }

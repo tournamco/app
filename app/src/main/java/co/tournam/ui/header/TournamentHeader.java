@@ -13,12 +13,23 @@ public class TournamentHeader extends BigHeader {
     private TextView title;
     private Button profileButton;
 
+    /**
+     * Constructor for TournamentHeader.
+     *
+     * @param context the current context.
+     */
     public TournamentHeader(Context context) {
         super(context, "Tournaments");
 
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -27,6 +38,11 @@ public class TournamentHeader extends BigHeader {
         buildContents(context);
     }
 
+    /**
+     * buildContents inflates the tournament header and sets the title and profile.
+     *
+     * @param context the current context
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,6 +54,11 @@ public class TournamentHeader extends BigHeader {
         profileButton = (Button) findViewById(R.id.button_profile_tournament);
     }
 
+    /**
+     * getter function for the profile button
+     *
+     * @return the profile button.
+     */
     public Button getProfileButton() {
         return profileButton;
     }

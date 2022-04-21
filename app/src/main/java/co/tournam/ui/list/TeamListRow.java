@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
+
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
 import co.tournam.api.ImageLoader;
@@ -29,6 +30,14 @@ public class TeamListRow extends LinearLayout {
     public Button actionButton;
     private TeamList.TeamListActionListener listener;
 
+    /**
+     * The constructor for the TeamListRow
+     *
+     * @param context    the current context
+     * @param team       the selected TeamModel.
+     * @param buttonText the text for the button
+     * @param listener   the listener for the class.
+     */
     public TeamListRow(Context context, TeamModel team, String buttonText, TeamList.TeamListActionListener listener) {
         super(context);
 
@@ -39,6 +48,12 @@ public class TeamListRow extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     public void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
@@ -46,6 +61,12 @@ public class TeamListRow extends LinearLayout {
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     public void buildContents(Context context) {
 
         LayoutInflater inflater = (LayoutInflater) context
@@ -67,10 +88,9 @@ public class TeamListRow extends LinearLayout {
             listener.onTeamSelected(team);
         });
 
-        if(buttonText == null) {
+        if (buttonText == null) {
             actionButton.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             actionButton.setText(buttonText);
         }
 

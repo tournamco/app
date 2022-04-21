@@ -21,6 +21,12 @@ public class SummaryMatchListItemTeam extends LinearLayout {
     private TextView scoreText;
     private ImageView iconImage;
 
+    /**
+     * @param context the current context
+     * @param team    the team being added to the list
+     * @param score   the score being added to the list
+     * @param winner  the winner being added to the summarymatchlist.
+     */
     public SummaryMatchListItemTeam(Context context, TeamModel team, int score, boolean winner) {
         super(context);
 
@@ -31,6 +37,12 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -39,6 +51,12 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,7 +69,7 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         if (team == null) {
             setName("Awaiting opponent");
         } else {
-            if(team.getIcon() != null || team.getIcon().equals("null")) {
+            if (team.getIcon() != null || team.getIcon().equals("null")) {
                 new DownloadImageWorker(image -> iconImage.setImageBitmap(image)).execute(team.getIcon());
             }
             setName(team.getName());
@@ -61,23 +79,42 @@ public class SummaryMatchListItemTeam extends LinearLayout {
         setWinner(winner);
     }
 
+    /**
+     * A setter for the name.
+     *
+     * @param name the name to be set
+     */
     private void setName(String name) {
         nameText.setText(name);
     }
 
+    /**
+     * A setter for the score.
+     *
+     * @param score the score to be set
+     */
     private void setScore(int score) {
         scoreText.setText(Integer.toString(score));
     }
 
+    /**
+     * A setter for whether a layout item is a winner or not
+     *
+     * @param winner the winner to be set
+     */
     private void setWinner(boolean winner) {
-        if(winner) {
+        if (winner) {
             scoreText.setTextColor(Color.BLACK);
-        }
-        else {
+        } else {
             scoreText.setTextColor(Color.GRAY);
         }
     }
 
+    /**
+     * @param context the current context
+     * @param dp      the size in dp
+     * @return the size in px.
+     */
     private int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,

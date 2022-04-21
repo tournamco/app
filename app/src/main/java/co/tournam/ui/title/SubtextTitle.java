@@ -11,6 +11,13 @@ public class SubtextTitle extends AbstractTitle {
     private TextView titleText;
     private String subtext;
 
+    /**
+     * The constructor for the SubTextTitle class.
+     *
+     * @param name    the name of the title
+     * @param subtext the subtext of the title
+     * @param context the current context.
+     */
     public SubtextTitle(String name, String subtext, Context context) {
         super(name, context);
 
@@ -19,12 +26,24 @@ public class SubtextTitle extends AbstractTitle {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -37,11 +56,4 @@ public class SubtextTitle extends AbstractTitle {
         subtext.setText(this.subtext);
     }
 
-    public String getSubtext() {
-        return subtext;
-    }
-
-    public void setSubtext(String subtext) {
-        this.subtext = subtext;
-    }
 }

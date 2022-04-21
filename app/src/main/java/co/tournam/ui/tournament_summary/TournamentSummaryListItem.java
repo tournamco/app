@@ -22,12 +22,15 @@ public class TournamentSummaryListItem extends LinearLayout {
     private TournamentModel tournament;
     private ImageView tournamentBanner;
     private TextView gameName;
-    private TextView participants;
     private TextView name;
     private TextView dateText;
-    private Button button;
-    private TextView location;
 
+    /**
+     * The constructor for TournamentSummaryListItem.
+     *
+     * @param context    the current context.
+     * @param tournament the tournamentModel.
+     */
     public TournamentSummaryListItem(Context context, TournamentModel tournament) {
         super(context);
 
@@ -37,18 +40,30 @@ public class TournamentSummaryListItem extends LinearLayout {
 
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.tournament_summary, this, true);
 
-        tournamentBanner = (ImageView)findViewById(R.id.banner);
+        tournamentBanner = (ImageView) findViewById(R.id.banner);
         setTournamentBanner(tournament);
         tournamentBanner.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -59,28 +74,48 @@ public class TournamentSummaryListItem extends LinearLayout {
             getContext().startActivity(intent);
         });
 
-        gameName = (TextView)findViewById(R.id.game_name);
+        gameName = (TextView) findViewById(R.id.game_name);
         setGameName(tournament.getGame());
 
-        name = (TextView)findViewById(R.id.name_text);
+        name = (TextView) findViewById(R.id.name_text);
         setName(tournament.getName());
 
-        dateText = (TextView)findViewById(R.id.date_text);
+        dateText = (TextView) findViewById(R.id.date_text);
         setDateText(tournament);
     }
 
+    /**
+     * function to set the tournament banner
+     *
+     * @param tournament the tournamentModel
+     */
     private void setTournamentBanner(TournamentModel tournament) {
         new DownloadImageWorker(image -> tournamentBanner.setImageBitmap(image)).execute(tournament.getBanner());
     }
 
+    /**
+     * Function to set the name of the game
+     *
+     * @param name the name to set the game to
+     */
     private void setGameName(String name) {
         gameName.setText(name);
     }
 
+    /**
+     * Function to set the name
+     *
+     * @param name the name to set the name to
+     */
     private void setName(String name) {
         this.name.setText(name);
     }
 
+    /**
+     * Function to set the date of a tournament.
+     *
+     * @param tournament the tournament to set the date for.
+     */
     private void setDateText(TournamentModel tournament) {
         dateText.setText(tournament.getStartDate() + " - " + tournament.getEndDate());
     }

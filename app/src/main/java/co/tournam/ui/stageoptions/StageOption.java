@@ -14,17 +14,23 @@ import java.util.Map;
 
 import co.tournam.models.TournamentModel;
 import co.tournam.schedule.R;
+
 public class StageOption extends LinearLayout {
 
     public Spinner spinner;
     private StageOptionBody name;
     private StageOptionBody noOfParticipants;
-//    private StageOptionBody noOfWinners;
     private StageOptionTime dateSpan;
     private StageOptionTime timeSpan;
     private LinearLayout options;
     private ParticipantsUpdateListener listener;
 
+    /**
+     * The constructor for StageOption.
+     *
+     * @param context  the current context
+     * @param listener the listener for the participantsUpdater.
+     */
     public StageOption(Context context, ParticipantsUpdateListener listener) {
         super(context);
 
@@ -33,12 +39,24 @@ public class StageOption extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -67,27 +85,32 @@ public class StageOption extends LinearLayout {
         this.addView(options);
     }
 
+    /**
+     * getter for the number of next participants in a stage
+     *
+     * @return the number of next participants in a stage.
+     */
     public int getNumberOfNextParticipants() {
-        switch (spinner.getSelectedItem().toString()){
+        switch (spinner.getSelectedItem().toString()) {
             case "Pools":
-                return getOptionValue(3) * (int) Math.ceil((float)Integer.parseInt(this.noOfParticipants.getEntry()) / (float)getOptionValue(2));
+                return getOptionValue(3) * (int) Math.ceil((float) Integer.parseInt(this.noOfParticipants.getEntry()) / (float) getOptionValue(2));
             case "Single Elim":
                 return (int) Math.ceil(Integer.parseInt(this.noOfParticipants.getEntry()) / Math.pow(2, getOptionValue(1)));
             case "Double Elim":
                 int upperBracket = Integer.parseInt(this.noOfParticipants.getEntry());
                 int lowerBracket = 0;
 
-                if(getOptionValue(1) <= 1) return upperBracket;
+                if (getOptionValue(1) <= 1) return upperBracket;
 
-                for(int i = 1; i < getOptionValue(1); i++) {
-                    if(upperBracket == 1 && lowerBracket == 1) {
+                for (int i = 1; i < getOptionValue(1); i++) {
+                    if (upperBracket == 1 && lowerBracket == 1) {
                         return 1;
                     }
 
-                    float oldUpperBracket = (float)upperBracket;
+                    float oldUpperBracket = (float) upperBracket;
                     upperBracket = (int) Math.ceil(oldUpperBracket / 2);
                     lowerBracket += Math.floor(oldUpperBracket / 2);
-                    lowerBracket = (int) Math.ceil((float)lowerBracket / 2);
+                    lowerBracket = (int) Math.ceil((float) lowerBracket / 2);
                 }
 
                 return lowerBracket + upperBracket;
@@ -125,13 +148,22 @@ public class StageOption extends LinearLayout {
         return sample;
     }
 
+    /**
+     * Setter for the options
+     *
+     * @param context the current context.
+     */
     public void setOptions(Context context) {
         options.removeAllViews();
         TextWatcher watcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 StageOption.this.listener.onParticipantsUpdate();
@@ -180,27 +212,47 @@ public class StageOption extends LinearLayout {
         return optionsMap;
     }
 
+    /**
+     * Getter for the value of options.
+     *
+     * @param index the index of the options
+     * @return the value of the options at a certain index.
+     */
     private int getOptionValue(int index) {
-        return Integer.parseInt(((StageOptionBody)this.options.getChildAt(index)).getEntry());
+        return Integer.parseInt(((StageOptionBody) this.options.getChildAt(index)).getEntry());
     }
 
+    /**
+     * Setter for the number of participants.
+     */
     public void setOpenNoOfParticipants() {
         noOfParticipants.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
         noOfParticipants.entryText.setEnabled(true);
     }
 
+    /**
+     * Setter for the forced number of participants.
+     *
+     * @param number the number of participants
+     */
     public void setForcedNoOfParticipants(int number) {
         noOfParticipants.setEntryText(String.valueOf(number));
         noOfParticipants.setBackgroundColor(Color.parseColor("#FFF0F0F0"));
         noOfParticipants.entryText.setEnabled(false);
     }
 
+    /**
+     * Setter for the error number of participants.
+     */
     public void setErrorNoOfParticipants() {
         noOfParticipants.setEntryText(String.valueOf(0));
         noOfParticipants.setBackgroundColor(Color.parseColor("#FFFF0000"));
         noOfParticipants.entryText.setEnabled(false);
     }
 
+    /**
+     * Interface for participantsupdateListener.
+     */
     public interface ParticipantsUpdateListener {
         void onParticipantsUpdate();
     }

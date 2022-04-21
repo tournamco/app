@@ -11,6 +11,12 @@ public abstract class AbstractTournamentSummary extends LinearLayout {
 
     protected List<TournamentModel> tournaments;
 
+    /**
+     * The constructor for the AbstractTournamentSummary class.
+     *
+     * @param context     the current context
+     * @param tournaments the list of tournamentModels.
+     */
     public AbstractTournamentSummary(Context context, List<TournamentModel> tournaments) {
         super(context);
 
@@ -19,5 +25,13 @@ public abstract class AbstractTournamentSummary extends LinearLayout {
         build(context);
     }
 
-    private void build(Context context) { setOrientation(LinearLayout.VERTICAL);}
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
+    private void build(Context context) {
+        setOrientation(LinearLayout.VERTICAL);
+    }
 }

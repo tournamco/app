@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DisputeHandler;
 import co.tournam.models.DisputeModel;
@@ -28,6 +29,16 @@ public class DisputeColumn extends LinearLayout {
     private Dispute.DisputeResolvedListener listener;
     private Dispute dispute;
 
+    /**
+     * The Constructor of the DisputeColumn class.
+     *
+     * @param context   the current context
+     * @param proof     the proof model
+     * @param disputeId the id of the dispute
+     * @param key       the key of the dispute
+     * @param dispute   the model of the dispute
+     * @param listener  the disputeresolved listener.
+     */
     public DisputeColumn(Context context, ProofModel proof, String disputeId, String key, Dispute dispute, Dispute.DisputeResolvedListener listener) {
         super(context);
 
@@ -40,6 +51,9 @@ public class DisputeColumn extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     */
     private void build(Context context) {
         setLayoutParams(new LinearLayoutCompat.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, (float) 1
@@ -49,6 +63,11 @@ public class DisputeColumn extends LinearLayout {
         buildContents(context);
     }
 
+    /**
+     * buildContents method adds the score and imageLists, uses disputehandler.
+     *
+     * @param context current context
+     */
     private void buildContents(Context context) {
         this.addView(new Score(context, new ArrayList<>(this.proof.getScores().values())));
         this.addView(new ImageListVertical(context, new ArrayList<>()));
@@ -68,6 +87,13 @@ public class DisputeColumn extends LinearLayout {
         this.addView(button);
     }
 
+    /**
+     * Converts a dp value to px.
+     *
+     * @param context the current context
+     * @param dp      the dp that needs to be converted
+     * @return the dp value in px
+     */
     private int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,

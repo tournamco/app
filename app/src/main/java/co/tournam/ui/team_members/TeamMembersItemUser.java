@@ -19,7 +19,7 @@ public class TeamMembersItemUser extends LinearLayout {
     private ImageView memberIcon;
 
     public TeamMembersItemUser(Context context, UserModel user
-        , boolean leftTeam) {
+            , boolean leftTeam) {
         super(context);
 
         this.user = user;
@@ -28,6 +28,12 @@ public class TeamMembersItemUser extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -35,10 +41,16 @@ public class TeamMembersItemUser extends LinearLayout {
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(leftTeam == true) {
+        if (leftTeam == true) {
             inflater.inflate(R.layout.team_member, this, true);
         } else {
             inflater.inflate(R.layout.team_member_right, this, true);
@@ -52,7 +64,12 @@ public class TeamMembersItemUser extends LinearLayout {
         new DownloadImageWorker(image -> memberIcon.setImageBitmap(image)).execute(user.getIcon());
     }
 
-    private void setName(String name) { memberName.setText(name);}
-
-    private void setIcon(int imageID) { memberIcon.setImageResource(imageID);}
+    /**
+     * The setter for the name
+     *
+     * @param name the name to be set.
+     */
+    private void setName(String name) {
+        memberName.setText(name);
+    }
 }

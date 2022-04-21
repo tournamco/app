@@ -11,7 +11,7 @@ import java.util.List;
 import co.tournam.models.MatchModel;
 import co.tournam.schedule.R;
 
-public class Score extends LinearLayout{
+public class Score extends LinearLayout {
 
     private List<Integer> scores;
 
@@ -42,7 +42,7 @@ public class Score extends LinearLayout{
         System.out.println("score2Text " + scores.get(1));
         score1Text.setText(Integer.toString(scores.get(0)));
 
-        TextView score2Text= findViewById(R.id.score2);
+        TextView score2Text = findViewById(R.id.score2);
         score2Text.setText(Integer.toString(scores.get(1)));
     }
 

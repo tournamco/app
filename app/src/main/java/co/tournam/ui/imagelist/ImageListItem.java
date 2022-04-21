@@ -13,6 +13,12 @@ public class ImageListItem extends LinearLayout {
     private Bitmap image;
     private ImageView mainView;
 
+    /**
+     * The constructor for the ImageListItem class.
+     *
+     * @param context the current context
+     * @param image   the input image
+     */
     public ImageListItem(Context context, Bitmap image) {
         super(context);
 
@@ -21,12 +27,24 @@ public class ImageListItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
 
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -34,11 +52,16 @@ public class ImageListItem extends LinearLayout {
 
         mainView = findViewById(R.id.imagelist_base);
 
-        if(image != null) {
+        if (image != null) {
             mainView.setImageBitmap(image);
         }
     }
 
+    /**
+     * setter for the ImageListItem class
+     *
+     * @param image The image to set
+     */
     public void setImage(Bitmap image) {
         mainView.setImageBitmap(image);
     }

@@ -34,7 +34,14 @@ public class TournamentPageHeader extends AbstractHeader {
     private ImageView background;
     private UserModel me;
 
-
+    /**
+     * Constructor for tournamentPageHeader.
+     *
+     * @param context    the current context.
+     * @param name       the input name.
+     * @param tournament the input tournament.
+     * @param me         the usermodel of the user.
+     */
     public TournamentPageHeader(Context context, String name, TournamentModel tournament, UserModel me) {
         super(context, name);
 
@@ -44,10 +51,22 @@ public class TournamentPageHeader extends AbstractHeader {
         build(context);
     }
 
+    /**
+     * Build method provides the option of modifying the layout before building
+     * its contents
+     *
+     * @param context the current context
+     */
     private void build(Context context) {
         buildContents(context);
     }
 
+    /**
+     * the buildContents method inflates the layout and builds/initiates the full
+     * UI-element.
+     *
+     * @param context the current context.
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -107,7 +126,7 @@ public class TournamentPageHeader extends AbstractHeader {
             getContext().startActivity(intent);
         });
 
-        if(!tournament.getOrganizer().getId().equals(me.getId())) {
+        if (!tournament.getOrganizer().getId().equals(me.getId())) {
             disputeButton.setVisibility(GONE);
             createButton.setVisibility(GONE);
             deleteButton.setVisibility(GONE);
@@ -129,6 +148,9 @@ public class TournamentPageHeader extends AbstractHeader {
 
     }
 
+    /**
+     * sets the background banner
+     */
     public void setBanner() {
         //Set the banner as background
         background = findViewById(R.id.tournament_page_header_image_view);
@@ -136,10 +158,18 @@ public class TournamentPageHeader extends AbstractHeader {
 
     }
 
+    /**
+     * Tournament name setter
+     *
+     * @param name name of the tournament.
+     */
     public void setTournamentName(String name) {
         tournamentName.setText(name);
     }
 
+    /**
+     * @param subText the subtext of the UI-element.
+     */
     public void setSubText(String subText) {
         dateSubText.setText(subText);
     }
