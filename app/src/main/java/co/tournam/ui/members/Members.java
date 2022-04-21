@@ -1,4 +1,4 @@
-package co.tournam.models.members;
+package co.tournam.ui.members;
 
 import android.content.Context;
 import android.widget.LinearLayout;
@@ -20,11 +20,21 @@ public class Members extends AbstractMembers {
         build(context);
     }
 
+    /**
+     * Allows the modification of the Linearlayout before building its components
+     *
+     * @param context Android context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         buildContents(context);
     }
 
+    /**
+     * Builds the components of the layout
+     *
+     * @param context Android Context
+     */
     private void buildContents(Context context) {
         for (UserModel user : team.getMembers()) {
             MembersListItem item = new MembersListItem(context, user, buttonText);

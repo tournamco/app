@@ -12,7 +12,7 @@ import co.tournam.api.ApiErrors;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 import co.tournam.ui.header.SmallHeader;
 import co.tournam.ui.matchlist.AlteredMatchList;
 import co.tournam.ui.roundbar.RoundBar;

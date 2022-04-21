@@ -1,4 +1,4 @@
-package co.tournam.models.members;
+package co.tournam.ui.members;
 
 import android.content.Context;
 import android.widget.LinearLayout;

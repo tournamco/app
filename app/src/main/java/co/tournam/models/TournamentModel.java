@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import co.tournam.models.stage.StageModel;
-
 public class TournamentModel {
     private boolean online;
     private String banner;
@@ -22,6 +20,7 @@ public class TournamentModel {
     private String name;
     private TournamentLocation location;
 
+    //Constructor of a Tournament Model
     public TournamentModel(String id, String name, String game, List<String> teams,
                            List<StageModel> stages, UserModel organizer, boolean isPublic,
                            int color, int teamSize, int gameLength, int currentStage, String banner,
@@ -166,6 +165,7 @@ public class TournamentModel {
         return formatter.format(stages.get(stages.size() - 1).getMaximalDate());
     }
 
+    //Static class for determining the tournament location
     public static class TournamentLocation {
         private float longitude;
         private float latitude;
@@ -184,6 +184,7 @@ public class TournamentModel {
         }
     }
 
+    //Static class for generating stages
     public static class CreateStageModel {
         private StageTypes type;
         private String name;

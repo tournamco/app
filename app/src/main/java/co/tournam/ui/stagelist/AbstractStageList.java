@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import co.tournam.models.TournamentModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 
 public abstract class AbstractStageList extends LinearLayout {
 

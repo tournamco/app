@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import co.tournam.models.TournamentModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 import co.tournam.schedule.R;
 import co.tournam.schedule.StageActivity;
 

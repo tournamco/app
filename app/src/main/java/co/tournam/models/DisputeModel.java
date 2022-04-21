@@ -1,14 +1,12 @@
 package co.tournam.models;
 
-import java.util.List;
-import java.util.Map;
-
 public class DisputeModel {
     private String id;
     private String matchId;
     private int gameIndex;
     private String tournamentId;
 
+    //Constructor of a Dispute Model
     public DisputeModel(String id, String matchId, int gameIndex, String tournamentId) {
         this.id = id;
         this.matchId = matchId;

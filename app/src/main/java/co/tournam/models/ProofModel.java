@@ -9,6 +9,7 @@ public class ProofModel {
     private Map<String, Integer> scores;
     private List<String> images;
 
+    //Constructor of a Proof Model
     public ProofModel(String id, String teamId, Map<String, Integer> scores, List<String> images) {
         this.id = id;
         this.teamId = teamId;

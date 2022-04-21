@@ -7,6 +7,7 @@ public class UserModel {
     private String email;
     private String icon;
 
+    //Constructor of a User Model
     public UserModel(String id, String username, String gamerTag, String email, String icon) {
         this.id = id;
         this.username = username;
