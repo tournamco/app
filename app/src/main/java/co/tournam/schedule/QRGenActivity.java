@@ -17,10 +17,12 @@ import co.tournam.ui.header.SmallHeader;
 
 public class QRGenActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private ImageView qrCodeView;
     private LinearLayout headerLayout;
     Context context;
 
+    //On create method of the QR Generator Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
@@ -37,17 +39,24 @@ public class QRGenActivity extends AppCompatActivity {
 
     }
 
+    //Sets and builds the Header of the activity
     public void setHeader() {
         headerLayout = findViewById(R.id.qr_code_gen_header);
         SmallHeader header = new SmallHeader(context, "QR Code", () -> finish());
         headerLayout.addView(header);
     }
 
+    //Sets and builds the Generated QR code
     public void setImageView(Bitmap bm) {
         qrCodeView = findViewById(R.id.qr_code_gen_image_view);
         qrCodeView.setImageBitmap(bm);
     }
 
+    /**
+     * Generates QR code from the passed in string. Calls the setImageView() method.
+     *
+     * @param token team invite token
+     */
     public void generateQRCode(String token) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 

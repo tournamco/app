@@ -21,18 +21,17 @@ import co.tournam.ui.matchlist.SummaryMatchList;
 
 public class ScheduleActivity extends AppCompatActivity {
 
+    //Variable Declarations
     Context context;
     private LinearLayout mainHeaderLayout;
     private LinearLayout selectSliderLayout;
     private LinearLayout timeSliderLayout;
-    private LinearLayout filterDropdownLayout;
     private LinearLayout matchListLayout;
     private SummaryMatchList matchList;
-    private List<MatchModel> allMatchList;
-
     private boolean isPersonal;
     private boolean future = true;
 
+    //On create method of the Schedule Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
@@ -41,7 +40,6 @@ public class ScheduleActivity extends AppCompatActivity {
         setMainHeaderLayout();
         setSelectSliderLayout();
         setTimeSliderLayout();
-        setFilterDropdownLayout();
         setNavigationBar();
 
         matchListLayout = (LinearLayout) findViewById(R.id.schedule_match_list);
@@ -51,13 +49,14 @@ public class ScheduleActivity extends AppCompatActivity {
         loadMatches();
     }
 
+    //Sets and builds the header of the activity
     public void setMainHeaderLayout() {
-
         mainHeaderLayout = (LinearLayout) findViewById(R.id.schedule_main_header);
         ScheduleHeader header = new ScheduleHeader(context);
         mainHeaderLayout.addView(header);
     }
 
+    //Sets and builds the Personal/All under the header of the activity
     public void setSelectSliderLayout() {
         selectSliderLayout = (LinearLayout) findViewById(R.id.schedule_slider);
         SliderSchedule slider = new SliderSchedule(context, false, "Personal", "All");
@@ -80,6 +79,7 @@ public class ScheduleActivity extends AppCompatActivity {
         this.isPersonal = slider.getBool();
     }
 
+    //Sets and builds the Upcoming/Results under the header of the activity
     public void setTimeSliderLayout() {
         timeSliderLayout = (LinearLayout) findViewById(R.id.time_slider);
         SliderSchedule slider = new SliderSchedule(context, true, "Upcoming", "Results");
@@ -102,18 +102,13 @@ public class ScheduleActivity extends AppCompatActivity {
         this.future = slider.getBool();
     }
 
-    public void setFilterDropdownLayout() {
-        //TODO Set up Filter Dropdown
-        //filterDropdownLayout = (LinearLayout) findViewById(R.id.schedule_filter_dropdown);
-        //FilterDropdown filter = new FilterDropdown(context);
-        //filterDropdownLayout.addView(filter);
-    }
-
+    //Gets the matches for the user from the server and adds the to the global match list
     public void loadMatches() {
         TeamHandler.listMatches(this.future, this.isPersonal, 0, 10,
                 matches -> matchList.addMatches(matches));
     }
 
+    //Builds the navigation bar at the bottom of the activity
     public void setNavigationBar() {
         BottomNavigationView bottomNav = findViewById(R.id.schedule_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_schedule);

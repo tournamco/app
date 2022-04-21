@@ -27,6 +27,7 @@ import co.tournam.ui.header.SmallHeader;
 
 public class MatchProofActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private Context context;
     private MatchModel match;
     private String teamKey;
@@ -34,9 +35,9 @@ public class MatchProofActivity extends AppCompatActivity {
     private LinearLayout proofContainer;
     private DefaultButton addButton;
     private int lastAddedIndex;
-
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
+    //On create method of the My Profile Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
@@ -49,6 +50,7 @@ public class MatchProofActivity extends AppCompatActivity {
             return;
         }
 
+        //Open Gallery
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -74,13 +76,23 @@ public class MatchProofActivity extends AppCompatActivity {
         loadMatch(matchId);
     }
 
+    //Gets the information about the selected match from the server and builds the activity
     private void loadMatch(String matchId) {
-        TeamHandler.matchInfo(matchId, response -> {
-            match = response;
-            build();
+        TeamHandler.matchInfo(matchId, new TeamHandler.MatchInfoComplete() {
+            @Override
+            public void success(MatchModel response) {
+                match = response;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Builds the activity screen
     private void build() {
         LinearLayout addButtonContainer = (LinearLayout) findViewById(R.id.add_button);
         addButton = new DefaultButton(context, "Add Game");
@@ -117,23 +129,47 @@ public class MatchProofActivity extends AppCompatActivity {
         }
     }
 
+    //Sends the information to the server that the selected match is finished
     private void finishMatch() {
-        TeamHandler.finishMatch(match.getId(), () -> finish());
-    }
+        TeamHandler.finishMatch(match.getId(), new TeamHandler.FinishMatchComplete() {
+            @Override
+            public void success() {
+                finish();
+            }
 
-    private void createProof(int gameIndex) {
-        ProofHandler.create(match.getId(), gameIndex, proofId -> {
-            proofContainer.addView(new GameProof(context, match.getGames().get(gameIndex),
-            gameIndex, match, teamKey, proofId, index -> {
-                lastAddedIndex = index;
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                someActivityResultLauncher.launch(intent);
-            }));
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Creates a new proof in the server
+    private void createProof(int gameIndex) {
+        ProofHandler.create(match.getId(), gameIndex, new ProofHandler.CreateComplete() {
+            @Override
+            public void success(String proofId) {
+                proofContainer.addView(new GameProof(context, match.getGames().get(gameIndex),
+                        gameIndex, match, teamKey, proofId, index -> {
+                    lastAddedIndex = index;
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    someActivityResultLauncher.launch(intent);
+                }));
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
+    }
+
+    /*
+     * Checks whether the amount of games that are given proof match the maximum amount of games in
+     * the match
+     */
     private void checkGameProofSize() {
         if (proofIndex < match.getGames().size()) {
             return;

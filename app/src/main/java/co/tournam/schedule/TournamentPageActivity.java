@@ -1,7 +1,6 @@
 package co.tournam.schedule;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -31,13 +30,11 @@ import co.tournam.ui.title.SubtextTitle;
 
 public class TournamentPageActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private TournamentModel tournamentModel;
     private UserModel meModel;
     private Context context;
-
     private LinearLayout customHeaderLayout;
-
-    private Bitmap tournamentBanner;
     private TextView gameName;
     private LinearLayout firstHeader;
     private LinearLayout stages;
@@ -46,7 +43,7 @@ public class TournamentPageActivity extends AppCompatActivity {
     private LinearLayout matchesHeader;
     private LinearLayout matchView;
 
-
+    //On create method of the Tournament Details Page Activity
     public void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
         String tournamentID = null;
@@ -60,20 +57,51 @@ public class TournamentPageActivity extends AppCompatActivity {
         loadTournament(tournamentID);
     }
 
+    /**
+     * Load tournament method asks the server for the tournament information
+     * through its ID and sets it as the global tournament model.
+     * Furthermore, it calls the loadMe() method.
+     *
+     * @param tournamentId id of the tournament
+     * @post this.tournamentModel = TournamentModel tournament
+     */
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, tournament -> {
-            tournamentModel = tournament;
-            loadMe();
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                tournamentModel = tournament;
+                loadMe();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    /**
+     * Load the information of the logged in user through a request to the server and then sets it
+     * as the global user model. Furthermore, it also calls the setup() function.
+     *
+     * @post this.meModel = UserModel me
+     */
     private void loadMe() {
-        UserHandler.me(me -> {
-            meModel = me;
-            setup();
+        UserHandler.me(new UserHandler.MeCompleted() {
+            @Override
+            public void success(UserModel me) {
+                meModel = me;
+                setup();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Calls all setup functions for building the activity
     private void setup() {
         setCustomHeader();
         setGameName();
@@ -85,6 +113,7 @@ public class TournamentPageActivity extends AppCompatActivity {
         setMatches();
     }
 
+    //Sets up and builds the header of the Activity
     public void setCustomHeader() {
         customHeaderLayout = findViewById(R.id.tournament_page_custom_header);
         TournamentPageHeader customHeader = new TournamentPageHeader(context, "", tournamentModel, meModel);
@@ -92,23 +121,26 @@ public class TournamentPageActivity extends AppCompatActivity {
         customHeaderLayout.addView(customHeader);
     }
 
-
+    //Sets up and builds the title displaying the game of the tournament
     private void setGameName() {
         gameName = findViewById(R.id.tournament_page_game_title);
         gameName.setText(tournamentModel.getGame());
     }
 
+    //Sets up and builds the header of the Stages section
     private void setStagesHeader() {
         firstHeader = findViewById(R.id.tournament_page_stages_header);
         firstHeader.addView(new DefaultTitle("Stages", context));
     }
 
+    //Sets up and builds the stage list section
     private void setStages() {
         stages = findViewById(R.id.tournament_page_stage_list);
         stages.removeAllViews();
         stages.addView(new StageList(context, (ArrayList<StageModel>) tournamentModel.getStages(), tournamentModel));
     }
 
+    //Sets up and builds the header of the Teams section
     private void setTeamsHeader() {
         secondHeader = findViewById(R.id.tournament_page_teams_header);
         secondHeader.addView(new SubtextTitle("Teams",
@@ -116,23 +148,47 @@ public class TournamentPageActivity extends AppCompatActivity {
                         tournamentModel.getStages().get(0).getNumberOfParticipants(), context));
     }
 
-
+    /**
+     * Obtains the models of the teams competing in the tournament from the server and calls the
+     * setTeamsList() method.
+     */
     private void setTeams() {
         teams = findViewById(R.id.tournament_page_teams_list);
         teams.removeAllViews();
-        TeamHandler.info(tournamentModel.getTeams(), teams -> {
-            Log.wtf("Team List size", String.valueOf(teams.size()));
-            setTeamsList(teams);
+        TeamHandler.info(tournamentModel.getTeams(), new TeamHandler.InfoArrayComplete() {
+            @Override
+            public void success(List<TeamModel> teams) {
+                Log.wtf("Team List size", String.valueOf(teams.size()));
+                setTeamsList(teams);
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
+
     }
 
+    /**
+     * Sets the teams of the teams list, and if the user is the organizer of the tournament
+     * then they are allowed to remove teams from the tournament
+     */
     private void setTeamsList(List<TeamModel> teams) {
         if (meModel.getId().equals(tournamentModel.getOrganizer().getId())) {
             this.teams.addView(new TeamList(context, teams, "Remove", team -> {
                 Toast.makeText(context, "Removed Team", Toast.LENGTH_LONG).show();
-                TeamHandler.delete(team.getID(), () -> {
-                    TournamentPageActivity.this.teams.removeAllViews();
-                    setTeams();
+                TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
+                    @Override
+                    public void success() {
+                        TournamentPageActivity.this.teams.removeAllViews();
+                        setTeams();
+                    }
+
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        System.err.println("API_ERROR: " + error.name() + " - " + message);
+                    }
                 });
             }));
         } else {
@@ -140,24 +196,36 @@ public class TournamentPageActivity extends AppCompatActivity {
         }
     }
 
+    //Sets up and builds the header of the Matches section
     private void setMatchesHeader() {
-        //TODO Add slider to the header
         matchesHeader = findViewById(R.id.tournament_page_matches_header);
         matchesHeader.addView(new DefaultTitle("Matches", context));
     }
 
-
+    /**
+     * Obtains the models of the matches coming up in the tournament from the server and calls the
+     * setMatchModels() method.
+     */
     private void setMatches() {
         matchView = findViewById(R.id.tournament_page_matches_list);
         matchView.removeAllViews();
         TournamentHandler.listMatches(tournamentModel.getId(), true,
-                matches -> {
-                    setMatchModels(matches);
-                    Log.wtf("Match List size", String.valueOf(matches.size()));
+                new TournamentHandler.ListMatchesComplete() {
+                    @Override
+                    public void success(List<MatchModel> matches) {
+                        setMatchModels(matches);
+                        Log.wtf("Match List size", String.valueOf(matches.size()));
+                    }
+
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        System.err.println("API_ERROR: " + error.name() + " - " + message);
+                    }
                 });
 
     }
 
+    //Adds the matches to the list and builds the list.
     public void setMatchModels(List<MatchModel> matches) {
         matchView.addView(new SummaryMatchList(context, matches));
     }

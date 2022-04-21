@@ -9,6 +9,8 @@ import java.net.CookiePolicy;
 import co.tournam.api.PersistentCookieStore;
 
 public class MainApplication extends Application {
+
+    //Sets up the cookie manager of the app
     @Override
     public void onCreate() {
         super.onCreate();

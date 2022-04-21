@@ -76,35 +76,15 @@
             android:name=".QRGenActivity"
             android:exported="true" />
         <activity
-            android:name=".CurrentLocationActivity"
-            android:exported="true" />
-        <activity
             android:name=".MapSelectActivity"
             android:exported="true" />
-<!--        <activity-->
-<!--            android:name=".Login"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--               <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-      <activity
-           android:name=".Register"
-            android:exported="true">
-<!--            <intent-filter>&ndash;&gt;-->
-<!--               <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
-
-<!--              <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-<!--           </intent-filter>-->
-       </activity>
-
+            android:exported="true"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

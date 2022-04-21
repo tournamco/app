@@ -35,6 +35,7 @@ import co.tournam.ui.title.DefaultTitle;
 
 public class MyProfileActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private LinearLayout userIconLayout;
     private LinearLayout usernameLayout;
     private LinearLayout gamerTagLayout;
@@ -50,6 +51,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private String newUserIconID;
 
 
+    //On create method of the My Profile Activity calling and setting up functions and variables
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,37 +86,52 @@ public class MyProfileActivity extends AppCompatActivity {
         DefaultButton button = new DefaultButton(context, "Logout");
         button.button.setOnClickListener(v -> {
             // TODO: Logout
-            UserHandler.logout(() -> {
-                Intent intent = new Intent(context, LoginActivity.class);
-                getApplicationContext().getSharedPreferences(PersistentCookieStore.COOKIE_PREFS, 0).edit().clear().apply();
-                startActivity(intent);
+            UserHandler.logout(new UserHandler.LogoutCompleted() {
+                @Override
+                public void success() {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    getApplicationContext().getSharedPreferences(PersistentCookieStore.COOKIE_PREFS, 0).edit().clear().apply();
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+
+                }
             });
         });
         header.addView(new SmallHeader(context, "My Profile", () -> this.finish(), button));
     }
 
+    //Gets the information of the user from the server and using that information sets up the page
     public void getUserInfo() {
-        UserHandler.me(me -> {
-            setUserInfo(me);
-            setUserIconLayout();
-            setUsernameLayout();
-            setGamerTagLayout();
-            setEmailLayout();
-            setFirstHeaderLayout();
-            setChangePasswordLayout();
-            setSecondHeaderLayout();
-            setStatisticsLayout();
+        UserHandler.me(new UserHandler.MeCompleted() {
+            @Override
+            public void success(UserModel me) {
+                setUserInfo(me);
+                setUserIconLayout();
+                setUsernameLayout();
+                setGamerTagLayout();
+                setEmailLayout();
+                setFirstHeaderLayout();
+                setChangePasswordLayout();
+                setSecondHeaderLayout();
+                setStatisticsLayout();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Sets the global user model equal to the passed in one
     public void setUserInfo(UserModel me) {
         this.user = me;
-        Log.w("Username", user.getUsername());
-        Log.w("UserID", user.getId());
-        Log.w("User Gamertag", user.getGamerTag());
-        Log.w("User Email", user.getEmail());
     }
 
+    //Gets and sets the users icon
     public void setUserIconLayout() {
 
         userIconLayout = (LinearLayout) findViewById(R.id.userIcon_mypf);
@@ -136,12 +153,22 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
+    //Changes the icon of the user to the value of newUserIconID
     public void changeIcon() {
-        //Log.w("User Icon value:");
+        UserHandler.changeIcon(this.newUserIconID, new UserHandler.ChangeComplete() {
+            @Override
+            public void success() {
+                Toast.makeText(MyProfileActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
+            }
 
-        UserHandler.changeIcon(this.newUserIconID, () -> Toast.makeText(MyProfileActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show());
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
     }
 
+    //Opens an intent of the gallery
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -149,6 +176,7 @@ public class MyProfileActivity extends AppCompatActivity {
         someActivityResultLauncher.launch(intent);
     }
 
+    //Sets and builds the username field
     public void setUsernameLayout() {
 
         usernameLayout = (LinearLayout) findViewById(R.id.username_mypf);
@@ -160,10 +188,21 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeUsername(((StageOptionBody) usernameLayout.getChildAt(0)).getEntry(),
-                    () -> Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show());
+                    new UserHandler.ChangeComplete() {
+                        @Override
+                        public void success() {
+                            Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         });
     }
 
+    //Sets and builds the gamertag field
     public void setGamerTagLayout() {
         gamerTagLayout = (LinearLayout) findViewById(R.id.gamerTag_mypf);
         StageOptionBody body = new StageOptionBody(context, "Gamertag", InputType.TYPE_CLASS_TEXT);
@@ -174,10 +213,21 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeGamertag(((StageOptionBody) gamerTagLayout.getChildAt(0)).getEntry(),
-                    () -> Toast.makeText(MyProfileActivity.this, "Gamertag changed.", Toast.LENGTH_SHORT).show());
+                    new UserHandler.ChangeComplete() {
+                        @Override
+                        public void success() {
+                            Toast.makeText(MyProfileActivity.this, "Gamertag changed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         });
     }
 
+    //Sets and builds the email field
     public void setEmailLayout() {
         emailLayout = (LinearLayout) findViewById(R.id.email_mypf);
         StageOptionBody body = new StageOptionBody(context, "Email", InputType.TYPE_CLASS_TEXT);
@@ -188,15 +238,27 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeEmail(((StageOptionBody) emailLayout.getChildAt(0)).getEntry(),
-                    () -> Toast.makeText(this, "Email changed.", Toast.LENGTH_SHORT).show());
+                    new UserHandler.ChangeComplete() {
+                        @Override
+                        public void success() {
+                            Toast.makeText(MyProfileActivity.this, "Email changed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         });
     }
 
+    //Sets and builds the Change Password Header
     public void setFirstHeaderLayout() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.first_header_mypf);
         firstHeaderLayout.addView(new DefaultTitle("Change Password", context));
     }
 
+    //Sets and builds the change username field
     public void setChangePasswordLayout() {
 
         changePasswordLayout = (LinearLayout) findViewById(R.id.change_password_mypf);
@@ -206,18 +268,20 @@ public class MyProfileActivity extends AppCompatActivity {
 
     }
 
+    //Sets and builds the Statistics Header
     public void setSecondHeaderLayout() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.second_header_mypf);
         secondHeaderLayout.addView(new DefaultTitle("Statistics", context));
     }
 
+    //Sets and builds the statistics field
     public void setStatisticsLayout() {
-
         statisticsLayout = (LinearLayout) findViewById(R.id.statistics_table_mypf);
         statisticsLayout.addView(setUpTable(context, user));
 
     }
 
+    //Generates the statistics table
     public Table setUpTable(Context context, UserModel me) {
         //TODO Add statistics
         Table mystats = new Table(this.context, 5);
@@ -230,6 +294,7 @@ public class MyProfileActivity extends AppCompatActivity {
         return mystats;
     }
 
+    //Adds a row to the statistics table
     public void setTableRow(Table table, int index, String title, String data) {
 
         ((TableRow) table.getChildAt(index)).setTitleText(title);

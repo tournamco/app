@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
 
+    //On launch the app check if the user is logged in, and redirects them accordingly
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sp = getSharedPreferences("LocationInfo", 0);

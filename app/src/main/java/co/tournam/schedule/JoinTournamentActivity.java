@@ -23,12 +23,13 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class JoinTournamentActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private Context context;
     private TournamentModel tournament;
-
     private LinearLayout tournamentBannerLayout;
     private LinearLayout teamsListLayout;
 
+    //On create method of the Join Tournament Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_tournament);
@@ -45,6 +46,13 @@ public class JoinTournamentActivity extends AppCompatActivity {
         context = this.getApplicationContext();
     }
 
+    /**
+     * Loads and sets the information of a tournament with its given ID, before
+     * building the activity.
+     *
+     * @param tournamentID id of the tournament
+     * @post this.tournament = TournamentModel tournament
+     */
     private void waitForTournamentInfo(String tournamentID) {
         TournamentHandler.info(tournamentID, tournament -> {
             JoinTournamentActivity.this.tournament = tournament;
@@ -52,6 +60,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
         });
     }
 
+    //Builds the components of the activity
     private void build() {
         LinearLayout headerContainer = (LinearLayout) findViewById(R.id.header);
 
@@ -82,6 +91,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
         }
     }
 
+    //Adds a team to the current tournament with the given team id
     private void addTeam(String teamId) {
         TeamList list = new TeamList(context, new ArrayList<>(), "Join", team -> {
             TeamHandler.joinByTeamId(teamId, (teamId1, isLeader) -> {

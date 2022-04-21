@@ -25,13 +25,14 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
 public class OurTeamActivity extends AppCompatActivity {
 
+    //Variable Declarations
     Context context;
     private String teamID;
-    private String tournamentID;
     private TournamentModel tournament;
     private TeamModel team;
     private UserModel me;
 
+    //On create method of the Our Team Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_our_team);
@@ -48,6 +49,7 @@ public class OurTeamActivity extends AppCompatActivity {
         loadTeam();
     }
 
+    //Gets and sets the selected team model from the server to the global team model variable
     public void loadTeam() {
         TeamHandler.info(teamID, team -> {
             OurTeamActivity.this.team = team;
@@ -55,6 +57,13 @@ public class OurTeamActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Load tournament method asks the server for the tournament information
+     * through the team and sets it as the global tournament model.
+     * Furthermore, it calls the loadMe() method.
+     *
+     * @post this.tournament = TournamentModel tournament
+     */
     public void loadTournament() {
         TournamentHandler.info(team.getTournamentId(), tournament -> {
             OurTeamActivity.this.tournament = tournament;
@@ -62,6 +71,12 @@ public class OurTeamActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Load the information of the logged in user through a request to the server and then sets it
+     * as the global user model. Furthermore, it also calls the build() function.
+     *
+     * @post this.me = UserModel me
+     */
     public void loadMe() {
         UserHandler.me(me -> {
             OurTeamActivity.this.me = me;
@@ -69,6 +84,7 @@ public class OurTeamActivity extends AppCompatActivity {
         });
     }
 
+    //Builds and sets up components of the activity
     private void build() {
         LinearLayout headerContainer = (LinearLayout) findViewById(R.id.header);
 

@@ -24,14 +24,15 @@ import com.google.android.gms.tasks.Task;
 
 public class MapSelectActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    //Variable Declaration
     GoogleMap gMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     public static final int REQUEST_CODE = 101;
     String location;
-
     Button selectLocation;
 
+    //On create function of the Map Select Activity setting up variables and calling functions
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
 
     }
 
+    //Passes selected location to shared preferences if the back button is pressed
     @Override
     public void onBackPressed() {
         String data = this.location;
@@ -56,6 +58,7 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
         editor.commit();
     }
 
+    //Fetches the last location of the user
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MapSelectActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
@@ -72,6 +75,12 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
         });
     }
 
+    /**
+     * Once the map is loaded, the map is positioned to the user's location and
+     * allows them to place a pin on the map
+     *
+     * @param googleMap the map
+     */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
@@ -88,6 +97,7 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
         });
     }
 
+    //Asks the user for the permission to their location
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -25,7 +25,6 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.TournamentModel;
@@ -37,15 +36,14 @@ import co.tournam.ui.tournament_summary.TournamentSummaryListJoin;
 
 public class DiscoveryActivity extends AppCompatActivity {
 
+    //Variable Declarations
     Context context;
     private List<TournamentModel> tournamentList = new ArrayList<TournamentModel>();
-
     Drawable nfc;
     Drawable qr;
     protected LocationManager locationManager;
     private LinearLayout mainDiscoveryHeaderLayout;
     private LinearLayout joinWithQRLayout;
-    private LinearLayout joinWithNFCLayout;
     private LinearLayout localOnlineSliderLayout;
     private LinearLayout tournamentHeaderLayout;
     private LinearLayout tournamentListLayout;
@@ -54,7 +52,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     private String currentLocation = "0, 0";
     private TournamentSummaryListJoin Thelist;
 
-
+    //On create method of the Disputes Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discovery);
@@ -62,7 +60,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         this.qr = ResourcesCompat.getDrawable(this.getResources(), R.drawable.qr_icon, null);
         this.nfc = ResourcesCompat.getDrawable(this.getResources(), R.drawable.nfc_icon, null);
 
-
+        //Checks for permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -71,6 +69,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
 
         }
+        //Requests current location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
             @Override
@@ -95,9 +94,9 @@ public class DiscoveryActivity extends AppCompatActivity {
             }
         });
 
+        //Calls setup functions
         setMainDiscoveryHeaderLayout();
         setJoinWithQRLayout();
-        setJoinWithNFCLayout();
         setLocalOnlineSliderLayout();
         setTournamentHeaderLayout();
         setTournamentListLayout();
@@ -106,7 +105,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     }
 
-
+    //Upon scanning the qr code the user is added to the team
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
@@ -117,6 +116,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         }
     }
 
+    //Sets and builds the header of the activity
     public void setMainDiscoveryHeaderLayout() {
         mainDiscoveryHeaderLayout = (LinearLayout) findViewById(R.id.discovery_main_header);
         DiscoveryHeader header = new DiscoveryHeader(context);
@@ -125,6 +125,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         mainDiscoveryHeaderLayout.addView(header);
     }
 
+    //Sets and builds the QR code reader button
     public void setJoinWithQRLayout() {
         joinWithQRLayout = (LinearLayout) findViewById(R.id.discovery_join_qr);
         DefaultButtonIMG qrJoin = new DefaultButtonIMG(context,
@@ -138,13 +139,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         });
     }
 
-    public void setJoinWithNFCLayout() {
-        //joinWithNFCLayout = (LinearLayout) findViewById(R.id.discovery_join_nfc);
-        //DefaultButtonIMG nfcJoin = new DefaultButtonIMG(context,
-        //        "                  Join using NFC                  ", nfc);
-        //joinWithNFCLayout.addView(nfcJoin);
-    }
-
+    //Sets and builds the Local/Online slider
     public void setLocalOnlineSliderLayout() {
         localOnlineSliderLayout = (LinearLayout) findViewById(R.id.discovery_slider);
         Slider slider = new Slider(context, false);
@@ -158,18 +153,19 @@ public class DiscoveryActivity extends AppCompatActivity {
             slider.setButtons(false);
             this.isLocal = slider.getBool();
             updateList();
-//            Log.i("isLocal: ", String.valueOf(this.isLocal));
         });
 
         this.isLocal = slider.getBool();
     }
 
+    //Sets and builds the tournaments header
     public void setTournamentHeaderLayout() {
         tournamentHeaderLayout = (LinearLayout) findViewById(R.id.discovery_tourn_header);
         Text text = new Text(context, "tournaments");
         tournamentHeaderLayout.addView(text);
     }
 
+    //Sets and builds the list of tournaments
     public void setTournamentListLayout() {
         tournamentListLayout = (LinearLayout) findViewById(R.id.discovery_tourn_list);
         updateList();
@@ -178,32 +174,36 @@ public class DiscoveryActivity extends AppCompatActivity {
         tournamentListLayout.addView(Thelist);
     }
 
+
     public void setTournaments(List<TournamentModel> tournaments) {
         Thelist.clearList();
         Thelist.addTournaments(tournaments, location);
     }
 
-
-    public void getOnline(Context context) {
+    //Gets all online tournaments
+    public void getOnline() {
         this.tournamentList.clear();
         TournamentHandler.discoveryOnline(0, 10, tournaments -> setTournaments(tournaments));
     }
 
-    public void getOffline(Context context, String location) {
+    //Gets all offline tournaments
+    public void getOffline(String location) {
         this.tournamentList.clear();
         TournamentHandler.discoveryLocal(location, 100000, 0, 10,
                 tournaments -> setTournaments(tournaments));
     }
 
+    //Gets the boolean value of the slider
     public void updateList() {
         if (this.isLocal) {
-            getOffline(context, this.currentLocation);
+            getOffline(this.currentLocation);
             Log.wtf("Location", this.currentLocation);
         } else {
-            getOnline(context);
+            getOnline();
         }
     }
 
+    //Sets and builds the navigation bar at the bottom of the activity
     public void setNavigationBar() {
         BottomNavigationView bottomNav = findViewById(R.id.discovery_bottomNav_view);
         bottomNav.setSelectedItemId(R.id.navigation_discovery);

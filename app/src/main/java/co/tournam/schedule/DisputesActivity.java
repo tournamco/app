@@ -18,11 +18,13 @@ import co.tournam.ui.header.SmallHeader;
 
 public class DisputesActivity extends AppCompatActivity {
 
+    //Variable Declarations
     Context context;
     private LinearLayout disputesLayout;
     private List<DisputeModel> disputes;
     private TournamentModel tournament;
 
+    //On create method of the Disputes Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tournament_disputes);
@@ -39,20 +41,44 @@ public class DisputesActivity extends AppCompatActivity {
         loadTournament(tournamentId);
     }
 
+    /**
+     * Loads and sets the information of a tournament with its given ID.
+     *
+     * @param tournamentId id of the tournament
+     * @post this.tournament = TournamentModel tournament
+     */
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, tournament -> {
-            DisputesActivity.this.tournament = tournament;
-            loadDisputes();
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                DisputesActivity.this.tournament = tournament;
+                loadDisputes();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Loads the disputes of the current tournament and sets them to the global variable
     private void loadDisputes() {
-        DisputeHandler.list(tournament.getId(), disputes -> {
-            DisputesActivity.this.disputes = disputes;
-            build();
+        DisputeHandler.list(tournament.getId(), new DisputeHandler.ListComplete() {
+            @Override
+            public void success(List<DisputeModel> disputes) {
+                DisputesActivity.this.disputes = disputes;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Builds the components of the activity
     private void build() {
         LinearLayout headerLayout = findViewById(R.id.header);
         headerLayout.addView(new SmallHeader(context, "Tournament disputes", () -> finish()));
@@ -60,6 +86,7 @@ public class DisputesActivity extends AppCompatActivity {
         setDisputes(disputes);
     }
 
+    //Displays and builds all the disputes from the global list
     private void setDisputes(List<DisputeModel> disputes) {
         disputesLayout = (LinearLayout) findViewById(R.id.disputes_list);
         for (DisputeModel dispute : disputes) {

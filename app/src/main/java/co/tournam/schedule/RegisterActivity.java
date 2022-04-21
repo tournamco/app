@@ -19,11 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
-import co.tournam.api.ApiErrors;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     public final int PASSWORD_LENGTH = 5;
 
@@ -104,7 +103,7 @@ public class Register extends AppCompatActivity {
                 //register user
                 UserHandler.create(userIconId, userName.getText().toString().trim(), sPassword,
                         gamerTag.getText().toString().trim(), sEmail, userId -> {
-                    Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 });
             } else {

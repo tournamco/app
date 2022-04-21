@@ -36,6 +36,7 @@ import co.tournam.ui.title.SubtextTitle;
 
 public class ManageTeamActivity extends AppCompatActivity {
 
+    //Variable Declarations
     Context context;
     private LinearLayout buttonsLayout;
     private LinearLayout membersLayout;
@@ -45,6 +46,7 @@ public class ManageTeamActivity extends AppCompatActivity {
     private Bitmap iconImage;
     private LinearLayout userIconLayout;
 
+    //On create method of the Manage Team Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
@@ -75,20 +77,49 @@ public class ManageTeamActivity extends AppCompatActivity {
         loadTeam(teamId);
     }
 
+    /**
+     * Loads and sets the information of a team with its given ID.
+     *
+     * @param teamId id of the team
+     * @post this.team = TeamModel team
+     */
     private void loadTeam(String teamId) {
-        TeamHandler.info(teamId, team -> {
-            ManageTeamActivity.this.team = team;
-            loadTournament(team.getTournamentId());
+        TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
+            @Override
+            public void success(TeamModel team) {
+                ManageTeamActivity.this.team = team;
+                loadTournament(team.getTournamentId());
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    /**
+     * Loads and sets the information of a tournament with its given ID.
+     *
+     * @param tournamentId id of the tournament
+     * @post this.tournament = TournamentModel tournament
+     */
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, tournament -> {
-            ManageTeamActivity.this.tournament = tournament;
-            build();
+        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
+            @Override
+            public void success(TournamentModel tournament) {
+                ManageTeamActivity.this.tournament = tournament;
+                build();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
         });
     }
 
+    //Builds the components of the activity
     private void build() {
         setContentView(R.layout.activity_manage_team);
         context = this.getApplicationContext();
@@ -111,10 +142,21 @@ public class ManageTeamActivity extends AppCompatActivity {
 
         Button abandonButton = (Button) findViewById(R.id.abandon_button);
         abandonButton.setOnClickListener(view -> {
-            TeamHandler.delete(team.getID(), () -> startActivity(new Intent(ManageTeamActivity.this, ScheduleActivity.class)));
+            TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
+                @Override
+                public void success() {
+                    startActivity(new Intent(ManageTeamActivity.this, ScheduleActivity.class));
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
+            });
         });
     }
 
+    //Sets and builds the team icon
     public void setIconLayout() {
         userIconLayout = (LinearLayout) findViewById(R.id.team_icon_image);
 
@@ -133,10 +175,22 @@ public class ManageTeamActivity extends AppCompatActivity {
         });
     }
 
+    //Changes the team icon to the passed in icon id
     public void changeIcon(String iconId) {
-        TeamHandler.changeIcon(iconId, () -> Toast.makeText(ManageTeamActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show());
+        TeamHandler.changeIcon(iconId, new TeamHandler.ChangeComplete() {
+            @Override
+            public void success() {
+                Toast.makeText(ManageTeamActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(ApiErrors error, String message) {
+                System.err.println("API_ERROR: " + error.name() + " - " + message);
+            }
+        });
     }
 
+    //Sets and builds the team name field
     public void setTeamName() {
         LinearLayout nameLayout = (LinearLayout) findViewById(R.id.name_input);
         StageOptionBody body = new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT);
@@ -146,10 +200,21 @@ public class ManageTeamActivity extends AppCompatActivity {
         ImageButton change = (ImageButton) findViewById(R.id.name_button);
         change.setOnClickListener(v -> {
             TeamHandler.changeName(((StageOptionBody) nameLayout.getChildAt(0)).getEntry(),
-                    () -> Toast.makeText(ManageTeamActivity.this, "Name changed.", Toast.LENGTH_SHORT).show());
+                    new TeamHandler.ChangeComplete() {
+                        @Override
+                        public void success() {
+                            Toast.makeText(ManageTeamActivity.this, "Name changed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         });
     }
 
+    //Sets up the buttons to using qr code or nfc to invite a team member
     private void setButtons() {
         buttonsLayout = (LinearLayout) findViewById(R.id.buttons);
         DefaultButton qrButton = new DefaultButton(context, "Use QR");
@@ -159,27 +224,45 @@ public class ManageTeamActivity extends AppCompatActivity {
 
         qrButton.button.setOnClickListener(v -> {
 
-            TeamHandler.createInvite(tournament.getId(), team.getID(), token -> {
-                Bundle b = new Bundle();
-                b.putString("token", token);
-                Intent intent = new Intent(context, QRGenActivity.class);
-                intent.putExtras(b);
-                startActivity(intent);
+            TeamHandler.createInvite(tournament.getId(), team.getID(), new TeamHandler.CreateInviteComplete() {
+                @Override
+                public void success(String token) {
+                    Bundle b = new Bundle();
+                    b.putString("token", token);
+                    Intent intent = new Intent(context, QRGenActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
             });
 
         });
     }
 
+    //Sets and builds the list of team members
     private void setMembers() {
         membersLayout = (LinearLayout) findViewById(R.id.members);
         membersLayout.addView(new UserList(context, team.getMembers(), "Remove", (user) -> {
-            TeamHandler.leave(team.getID(), user.getId(), () -> {
-                membersLayout.removeAllViews();
-                setMembers();
+            TeamHandler.leave(team.getID(), user.getId(), new TeamHandler.LeaveComplete() {
+                @Override
+                public void success() {
+                    membersLayout.removeAllViews();
+                    setMembers();
+                }
+
+                @Override
+                public void failure(ApiErrors error, String message) {
+                    System.err.println("API_ERROR: " + error.name() + " - " + message);
+                }
             });
         }));
     }
 
+    //Calls an intent to open the user's gallery
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
