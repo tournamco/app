@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
-import co.tournam.api.ApiErrors;
 import co.tournam.api.DisputeHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.models.DisputeModel;
@@ -54,11 +53,6 @@ public class DisputesActivity extends AppCompatActivity {
                 DisputesActivity.this.tournament = tournament;
                 loadDisputes();
             }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
         });
     }
 
@@ -69,11 +63,6 @@ public class DisputesActivity extends AppCompatActivity {
             public void success(List<DisputeModel> disputes) {
                 DisputesActivity.this.disputes = disputes;
                 build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
             }
         });
     }
