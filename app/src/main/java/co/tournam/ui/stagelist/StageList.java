@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import co.tournam.models.TournamentModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 
 
 public class StageList extends AbstractStageList {

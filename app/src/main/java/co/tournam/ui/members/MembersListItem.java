@@ -1,4 +1,4 @@
-package co.tournam.models.members;
+package co.tournam.ui.members;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,12 +27,21 @@ public class MembersListItem extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Allows the modification of the Linearlayout before building its components
+     *
+     * @param context Android context
+     */
     private void build(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
-        //setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         buildContents(context);
     }
 
+    /**
+     * Builds the components of the layout
+     *
+     * @param context Android Context
+     */
     private void buildContents(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,7 +53,6 @@ public class MembersListItem extends LinearLayout {
         setButtonText(buttonText);
 
         setName(user.getGamerTag());
-        //setIcon(user.getIcon());
     }
 
     private void setName(String name) {

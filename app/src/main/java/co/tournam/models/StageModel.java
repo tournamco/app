@@ -1,10 +1,8 @@
-package co.tournam.models.stage;
+package co.tournam.models;
 
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
-
-import co.tournam.models.RoundModel;
 
 public class StageModel {
     private String type;
@@ -17,6 +15,7 @@ public class StageModel {
     private LocalTime minimalTime;
     private LocalTime maximalTime;
 
+    //Constructor of the Stage Model
     public StageModel(String type, String name, int numberOfParticipants, List<RoundModel> rounds,
                       List<String> winners, Date minimalDate, Date maximalDate,
                       LocalTime minimalTime, LocalTime maximalTime) {

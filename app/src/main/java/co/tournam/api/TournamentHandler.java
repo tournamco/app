@@ -11,7 +11,7 @@ import java.util.List;
 
 import co.tournam.models.MatchModel;
 import co.tournam.models.TournamentModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 
 public class TournamentHandler {
     public static TournamentModel fromJSON(JSONObject tournament) throws JSONException {

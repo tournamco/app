@@ -20,7 +20,7 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 import co.tournam.ui.header.TournamentPageHeader;
 import co.tournam.ui.list.TeamList;
 import co.tournam.ui.matchlist.SummaryMatchList;

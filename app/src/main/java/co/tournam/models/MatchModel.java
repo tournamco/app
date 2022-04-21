@@ -17,6 +17,7 @@ public class MatchModel {
     private Map<String, Boolean> finished;
     private List<String> keys;
 
+    //Constructor of a Match Model
     public MatchModel(String id, String name, LocalDateTime startDate, LocalDateTime endDate,
                       MatchTournamentModel tournament, Map<String, Integer> scores,
                       List<String> keys, List<GameModel> games, Map<String, Boolean> finished,
@@ -49,6 +50,7 @@ public class MatchModel {
         return team == getWinner();
     }
 
+    //Determines and returns the winner of the match
     public TeamModel getWinner() {
         Map<TeamModel, Integer> wins = new HashMap<>();
 
@@ -157,6 +159,7 @@ public class MatchModel {
         return finished;
     }
 
+    //Subclass used for match generation
     public static class MatchTournamentModel {
         private String id;
         private String name;

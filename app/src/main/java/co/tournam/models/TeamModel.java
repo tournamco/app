@@ -11,6 +11,7 @@ public class TeamModel {
     private String tournamentId;
     private boolean isPublic;
 
+    //Constructor of a Team Model
     public TeamModel(String id, String name, UserModel leader, List<UserModel> members,
                      boolean isPublic, String icon, String tournamentId) {
         this.id = id;

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.tournam.models.RoundModel;
-import co.tournam.models.stage.StageModel;
+import co.tournam.models.StageModel;
 
 public class StageHandler {
     public static StageModel fromJSON(JSONObject json) throws JSONException {

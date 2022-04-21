@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -21,13 +20,11 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tournam.api.ApiErrors;
 import co.tournam.api.ImageLoader;
 import co.tournam.api.TournamentHandler;
 import co.tournam.api.UploadImageWorker;
@@ -44,6 +41,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateTournamentActivity extends AppCompatActivity {
 
+    //Variable Declarations
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     private Context context;
     private LinearLayout tournamentBannerLayout;
@@ -58,21 +56,25 @@ public class CreateTournamentActivity extends AppCompatActivity {
     private LinearLayout addButtonLayout;
     private LinearLayout locationLayout;
     private TextView numberOfWinners;
-    private boolean participantsHasError;
-    private String bannerID = "";
-    private boolean isOnline = false;
     private String name;
-    private int color;
+    private String bannerID = "";
     private String game;
-    private int teamSize;
+    private String location = "no location";
+    private boolean participantsHasError;
+    private boolean isOnline = false;
     private boolean isPublic;
+    private int color;
+    private int teamSize;
     private int gameLength;
     private List<TournamentModel.CreateStageModel> stages;
-    private String location = "no location";
     private CheckBox onlineBox;
     private CheckBox publicBox;
     private Bitmap bannerImage;
 
+    /*
+     * On create method of the Create Tournament Activity calling and setting up functions
+     * and variables
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tournament);
@@ -120,6 +122,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         numberOfWinners.setText("Number of Winners is not set");
         numberOfWinnersLayout.addView(numberOfWinners);
 
+        //Setting up components
         setTournamentBanner();
         setTournamentName();
         setTournamentGameName();
@@ -128,7 +131,6 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setTournamentColorPicker();
         setFirstHeader();
         setStageOption();
-
         setSecondHeader();
         setAddButton();
         setLocation();
@@ -137,7 +139,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         publicBox = findViewById(R.id.isPublic_checkbox_create_tournament);
     }
 
-
+    //Creates a tournament from the collected information
     public void createTournament() {
         System.out.println("Tournament " + this.isOnline + " - " + onlineBox.isChecked());
         if (this.isOnline) {
@@ -155,6 +157,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         }
     }
 
+    //Updates all variables of the activity based on the entries
     public void infoUpdate() {
         this.name = ((StageOptionBody) tournamentNameLayout.getChildAt(0)).getEntry();
         this.game = ((StageOptionBody) tournamentGameNameLayout.getChildAt(0)).getEntry();
@@ -167,23 +170,9 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         this.isOnline = onlineBox.isChecked();
         this.isPublic = publicBox.isChecked();
-
-//        Log.w("Updated:", "True");
-//        Log.w("Banner ID:", this.bannerID);
-//        Log.w("Name:", this.name);
-//        Log.w("Color:", String.valueOf(this.color));
-//        Log.w("Game:", this.game);
-//        Log.w("Team Size:", String.valueOf(this.teamSize));
-//        Log.w("Location:", this.location);
-//        Log.w("Stage Count:", String.valueOf(this.stages.size()));
-//        Log.w("Game Length", String.valueOf(this.gameLength));
-        Log.w("isOnline:", String.valueOf(this.isOnline));
-        Log.w("isPublic:", String.valueOf(this.isPublic));
-//        Log.w("isOnline:", String.valueOf(this.isOnline));
-//        Log.w("isPublic:", String.valueOf(this.isPublic));
     }
 
-
+    //Sets and builds the Tournament Banner field
     public void setTournamentBanner() {
         tournamentBannerLayout = (LinearLayout) findViewById(R.id.tournamentBanner_create_tournament);
         ImageListItem image;
@@ -203,16 +192,19 @@ public class CreateTournamentActivity extends AppCompatActivity {
         });
     }
 
+    //Sets and builds the Tournament Name field
     public void setTournamentName() {
         tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName_create_tournament);
         tournamentNameLayout.addView(new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
     }
 
+    //Sets and builds the Tournament Game Name field
     public void setTournamentGameName() {
         tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName_create_tournament);
         tournamentGameNameLayout.addView(new StageOptionBody(context, "Game Name", InputType.TYPE_CLASS_TEXT));
     }
 
+    //Sets and builds the Tournament Game Length field
     private void setTournamentGameLength() {
         tournamentGameLengthLayout = (LinearLayout) findViewById(R.id.tournamentGameLength_create_tournament);
         tournamentGameLengthLayout.addView(new StageOptionBody(
@@ -220,11 +212,13 @@ public class CreateTournamentActivity extends AppCompatActivity {
                 "Game Length\n(in min.)", InputType.TYPE_CLASS_NUMBER));
     }
 
+    //Sets and builds the Tournament Team Size field
     public void setTournamentTeamSize() {
         tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize_create_tournament);
         tournamentTeamSizeLayout.addView(new StageOptionBody(context, "Team Size", InputType.TYPE_CLASS_TEXT));
     }
 
+    //Sets and builds the Tournament Color Picker field
     public void setTournamentColorPicker() {
         tournamentColorPickerLayout = (LinearLayout) findViewById(R.id.tournamentColorPicker_create_tournament);
         StageOptionColorPicker colorPicker = new StageOptionColorPicker(context);
@@ -235,6 +229,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         tournamentColorPickerLayout.addView(colorPicker);
     }
 
+    //Opens a color picker popup window
     public void openColorPicker() {
 
         AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, R.color.gray_400, new AmbilWarnaDialog.OnAmbilWarnaListener() {
@@ -251,15 +246,18 @@ public class CreateTournamentActivity extends AppCompatActivity {
         ambilWarnaDialog.show();
     }
 
+    //Sets the global color to the selected color
     private void setGlobalColor(int color) {
         this.color = color;
     }
 
+    //Sets and builds the Stages header
     public void setFirstHeader() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne_create_tournament);
         firstHeaderLayout.addView(new DefaultTitle("Stages", context));
     }
 
+    //Sets up and builds the Stage options component
     public void setStageOption() {
         stageOptionLayout = (LinearLayout) findViewById(R.id.stageOptions_create_tournament);
         StageOption stage = new StageOption(context, () -> updateParticipants());
@@ -279,6 +277,10 @@ public class CreateTournamentActivity extends AppCompatActivity {
         updateParticipants();
     }
 
+    /**
+     * Based on the information from the first stage, it controls and sets the participants in the
+     * later added stages as well.
+     */
     private void updateParticipants() {
         int nextParticipants = 0;
         boolean errored = false;
@@ -313,6 +315,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         System.out.println("Participants: " + nextParticipants + " " + participantsHasError);
     }
 
+    //Adds a new stage option component
     public void addStageOption() {
         StageOption stage = new StageOption(context, () -> updateParticipants());
         stage.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -330,14 +333,14 @@ public class CreateTournamentActivity extends AppCompatActivity {
         updateParticipants();
     }
 
+    //Sets and builds the Location Header
     public void setSecondHeader() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo_create_tournament);
         secondHeaderLayout.addView(new DefaultTitle("Location", context));
     }
 
+    //Sets and builds the Add Stage Option button
     public void setAddButton() {
-
-        Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
         addButtonLayout = (LinearLayout) findViewById(R.id.addStageOptionButton_create_tournament);
         DefaultButton button = new DefaultButton(context, "Add");
         addButtonLayout.addView(button, 0);
@@ -347,6 +350,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         });
     }
 
+    //Sets and builds the Set Location Button
     public void setLocation() {
         locationLayout = findViewById(R.id.location_create_tournament);
         DefaultButton locationEntry = new DefaultButton(context, "Pick Location");
@@ -357,6 +361,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         });
     }
 
+    //Gets the selected location on resume from the shared preferences
     @Override
     public void onResume() {
         super.onResume();
@@ -366,6 +371,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         setLocationButton(sp.getString("location", "no location"));
     }
 
+    //Updates the text of the Set Location Button
     public void setLocationButton(String text) {
         if (!text.equals("no location")) {
             ((DefaultButton) locationLayout.getChildAt(0)).button.setText("Loc. Picked");
@@ -374,6 +380,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         }
     }
 
+    //Calls intent to open the phone's gallery
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");

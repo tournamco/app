@@ -8,6 +8,7 @@ public class GameModel {
     private Map<String, Integer> scores;
     private Map<String, String> proofs;
 
+    //Constructor of a Game Model
     public GameModel(Map<String, Integer> scores, Map<String, String> proofs) {
         this.scores = scores;
         this.proofs = proofs;
@@ -29,10 +30,12 @@ public class GameModel {
         this.proofs = proofs;
     }
 
+    //Returns whether the passed team ID is a winner or not
     public boolean isWinner(String key) {
         return getWinners().contains(key);
     }
 
+    //Return the winning team(s)
     public List<String> getWinners() {
         List<String> winners = new ArrayList<>();
         int topScore = -1;

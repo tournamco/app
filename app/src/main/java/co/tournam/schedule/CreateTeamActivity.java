@@ -19,13 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
-import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.api.UploadImageWorker;
 import co.tournam.api.UserHandler;
-import co.tournam.models.TournamentModel;
-import co.tournam.models.UserModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.button.DefaultButtonFilled;
 import co.tournam.ui.header.SmallHeader;
@@ -34,22 +31,21 @@ import co.tournam.ui.stageoptions.StageOptionBody;
 
 public class CreateTeamActivity extends AppCompatActivity {
 
+    //Variable Declarations
     private Context context;
-
     private String tournamentId;
     private String organizerID;
+    private String iconId;
+    private String teamName;
     private Bitmap iconImage;
     private LinearLayout iconLayout;
     private LinearLayout nameLayout;
-
-    private String iconId;
-    private String teamName;
     private boolean isPublic;
     private boolean willJoin = true;
     private CheckBox joinBox;
-
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
+    //On create method of the Create Team Activity calling and setting up functions and variables
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_team);
@@ -57,6 +53,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
         tournamentId = getIntent().getStringExtra("tournamentid");
 
+        //Opens gallery
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -98,6 +95,7 @@ public class CreateTeamActivity extends AppCompatActivity {
         this.organizerID = id;
     }
 
+    //Compares the passed in ID to the known organizer's ID
     private void compare(String id) {
         if (this.organizerID.equals(id)) {
             setJoinCheckBox();
@@ -108,10 +106,12 @@ public class CreateTeamActivity extends AppCompatActivity {
         joinBox.setVisibility(View.VISIBLE);
     }
 
+    //Passes the current Users ID to the compare() method
     private void compareWithMe() {
         UserHandler.me(me -> compare(me.getId()));
     }
 
+    //Creates a team from the collected information
     private void createTeam() {
         if (iconId != null) {
             willJoin = joinBox.isChecked();
@@ -126,9 +126,9 @@ public class CreateTeamActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Invalid Icon, Try Again", Toast.LENGTH_LONG).show();
         }
-
     }
 
+    //Sets and builds the team icon field
     private void setIconField() {
         iconLayout = findViewById(R.id.icon);
         ImageListItem image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
@@ -139,16 +139,19 @@ public class CreateTeamActivity extends AppCompatActivity {
         selectImage.button.setOnClickListener(v -> openGallery());
     }
 
+    //Sets and builds the team name field
     private void setNameField() {
         nameLayout = findViewById(R.id.name);
         nameLayout.addView(new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
     }
 
+    //Update the values of the global variables based on the entered information by the user
     private void infoUpdate() {
         teamName = ((StageOptionBody) nameLayout.getChildAt(0)).getEntry();
         isPublic = ((CheckBox) findViewById(R.id.is_public)).isChecked();
     }
 
+    //Calls intent to open the phone's gallery
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
