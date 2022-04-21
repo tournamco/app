@@ -88,17 +88,9 @@ public class CreateTeamActivity extends AppCompatActivity {
         setIconField();
         setNameField();
 
-        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                setOrganizer(tournament.getOrganizer().getId());
-                compareWithMe();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentId, tournament -> {
+            setOrganizer(tournament.getOrganizer().getId());
+            compareWithMe();
         });
     }
 
@@ -117,37 +109,19 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     private void compareWithMe() {
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                compare(me.getId());
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        UserHandler.me(me -> compare(me.getId()));
     }
 
     private void createTeam() {
         if (iconId != null) {
             willJoin = joinBox.isChecked();
-            TeamHandler.createNormalTeam(tournamentId, willJoin, iconId, isPublic, teamName, new TeamHandler.CreateNormalTeamComplete() {
-                @Override
-                public void success(String teamId) {
-                    Toast.makeText(context, "Team Created", Toast.LENGTH_LONG).show();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("teamid", teamId);
-                    Intent intent = new Intent(context, OurTeamActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TeamHandler.createNormalTeam(tournamentId, willJoin, iconId, isPublic, teamName, teamId -> {
+                Toast.makeText(context, "Team Created", Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("teamid", teamId);
+                Intent intent = new Intent(context, OurTeamActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             });
         } else {
             Toast.makeText(this, "Invalid Icon, Try Again", Toast.LENGTH_LONG).show();

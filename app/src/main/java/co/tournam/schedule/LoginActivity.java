@@ -55,18 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //authenticate the user
 
-                UserHandler.login(sUserName, sPassword, new UserHandler.LoginCompleted() {
-                    @Override
-                    public void success(String userId) {
-
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-                        Toast.makeText(LoginActivity.this, "Not able to Authenticate the User:" + message, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                UserHandler.login(sUserName, sPassword, userId -> startActivity(new Intent(getApplicationContext(), MainActivity.class)));
             }
         });
 

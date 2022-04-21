@@ -58,36 +58,23 @@ public class TournamentHandler {
     }
 
     public static void info(String tournamentId, InfoComplete listener) {
-        RequestHandler.request("/tournament/info", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/info", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("tournament", tournamentId);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 TournamentModel tournament = TournamentHandler.fromJSON(response.getJSONObject("tournament"));
                 listener.success(tournament);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface InfoComplete extends RequestHandler.AbstractCompleted {
+    public interface InfoComplete {
         void success(TournamentModel tournament);
     }
 
     public static void create(JSONObject json, String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
-        RequestHandler.request("/tournament/create", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/create", Request.Method.POST, () -> {
                 json.put("banner", banner);
                 json.put("name", name);
                 json.put("game", game);
@@ -119,84 +106,59 @@ public class TournamentHandler {
                 json.put("stages", stagesData);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success(response.getString("id"));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success(response.getString("id")));
     }
 
     public static void createOnline(String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
         JSONObject json = new JSONObject();
+
         try {
             json.put("online", true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         create(json, banner, name, color, game, teamSize, isPublic, gameLength, stages, listener);
     }
 
     public static void createOffline(String banner, String name, int color, String game, int teamSize, boolean isPublic, int gameLength, String location, List<TournamentModel.CreateStageModel> stages, CreateComplete listener) {
         JSONObject json = new JSONObject();
+
         try {
             json.put("online", false);
             json.put("location", location);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         create(json, banner, name, color, game, teamSize, isPublic, gameLength, stages, listener);
     }
 
-    public interface CreateComplete extends RequestHandler.AbstractCompleted {
+    public interface CreateComplete {
         void success(String id);
     }
 
     public static void delete(String id, DeleteComplete listener) {
-        RequestHandler.request("/tournament/delete", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/delete", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("tournament", id);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success());
     }
 
-    public interface DeleteComplete extends RequestHandler.AbstractCompleted {
+    public interface DeleteComplete {
         void success();
     }
 
     public static void listMatches(String tournamentId, Boolean inFuture, ListMatchesComplete listener) {
-        RequestHandler.request("/tournament/match/list", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/match/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("tournament", tournamentId);
                 json.put("future", inFuture);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 List<MatchModel> matches = new ArrayList<>();
                 JSONArray matchesData = response.getJSONArray("matches");
 
@@ -205,33 +167,22 @@ public class TournamentHandler {
                 }
 
                 listener.success(matches);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface ListMatchesComplete extends RequestHandler.AbstractCompleted {
+    public interface ListMatchesComplete {
         void success(List<MatchModel> matches);
     }
 
     public static void listRoundMatches(String tournamentId, int stageIndex, int roundIndex, ListRoundMatchesComplete listener) {
-        RequestHandler.request("/tournament/round/list", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/round/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("tournament", tournamentId);
                 json.put("stage", stageIndex);
                 json.put("round", roundIndex);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 List<MatchModel> matches = new ArrayList<>();
                 JSONArray matchesData = response.getJSONArray("matches");
 
@@ -240,16 +191,10 @@ public class TournamentHandler {
                 }
 
                 listener.success(matches);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface ListRoundMatchesComplete extends RequestHandler.AbstractCompleted {
+    public interface ListRoundMatchesComplete {
         void success(List<MatchModel> matches);
     }
 
@@ -260,9 +205,7 @@ public class TournamentHandler {
      * @param listener The listener to call when the request is complete.
      */
     public static void discoveryLocal(String location, int distance, int pageNumber, int pageSize, DiscoverComplete listener) {
-        RequestHandler.request("/tournament/discovery", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/discovery", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("location", location);
                 json.put("distance", distance);
@@ -271,10 +214,7 @@ public class TournamentHandler {
                 json.put("pageSize", pageSize);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 JSONArray tournamentsData = response.getJSONArray("tournaments");
                 List<TournamentModel> tournaments = new ArrayList<>();
 
@@ -283,29 +223,18 @@ public class TournamentHandler {
                 }
 
                 listener.success(tournaments);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
     public static void discoveryOnline(int pageNumber, int pageSize, DiscoverComplete listener) {
-        RequestHandler.request("/tournament/discovery", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/tournament/discovery", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("local", false);
                 json.put("pageNumber", pageNumber);
                 json.put("pageSize", pageSize);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 JSONArray tournamentsData = response.getJSONArray("tournaments");
                 List<TournamentModel> tournaments = new ArrayList<>();
 
@@ -314,16 +243,10 @@ public class TournamentHandler {
                 }
 
                 listener.success(tournaments);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface DiscoverComplete extends RequestHandler.AbstractCompleted {
+    public interface DiscoverComplete {
         void success(List<TournamentModel> tournaments);
     }
 }

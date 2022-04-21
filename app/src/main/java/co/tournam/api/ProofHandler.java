@@ -39,94 +39,41 @@ public class ProofHandler {
     }
 
     public static void create(String matchId, int gameIndex, CreateComplete listener) {
-        RequestHandler.request("/proof/create", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/proof/create", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
                 json.put("match", matchId);
                 json.put("game", gameIndex);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 String proofId = response.getString("id");
 
                 listener.success(proofId);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface CreateComplete extends RequestHandler.AbstractCompleted {
+    public interface CreateComplete {
         void success(String proofId);
     }
 
     public static void addImage(String matchId, String proofId, String imageId, AddImageComplete listener) {
-        RequestHandler.request("/proof/image/add", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
-                JSONObject json = new JSONObject();
+        RequestHandler.request("/proof/image/add", Request.Method.POST, () -> {
+            JSONObject json = new JSONObject();
                 json.put("match", matchId);
                 json.put("proof", proofId);
                 json.put("image", imageId);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success());
     }
 
-    public interface AddImageComplete extends RequestHandler.AbstractCompleted {
-        void success();
-    }
-
-    public static void removeImage(String proofId, String imageId, RemoveImageComplete listener) {
-        RequestHandler.request("/proof/image/remove", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
-                JSONObject json = new JSONObject();
-                json.put("id", proofId);
-                json.put("image", imageId);
-
-                return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
-    }
-
-    public interface RemoveImageComplete extends RequestHandler.AbstractCompleted {
+    public interface AddImageComplete {
         void success();
     }
 
     public static void setScores(String matchId, String proofId, Map<String, Integer> scores, SetScoresComplete listener) {
-        RequestHandler.request("/proof/scores/set", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
-                JSONObject json = new JSONObject();
+        RequestHandler.request("/proof/scores/set", Request.Method.POST, () -> {
+            JSONObject json = new JSONObject();
                 json.put("match", matchId);
                 json.put("proof", proofId);
                 JSONObject scoresObj = new JSONObject();
@@ -136,47 +83,23 @@ public class ProofHandler {
                 json.put("scores", scoresObj);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success());
     }
 
-    public interface SetScoresComplete extends RequestHandler.AbstractCompleted {
+    public interface SetScoresComplete {
         void success();
     }
 
     public static void info(String proofId, InfoComplete listener) {
-        RequestHandler.request("/proof/info", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
-                JSONObject json = new JSONObject();
+        RequestHandler.request("/proof/info", Request.Method.POST, () -> {
+            JSONObject json = new JSONObject();
                 json.put("id", proofId);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success(ProofHandler.fromJSON(response.getJSONObject("proof")));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success(ProofHandler.fromJSON(response.getJSONObject("proof"))));
     }
 
-    public interface InfoComplete extends RequestHandler.AbstractCompleted {
+    public interface InfoComplete {
         void success(ProofModel proof);
     }
 }

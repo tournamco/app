@@ -20,39 +20,8 @@ public class ImageLoader {
     public static final String DOWNLOAD_PATH = RequestHandler.url + "/image/download";
     public static final String UPLOAD_PATH = RequestHandler.url + "/image/upload";
 
-    public static Bitmap loadImage(String imageId, Context context) {
-        /*File cacheDir = context.getCacheDir();
-        Path imagesDir = Paths.get(cacheDir.getPath(), "images");
-
-        try {
-            ensureFolderExists(imagesDir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Path child = imagesDir.resolve(imageId);
-
-        if(Files.exists(child)) {
-            Log.wtf("Cached Banner ID", "I exist when I shouldnt");
-            Log.wtf("Cached Banner Path", child.toFile().getPath());
-            return BitmapFactory.decodeFile(child.toFile().getPath());
-        }*/
-
-        Bitmap bitmap = downloadImage(imageId);
-
-        /*try {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(child.toFile()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
-        return bitmap;
-    }
-
-    public static void ensureFolderExists(Path folder) throws IOException {
-        if(Files.exists(folder)) return;
-
-        Files.createDirectory(folder);
+    public static Bitmap loadImage(String imageId) {
+        return downloadImage(imageId);
     }
 
     public static Bitmap downloadImage(String imageId) {
@@ -65,17 +34,23 @@ public class ImageLoader {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setDoInput(true);
+
             String jsonInputString = "{\"id\":\""+imageId+"\"}";
+
             try(OutputStream os = connection.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
+
             connection.connect();
+
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
+
             return null;
         }
     }
@@ -89,19 +64,24 @@ public class ImageLoader {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "image/png");
             connection.setDoInput(true);
+
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, connection.getOutputStream());
             connection.connect();
+
             BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String responseLine = null;
+
             while ((responseLine = input.readLine()) != null) {
                 response.append(responseLine.trim());
             }
+
             JSONObject json = new JSONObject(response.toString());
 
             return json.getString("id");
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+
             return null;
         }
     }

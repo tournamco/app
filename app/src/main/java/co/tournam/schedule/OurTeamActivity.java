@@ -49,47 +49,23 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     public void loadTeam() {
-        TeamHandler.info(teamID, new TeamHandler.InfoComplete() {
-            @Override
-            public void success(TeamModel team) {
-                OurTeamActivity.this.team = team;
-                loadTournament();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.info(teamID, team -> {
+            OurTeamActivity.this.team = team;
+            loadTournament();
         });
     }
 
     public void loadTournament() {
-        TournamentHandler.info(team.getTournamentId(), new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                OurTeamActivity.this.tournament = tournament;
-                loadMe();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(team.getTournamentId(), tournament -> {
+            OurTeamActivity.this.tournament = tournament;
+            loadMe();
         });
     }
 
     public void loadMe() {
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                OurTeamActivity.this.me = me;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        UserHandler.me(me -> {
+            OurTeamActivity.this.me = me;
+            build();
         });
     }
 

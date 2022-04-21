@@ -45,17 +45,8 @@ public class StageActivity extends AppCompatActivity {
         this.context = this.getApplicationContext();
 
 
-        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                setMainStage(tournament.getStages().get(stageIndex), tournament.getName());
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TournamentHandler.info(tournamentID,
+                tournament -> setMainStage(tournament.getStages().get(stageIndex), tournament.getName()));
     }
 
     public void setMainStage(StageModel stage, String tournamentName) {
@@ -96,17 +87,8 @@ public class StageActivity extends AppCompatActivity {
     }
 
     public void refreshMatches() {
-        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound, new TournamentHandler.ListRoundMatchesComplete() {
-            @Override
-            public void success(List<MatchModel> matches) {
-                addMatches(matches);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound,
+                matches -> addMatches(matches));
     }
 
     public void addMatches(List<MatchModel> matches) {

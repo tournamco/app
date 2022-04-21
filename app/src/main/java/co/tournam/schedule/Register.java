@@ -102,19 +102,10 @@ public class Register extends AppCompatActivity {
 
             if (userIconId != null) {
                 //register user
-                UserHandler.create(userIconId, userName.getText().toString().trim(), sPassword, gamerTag.getText().toString().trim(), sEmail, new UserHandler.CreateCompleted() {
-                    @Override
-                    public void success(String userId) {
-                        Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-                        Toast.makeText(Register.this, "Not able to Create an User", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        System.err.println("API_ERROR: " + error.name() + " - " + message);
-                    }
+                UserHandler.create(userIconId, userName.getText().toString().trim(), sPassword,
+                        gamerTag.getText().toString().trim(), sEmail, userId -> {
+                    Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 });
             } else {
                 Toast.makeText(this, "Invalid Icon.", Toast.LENGTH_LONG).show();

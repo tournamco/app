@@ -61,32 +61,16 @@ public class TournamentPageActivity extends AppCompatActivity {
     }
 
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                tournamentModel = tournament;
-                loadMe();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentId, tournament -> {
+            tournamentModel = tournament;
+            loadMe();
         });
     }
 
     private void loadMe() {
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                meModel = me;
-                setup();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        UserHandler.me(me -> {
+            meModel = me;
+            setup();
         });
     }
 
@@ -136,36 +120,19 @@ public class TournamentPageActivity extends AppCompatActivity {
     private void setTeams() {
         teams = findViewById(R.id.tournament_page_teams_list);
         teams.removeAllViews();
-        TeamHandler.info(tournamentModel.getTeams(), new TeamHandler.InfoArrayComplete() {
-            @Override
-            public void success(List<TeamModel> teams) {
-                Log.wtf("Team List size", String.valueOf(teams.size()));
-                setTeamsList(teams);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.info(tournamentModel.getTeams(), teams -> {
+            Log.wtf("Team List size", String.valueOf(teams.size()));
+            setTeamsList(teams);
         });
-
     }
 
     private void setTeamsList(List<TeamModel> teams) {
         if (meModel.getId().equals(tournamentModel.getOrganizer().getId())) {
             this.teams.addView(new TeamList(context, teams, "Remove", team -> {
                 Toast.makeText(context, "Removed Team", Toast.LENGTH_LONG).show();
-                TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
-                    @Override
-                    public void success() {
-                        TournamentPageActivity.this.teams.removeAllViews();
-                        setTeams();
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-                        System.err.println("API_ERROR: " + error.name() + " - " + message);
-                    }
+                TeamHandler.delete(team.getID(), () -> {
+                    TournamentPageActivity.this.teams.removeAllViews();
+                    setTeams();
                 });
             }));
         } else {
@@ -184,17 +151,9 @@ public class TournamentPageActivity extends AppCompatActivity {
         matchView = findViewById(R.id.tournament_page_matches_list);
         matchView.removeAllViews();
         TournamentHandler.listMatches(tournamentModel.getId(), true,
-                new TournamentHandler.ListMatchesComplete() {
-                    @Override
-                    public void success(List<MatchModel> matches) {
-                        setMatchModels(matches);
-                        Log.wtf("Match List size", String.valueOf(matches.size()));
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-                        System.err.println("API_ERROR: " + error.name() + " - " + message);
-                    }
+                matches -> {
+                    setMatchModels(matches);
+                    Log.wtf("Match List size", String.valueOf(matches.size()));
                 });
 
     }

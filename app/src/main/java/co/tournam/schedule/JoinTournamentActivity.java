@@ -46,17 +46,9 @@ public class JoinTournamentActivity extends AppCompatActivity {
     }
 
     private void waitForTournamentInfo(String tournamentID) {
-        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                JoinTournamentActivity.this.tournament = tournament;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentID, tournament -> {
+            JoinTournamentActivity.this.tournament = tournament;
+            build();
         });
     }
 
@@ -92,42 +84,26 @@ public class JoinTournamentActivity extends AppCompatActivity {
 
     private void addTeam(String teamId) {
         TeamList list = new TeamList(context, new ArrayList<>(), "Join", team -> {
-            TeamHandler.joinByTeamId(teamId, new TeamHandler.JoinCompleted() {
-                @Override
-                public void success(String teamId, boolean isLeader) {
-                    Toast.makeText(context, "Team Joined", Toast.LENGTH_LONG).show();
-                    finish();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("teamid", teamId);
-                    Intent intent = new Intent(context, OurTeamActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TeamHandler.joinByTeamId(teamId, (teamId1, isLeader) -> {
+                Toast.makeText(context, "Team Joined", Toast.LENGTH_LONG).show();
+                finish();
+                Bundle bundle = new Bundle();
+                bundle.putString("teamid", teamId1);
+                Intent intent = new Intent(context, OurTeamActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             });
         });
         teamsListLayout.addView(list);
 
-        TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
-            @Override
-            public void success(TeamModel team) {
-                System.out.println("Team: " + team.getName() + " - " + team.isPublic() + " - " + team.getMembers().size() + " - " + tournament.getTeamSize() + " - " + (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()));
+        TeamHandler.info(teamId, team -> {
+            System.out.println("Team: " + team.getName() + " - " + team.isPublic() + " - " + team.getMembers().size() + " - " + tournament.getTeamSize() + " - " + (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()));
 
-                if (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()) {
-                    return;
-                }
-
-                list.addTeam(team);
+            if (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()) {
+                return;
             }
 
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+            list.addTeam(team);
         });
     }
 }

@@ -112,18 +112,8 @@ public class DiscoveryActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
 
         if (result != null) {
-            TeamHandler.joinByToken(result.getContents(), new TeamHandler.JoinCompleted() {
-                @Override
-                public void success(String teamId, boolean isLeader) {
-                    Toast.makeText(DiscoveryActivity.this, "You have joined a new team.",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+            TeamHandler.joinByToken(result.getContents(), (teamId, isLeader) -> Toast.makeText(DiscoveryActivity.this, "You have joined a new team.",
+                    Toast.LENGTH_LONG).show());
         }
     }
 
@@ -196,35 +186,13 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     public void getOnline(Context context) {
         this.tournamentList.clear();
-        TournamentHandler.discoveryOnline(0, 10, new TournamentHandler.DiscoverComplete() {
-            @Override
-            public void success(List<TournamentModel> tournaments) {
-                setTournaments(tournaments);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-                Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
-            }
-        });
+        TournamentHandler.discoveryOnline(0, 10, tournaments -> setTournaments(tournaments));
     }
 
     public void getOffline(Context context, String location) {
         this.tournamentList.clear();
         TournamentHandler.discoveryLocal(location, 100000, 0, 10,
-                new TournamentHandler.DiscoverComplete() {
-                    @Override
-                    public void success(List<TournamentModel> tournaments) {
-                        setTournaments(tournaments);
-                    }
-
-                    @Override
-                    public void failure(ApiErrors error, String message) {
-                        System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
-                    }
-                });
+                tournaments -> setTournaments(tournaments));
     }
 
     public void updateList() {

@@ -52,17 +52,7 @@ public class TournamentActivity extends AppCompatActivity {
     }
 
     private void listMoreTournaments() {
-        TeamHandler.listTournaments(pageIndex, pageSize, new TeamHandler.ListTournamentsComplete() {
-            @Override
-            public void success(List<TournamentModel> tournaments) {
-                TournamentActivity.this.addTournaments(tournaments);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TeamHandler.listTournaments(pageIndex, pageSize, tournaments -> this.addTournaments(tournaments));
     }
 
     private void addTournaments(List<TournamentModel> tournaments) {

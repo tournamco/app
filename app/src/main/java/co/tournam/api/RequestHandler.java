@@ -30,17 +30,19 @@ public class RequestHandler {
         queue.start();
     }
 
-    public static void request(String path, int method, RequestSetup setup) {
+    public static void request(String path, int method, RequestBody bodyListener, RequestSuccess successListener) {
         JSONObject body = null;
-        try {
-            body = setup.body();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(bodyListener != null) {
+            try {
+                body = bodyListener.body();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         JsonObjectRequest request = new JsonObjectRequest(method, url + path, body, (Response.Listener<JSONObject>) response -> {
             try {
-                setup.success(response);
+                successListener.success(response);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -52,8 +54,9 @@ public class RequestHandler {
             try {
                 JSONObject response = new JSONObject(new String(networkResponse.data));
                 if(!response.has("errno")) return;
-
-                setup.failure(ApiErrors.valueOfIndex(response.getInt("errno")), response.getString("message"));
+                System.err.println("API_ERROR: "
+                        + ApiErrors.valueOfIndex(response.getInt("errno")) + " - "
+                        + response.getString("message"));
             } catch (JSONException e) {}
         });
         queue.add(request);
@@ -75,8 +78,11 @@ public class RequestHandler {
         return false;
     }
 
-    public interface RequestSetup extends AbstractCompleted {
+    public interface RequestBody {
         JSONObject body() throws JSONException;
+    }
+
+    public interface RequestSuccess {
         void success(JSONObject response) throws JSONException;
     }
 

@@ -40,32 +40,16 @@ public class DisputesActivity extends AppCompatActivity {
     }
 
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                DisputesActivity.this.tournament = tournament;
-                loadDisputes();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentId, tournament -> {
+            DisputesActivity.this.tournament = tournament;
+            loadDisputes();
         });
     }
 
     private void loadDisputes() {
-        DisputeHandler.list(tournament.getId(), new DisputeHandler.ListComplete() {
-            @Override
-            public void success(List<DisputeModel> disputes) {
-                DisputesActivity.this.disputes = disputes;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        DisputeHandler.list(tournament.getId(), disputes -> {
+            DisputesActivity.this.disputes = disputes;
+            build();
         });
     }
 

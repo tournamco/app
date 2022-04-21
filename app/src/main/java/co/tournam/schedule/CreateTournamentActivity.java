@@ -142,33 +142,15 @@ public class CreateTournamentActivity extends AppCompatActivity {
         System.out.println("Tournament " + this.isOnline + " - " + onlineBox.isChecked());
         if (this.isOnline) {
             TournamentHandler.createOnline(this.bannerID, this.name, this.color, this.game, this.teamSize,
-                    this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
-                        @Override
-                        public void success(String id) {
-                            Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
-                            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
+                    this.isPublic, this.gameLength, this.stages, id -> {
+                        Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
+                        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     });
         } else {
             TournamentHandler.createOffline(this.bannerID, this.name, this.color, this.game, this.teamSize,
-                    this.isPublic, this.gameLength, this.location, this.stages, new TournamentHandler.CreateComplete() {
-                        @Override
-                        public void success(String id) {
-                            Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
-                            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
+                    this.isPublic, this.gameLength, this.location, this.stages, id -> {
+                        Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
+                        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     });
         }
     }
@@ -210,7 +192,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
             image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.imagelist_add_plus));
         } else {
-            image = new ImageListItem(context, ImageLoader.loadImage(this.bannerID, context));
+            image = new ImageListItem(context, ImageLoader.loadImage(this.bannerID));
         }
 
         DefaultButton selectImage = new DefaultButton(context, "Upload");

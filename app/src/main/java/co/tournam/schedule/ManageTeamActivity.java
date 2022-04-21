@@ -76,32 +76,16 @@ public class ManageTeamActivity extends AppCompatActivity {
     }
 
     private void loadTeam(String teamId) {
-        TeamHandler.info(teamId, new TeamHandler.InfoComplete() {
-            @Override
-            public void success(TeamModel team) {
-                ManageTeamActivity.this.team = team;
-                loadTournament(team.getTournamentId());
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.info(teamId, team -> {
+            ManageTeamActivity.this.team = team;
+            loadTournament(team.getTournamentId());
         });
     }
 
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                ManageTeamActivity.this.tournament = tournament;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentId, tournament -> {
+            ManageTeamActivity.this.tournament = tournament;
+            build();
         });
     }
 
@@ -127,17 +111,7 @@ public class ManageTeamActivity extends AppCompatActivity {
 
         Button abandonButton = (Button) findViewById(R.id.abandon_button);
         abandonButton.setOnClickListener(view -> {
-            TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
-                @Override
-                public void success() {
-                    startActivity(new Intent(ManageTeamActivity.this, ScheduleActivity.class));
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+            TeamHandler.delete(team.getID(), () -> startActivity(new Intent(ManageTeamActivity.this, ScheduleActivity.class)));
         });
     }
 
@@ -160,17 +134,7 @@ public class ManageTeamActivity extends AppCompatActivity {
     }
 
     public void changeIcon(String iconId) {
-        TeamHandler.changeIcon(iconId, new TeamHandler.ChangeComplete() {
-            @Override
-            public void success() {
-                Toast.makeText(ManageTeamActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TeamHandler.changeIcon(iconId, () -> Toast.makeText(ManageTeamActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show());
     }
 
     public void setTeamName() {
@@ -182,17 +146,7 @@ public class ManageTeamActivity extends AppCompatActivity {
         ImageButton change = (ImageButton) findViewById(R.id.name_button);
         change.setOnClickListener(v -> {
             TeamHandler.changeName(((StageOptionBody) nameLayout.getChildAt(0)).getEntry(),
-                    new TeamHandler.ChangeComplete() {
-                        @Override
-                        public void success() {
-                            Toast.makeText(ManageTeamActivity.this, "Name changed.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
-                    });
+                    () -> Toast.makeText(ManageTeamActivity.this, "Name changed.", Toast.LENGTH_SHORT).show());
         });
     }
 
@@ -205,20 +159,12 @@ public class ManageTeamActivity extends AppCompatActivity {
 
         qrButton.button.setOnClickListener(v -> {
 
-            TeamHandler.createInvite(tournament.getId(), team.getID(), new TeamHandler.CreateInviteComplete() {
-                @Override
-                public void success(String token) {
-                    Bundle b = new Bundle();
-                    b.putString("token", token);
-                    Intent intent = new Intent(context, QRGenActivity.class);
-                    intent.putExtras(b);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TeamHandler.createInvite(tournament.getId(), team.getID(), token -> {
+                Bundle b = new Bundle();
+                b.putString("token", token);
+                Intent intent = new Intent(context, QRGenActivity.class);
+                intent.putExtras(b);
+                startActivity(intent);
             });
 
         });
@@ -227,18 +173,9 @@ public class ManageTeamActivity extends AppCompatActivity {
     private void setMembers() {
         membersLayout = (LinearLayout) findViewById(R.id.members);
         membersLayout.addView(new UserList(context, team.getMembers(), "Remove", (user) -> {
-            // TODO: Remove user from team api
-            TeamHandler.leave(team.getID(), user.getId(), new TeamHandler.LeaveComplete() {
-                @Override
-                public void success() {
-                    membersLayout.removeAllViews();
-                    setMembers();
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TeamHandler.leave(team.getID(), user.getId(), () -> {
+                membersLayout.removeAllViews();
+                setMembers();
             });
         }));
     }

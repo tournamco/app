@@ -22,46 +22,26 @@ public class DisputeHandler {
     }
 
     public static void resolve(String disputeId, String chosenTeamKey, ResolveComplete listener) {
-        RequestHandler.request("/dispute/resolve", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/dispute/resolve", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
-
                 json.put("dispute", disputeId);
                 json.put("key", chosenTeamKey);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                listener.success();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            }, response -> listener.success());
     }
 
-    public interface ResolveComplete extends RequestHandler.AbstractCompleted {
+    public interface ResolveComplete {
         void success();
     }
 
     public static void list(String tournamentId, ListComplete listener) {
-        RequestHandler.request("/dispute/list", Request.Method.POST, new RequestHandler.RequestSetup() {
-            @Override
-            public JSONObject body() throws JSONException {
+        RequestHandler.request("/dispute/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
-
                 json.put("tournament", tournamentId);
 
                 return json;
-            }
-
-            @Override
-            public void success(JSONObject response) throws JSONException {
+            }, response -> {
                 List<DisputeModel> disputes = new ArrayList<>();
                 JSONArray disputesData = response.getJSONArray("disputes");
 
@@ -70,16 +50,10 @@ public class DisputeHandler {
                 }
 
                 listener.success(disputes);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                listener.failure(error, message);
-            }
-        });
+            });
     }
 
-    public interface ListComplete extends RequestHandler.AbstractCompleted {
+    public interface ListComplete {
         void success(List<DisputeModel> disputes);
     }
 }

@@ -110,17 +110,8 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void loadMatches() {
-        TeamHandler.listMatches(this.future, this.isPersonal, 0, 10, new TeamHandler.ListMatchesComplete() {
-            @Override
-            public void success(List<MatchModel> matches) {
-                matchList.addMatches(matches);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TeamHandler.listMatches(this.future, this.isPersonal, 0, 10,
+                matches -> matchList.addMatches(matches));
     }
 
     public void setNavigationBar() {
