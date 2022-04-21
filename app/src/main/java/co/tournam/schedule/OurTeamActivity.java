@@ -8,25 +8,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.List;
+
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
 import co.tournam.api.UserHandler;
-import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
 import co.tournam.ui.button.DefaultButton;
 import co.tournam.ui.header.SmallHeader;
-import co.tournam.ui.imagelist.ImageListItem;
 import co.tournam.ui.list.UserList;
-import co.tournam.ui.matchlist.SummaryMatchList;
-import co.tournam.ui.team_members.TeamMembers;
-import co.tournam.ui.textentry.TextEntry;
 import co.tournam.ui.title.DefaultTitle;
 import co.tournam.ui.tournament_summary.TournamentSummaryListItem;
 
@@ -46,7 +39,7 @@ public class OurTeamActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
+        if (b != null) {
             teamID = b.getString("teamid");
         }
 
@@ -101,9 +94,9 @@ public class OurTeamActivity extends AppCompatActivity {
     }
 
     private void build() {
-        LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
+        LinearLayout headerContainer = (LinearLayout) findViewById(R.id.header);
 
-        if(team.getLeader() != null && me.getId().equals(team.getLeader().getId())) {
+        if (team.getLeader() != null && me.getId().equals(team.getLeader().getId())) {
             DefaultButton button = new DefaultButton(context, "Manage");
             button.button.setOnClickListener(v -> {
                 Bundle b = new Bundle();
@@ -113,13 +106,12 @@ public class OurTeamActivity extends AppCompatActivity {
                 startActivity(intent);
             });
             headerContainer.addView(new SmallHeader(context, team.getName(), () -> finish(), button));
-        }
-        else {
+        } else {
             headerContainer.addView(new SmallHeader(context, team.getName(), () -> finish()));
         }
 
         LinearLayout tournamentBannerLayout = (LinearLayout) findViewById(R.id.banner);
-        tournamentBannerLayout.addView( new TournamentSummaryListItem(context, tournament));
+        tournamentBannerLayout.addView(new TournamentSummaryListItem(context, tournament));
 
         ImageView teamIcon = (ImageView) findViewById(R.id.team_icon);
         new DownloadImageWorker(image -> teamIcon.setImageBitmap(image)).execute(team.getIcon());

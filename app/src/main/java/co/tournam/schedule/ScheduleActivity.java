@@ -14,11 +14,8 @@ import java.util.List;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
-import co.tournam.api.TournamentHandler;
 import co.tournam.models.MatchModel;
-import co.tournam.models.TournamentModel;
 import co.tournam.ui.Slider.SliderSchedule;
-import co.tournam.ui.filterdropdown.FilterDropdown;
 import co.tournam.ui.header.ScheduleHeader;
 import co.tournam.ui.matchlist.SummaryMatchList;
 
@@ -114,10 +111,10 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void loadMatches() {
         TeamHandler.listMatches(this.future, this.isPersonal, 0, 10, new TeamHandler.ListMatchesComplete() {
-             @Override
+            @Override
             public void success(List<MatchModel> matches) {
-                    matchList.addMatches(matches);
-                }
+                matchList.addMatches(matches);
+            }
 
             @Override
             public void failure(ApiErrors error, String message) {

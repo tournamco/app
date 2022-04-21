@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import co.tournam.api.UserHandler;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     Context context;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.context = this.getApplicationContext();
 
-        if(!UserHandler.isLoggedIn()) {
+        if (!UserHandler.isLoggedIn()) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
             return;

@@ -36,11 +36,12 @@ public class CurrentLocationActivity extends Activity implements LocationListene
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             ActivityCompat.requestPermissions(CurrentLocationActivity.this,
-                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, 12);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
 
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
+
     @Override
     public void onLocationChanged(Location location) {
         txtLat = (TextView) findViewById(R.id.textview1);
@@ -49,17 +50,17 @@ public class CurrentLocationActivity extends Activity implements LocationListene
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Latitude","disable");
+        Log.d("Latitude", "disable");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Latitude","enable");
+        Log.d("Latitude", "enable");
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude","status");
+        Log.d("Latitude", "status");
     }
 
 

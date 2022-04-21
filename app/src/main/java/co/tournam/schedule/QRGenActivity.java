@@ -55,9 +55,9 @@ public class QRGenActivity extends AppCompatActivity {
             int size = 500;
             BitMatrix bitMatrix = qrCodeWriter.encode(token, BarcodeFormat.QR_CODE, size, size);
             Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565);
-            for (int x = 0; x<size; x++){
-                for (int y=0; y<size; y++){
-                    bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
+            for (int x = 0; x < size; x++) {
+                for (int y = 0; y < size; y++) {
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
                 }
             }
             setImageView(bitmap);

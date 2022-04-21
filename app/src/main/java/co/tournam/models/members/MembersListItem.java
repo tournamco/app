@@ -47,9 +47,15 @@ public class MembersListItem extends LinearLayout {
         //setIcon(user.getIcon());
     }
 
-    private void setName(String name) { playerName.setText(name);}
+    private void setName(String name) {
+        playerName.setText(name);
+    }
 
-    private void setIcon(int imageID) { logo.setImageResource(imageID);}
+    private void setIcon(int imageID) {
+        logo.setImageResource(imageID);
+    }
 
-    private void setButtonText(String text) { actionButton.setText(text);}
+    private void setButtonText(String text) {
+        actionButton.setText(text);
+    }
 }

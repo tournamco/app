@@ -58,7 +58,7 @@ public class MapSelectActivity extends FragmentActivity implements OnMapReadyCal
 
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MapSelectActivity.this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE);
+            ActivityCompat.requestPermissions(MapSelectActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();

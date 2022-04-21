@@ -58,7 +58,9 @@ public class TournamentModel {
         this.teams = teams;
     }
 
-    public int getCurrentAmountOfTeams() { return (int) teams.stream().count(); }
+    public int getCurrentAmountOfTeams() {
+        return (int) teams.stream().count();
+    }
 
     public UserModel getOrganizer() {
         return organizer;
@@ -108,7 +110,9 @@ public class TournamentModel {
         this.name = name;
     }
 
-    public TournamentLocation getLocation() { return location; }
+    public TournamentLocation getLocation() {
+        return location;
+    }
 
     public int getCurrentStage() {
         return currentStage;
@@ -159,7 +163,7 @@ public class TournamentModel {
     public String getEndDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM");
 
-        return formatter.format(stages.get(stages.size()-1).getMaximalDate());
+        return formatter.format(stages.get(stages.size() - 1).getMaximalDate());
     }
 
     public static class TournamentLocation {

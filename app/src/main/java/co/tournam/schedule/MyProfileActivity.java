@@ -74,7 +74,7 @@ public class MyProfileActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     }
                 });
 
@@ -138,7 +138,7 @@ public class MyProfileActivity extends AppCompatActivity {
         ImageListItem image = new ImageListItem(context, null);
         userIconLayout.addView(image);
 
-        try{
+        try {
             new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(user.getIcon());
         } catch (NullPointerException e) {
             Log.w("User Icon is null", e);
@@ -187,16 +187,16 @@ public class MyProfileActivity extends AppCompatActivity {
 
             UserHandler.changeUsername(((StageOptionBody) usernameLayout.getChildAt(0)).getEntry(),
                     new UserHandler.ChangeComplete() {
-                @Override
-                public void success() {
-                    Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show();
-                }
+                        @Override
+                        public void success() {
+                            Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show();
+                        }
 
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         });
     }
 

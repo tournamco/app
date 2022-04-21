@@ -1,7 +1,6 @@
 package co.tournam.schedule;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +50,7 @@ public class TournamentPageActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
         String tournamentID = null;
-        if(b != null) {
+        if (b != null) {
             tournamentID = b.getString("tournamentid");
         }
         super.onCreate(savedInstanceState);
@@ -153,7 +152,7 @@ public class TournamentPageActivity extends AppCompatActivity {
     }
 
     private void setTeamsList(List<TeamModel> teams) {
-        if(meModel.getId().equals(tournamentModel.getOrganizer().getId())) {
+        if (meModel.getId().equals(tournamentModel.getOrganizer().getId())) {
             this.teams.addView(new TeamList(context, teams, "Remove", team -> {
                 Toast.makeText(context, "Removed Team", Toast.LENGTH_LONG).show();
                 TeamHandler.delete(team.getID(), new TeamHandler.DeleteComplete() {
@@ -169,8 +168,7 @@ public class TournamentPageActivity extends AppCompatActivity {
                     }
                 });
             }));
-        }
-        else {
+        } else {
             this.teams.addView(new TeamList(context, teams, null, null));
         }
     }

@@ -70,7 +70,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     }
                 });
 
@@ -101,12 +101,13 @@ public class CreateTeamActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setOrganizer(String id) {
         this.organizerID = id;
     }
 
     private void compare(String id) {
-        if(this.organizerID.equals(id)) {
+        if (this.organizerID.equals(id)) {
             setJoinCheckBox();
         }
     }
@@ -157,7 +158,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     private void setIconField() {
         iconLayout = findViewById(R.id.icon);
         ImageListItem image = new ImageListItem(context, BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.imagelist_add_plus));
+                R.drawable.imagelist_add_plus));
         DefaultButton selectImage = new DefaultButton(context, "Upload");
         iconLayout.addView(image);
         iconLayout.addView(selectImage);
@@ -166,7 +167,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void setNameField() {
         nameLayout = findViewById(R.id.name);
-        nameLayout.addView( new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
+        nameLayout.addView(new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
     }
 
     private void infoUpdate() {

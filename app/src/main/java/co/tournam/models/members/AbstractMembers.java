@@ -17,5 +17,7 @@ public abstract class AbstractMembers extends LinearLayout {
         build(context);
     }
 
-    private void build(Context context) { setOrientation(LinearLayout.VERTICAL); }
+    private void build(Context context) {
+        setOrientation(LinearLayout.VERTICAL);
+    }
 }

@@ -65,7 +65,7 @@ public class Register extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     }
                 });
 

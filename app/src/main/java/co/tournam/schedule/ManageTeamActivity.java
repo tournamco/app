@@ -147,7 +147,7 @@ public class ManageTeamActivity extends AppCompatActivity {
         ImageListItem image = new ImageListItem(context, null);
         userIconLayout.addView(image);
 
-        try{
+        try {
             new DownloadImageWorker(bitmap -> image.setImage(bitmap)).execute(team.getIcon());
         } catch (NullPointerException e) {
             Log.w("User Icon is null", e);
@@ -198,7 +198,7 @@ public class ManageTeamActivity extends AppCompatActivity {
 
     private void setButtons() {
         buttonsLayout = (LinearLayout) findViewById(R.id.buttons);
-        DefaultButton qrButton = new DefaultButton(context,"Use QR");
+        DefaultButton qrButton = new DefaultButton(context, "Use QR");
         DefaultButton nfcButton = new DefaultButton(context, "Use NFC");
         buttonsLayout.addView(qrButton);
         buttonsLayout.addView(nfcButton);
@@ -234,6 +234,7 @@ public class ManageTeamActivity extends AppCompatActivity {
                     membersLayout.removeAllViews();
                     setMembers();
                 }
+
                 @Override
                 public void failure(ApiErrors error, String message) {
                     System.err.println("API_ERROR: " + error.name() + " - " + message);

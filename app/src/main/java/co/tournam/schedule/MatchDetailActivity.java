@@ -1,31 +1,21 @@
 package co.tournam.schedule;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.sql.Array;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.DownloadImageWorker;
-import co.tournam.api.ImageLoader;
 import co.tournam.api.ProofHandler;
 import co.tournam.api.TeamHandler;
 import co.tournam.api.TournamentHandler;
@@ -72,7 +62,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         super.onResume();
 
         LinearLayout addProofButtonLayout = (LinearLayout) findViewById(R.id.proof_of_score_button);
-        if(match != null && teamKey != null && match.getFinished().get(teamKey)) {
+        if (match != null && teamKey != null && match.getFinished().get(teamKey)) {
             addProofButtonLayout.removeAllViews();
             TextView alreadyFinished = new TextView(context);
             alreadyFinished.setText("Already finished");
@@ -127,11 +117,11 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     private void build() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd'th of' MMMM, HH:mm");
-        LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
+        LinearLayout headerContainer = (LinearLayout) findViewById(R.id.header);
         headerContainer.addView(new SmallHeader(context, formatter.format(match.getStartDate()), match.getName(), () -> finish()));
 
         LinearLayout tournamentBannerLayout = (LinearLayout) findViewById(R.id.banner);
-        tournamentBannerLayout.addView( new TournamentSummaryListItem(context, tournament));
+        tournamentBannerLayout.addView(new TournamentSummaryListItem(context, tournament));
 
         setTeamScoreLayout();
 
@@ -146,7 +136,7 @@ public class MatchDetailActivity extends AppCompatActivity {
 
         setMembersLayout();
 
-        if(isLeaderInMatch()) {
+        if (isLeaderInMatch()) {
             LinearLayout proofOfScoreTitleLayout = (LinearLayout) findViewById(R.id.proof_of_score_title);
             proofOfScoreTitleLayout.addView(new DefaultTitle("Proof of score", context));
 
@@ -155,8 +145,8 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     public boolean isLeaderInMatch() {
-        for(Map.Entry<String, TeamModel> entry : match.getTeams().entrySet()) {
-            if(entry.getValue() == null || entry.getValue().getLeader() == null
+        for (Map.Entry<String, TeamModel> entry : match.getTeams().entrySet()) {
+            if (entry.getValue() == null || entry.getValue().getLeader() == null
                     || !entry.getValue().getLeader().getId().equals(me.getId())) {
                 continue;
             }
@@ -171,7 +161,7 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     public void setTeamScoreLayout() {
         LinearLayout teamScoreLayout = (LinearLayout) findViewById(R.id.score);
-        teamScoreLayout.addView( new TeamScore(context, match));
+        teamScoreLayout.addView(new TeamScore(context, match));
     }
 
     public Table setUpTable(Context context, MatchModel match) {
@@ -197,12 +187,11 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     public void setProofOfScoreLayout() {
         LinearLayout addProofButtonLayout = (LinearLayout) findViewById(R.id.proof_of_score_button);
-        if(match.getFinished().get(teamKey)) {
+        if (match.getFinished().get(teamKey)) {
             TextView alreadyFinished = new TextView(context);
             alreadyFinished.setText("Already finished");
             addProofButtonLayout.addView(alreadyFinished);
-        }
-        else {
+        } else {
             DefaultButton button = new DefaultButton(context, "Add proof");
             button.button.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
@@ -223,8 +212,8 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     public void getProofIds(List<GameModel> games) {
-        for(GameModel game : games) {
-            if(game.getProofs().get(teamKey) == null) continue;
+        for (GameModel game : games) {
+            if (game.getProofs().get(teamKey) == null) continue;
 
             ProofHandler.info(game.getProofs().get(teamKey), new ProofHandler.InfoComplete() {
                 @Override
@@ -241,7 +230,7 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     public void loadImages(List<String> images) {
-        for(String imageId : images) {
+        for (String imageId : images) {
             new DownloadImageWorker(image -> imageList.addImage(image)).execute(imageId);
         }
     }

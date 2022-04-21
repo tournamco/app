@@ -1,14 +1,9 @@
 package co.tournam.models;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import co.tournam.models.stage.AbstractStageModel;
 
 public class MatchModel {
     private String id;
@@ -41,8 +36,8 @@ public class MatchModel {
     public int getScore(String key) {
         int score = 0;
 
-        for(GameModel game : games) {
-            if(!game.isWinner(key)) continue;
+        for (GameModel game : games) {
+            if (!game.isWinner(key)) continue;
 
             score++;
         }
@@ -57,11 +52,11 @@ public class MatchModel {
     public TeamModel getWinner() {
         Map<TeamModel, Integer> wins = new HashMap<>();
 
-        for(GameModel game : games) {
-            for(String winnerKey : game.getWinners()) {
+        for (GameModel game : games) {
+            for (String winnerKey : game.getWinners()) {
                 TeamModel winner = this.teams.get(winnerKey);
 
-                if(!wins.containsKey(winner)) {
+                if (!wins.containsKey(winner)) {
                     wins.put(winner, 1);
                     continue;
                 }
@@ -71,16 +66,14 @@ public class MatchModel {
             }
         }
 
-        if(wins.size() == 0) {
+        if (wins.size() == 0) {
             return null;
         }
 
         Map.Entry<TeamModel, Integer> maxEntry = null;
 
-        for (Map.Entry<TeamModel, Integer> entry : wins.entrySet())
-        {
-            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
-            {
+        for (Map.Entry<TeamModel, Integer> entry : wins.entrySet()) {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
                 maxEntry = entry;
             }
         }

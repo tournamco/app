@@ -35,7 +35,7 @@ public class StageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
+        if (b != null) {
             tournamentID = b.getString("tournamentID");
             stageIndex = b.getInt("stageIndex");
         }

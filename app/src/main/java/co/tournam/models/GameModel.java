@@ -39,27 +39,26 @@ public class GameModel {
 
         boolean allZeros = true;
 
-        if(scores == null) {
+        if (scores == null) {
             return winners;
         }
 
-        for(String team : scores.keySet()) {
+        for (String team : scores.keySet()) {
             int score = scores.get(team);
 
-            if(score > 0) {
+            if (score > 0) {
                 allZeros = false;
             }
 
-            if(score == topScore) {
+            if (score == topScore) {
                 winners.add(team);
-            }
-            else if(score > topScore) {
+            } else if (score > topScore) {
                 winners.clear();
                 winners.add(team);
             }
         }
 
-        if(allZeros) {
+        if (allZeros) {
             winners.clear();
         }
 

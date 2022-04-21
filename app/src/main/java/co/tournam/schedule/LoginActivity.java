@@ -9,10 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import co.tournam.api.ApiErrors;
-import co.tournam.api.UserHandler;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import co.tournam.api.ApiErrors;
+import co.tournam.api.UserHandler;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,12 +43,12 @@ public class LoginActivity extends AppCompatActivity {
                 String sUserName = userName.getText().toString().trim();
                 String sPassword = password.getText().toString().trim();
 
-                if(TextUtils.isEmpty(sUserName)){
+                if (TextUtils.isEmpty(sUserName)) {
                     userName.setError("Email is required.");
-                    return ;
+                    return;
                 }
 
-                if(TextUtils.isEmpty(sPassword)){
+                if (TextUtils.isEmpty(sPassword)) {
                     password.setError("Password is required.");
                     return;
                 }

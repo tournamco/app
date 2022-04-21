@@ -93,7 +93,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (result.getResultCode() == Activity.RESULT_CANCELED)  {
+                    } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     }
                 });
 
@@ -102,7 +102,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         DefaultButtonFilled button = new DefaultButtonFilled(context, "Create");
 
         button.button.setOnClickListener(v -> {
-            if(participantsHasError) {
+            if (participantsHasError) {
                 Toast.makeText(context, "Number of participants is incorrect", Toast.LENGTH_LONG).show();
 
                 return;
@@ -138,37 +138,38 @@ public class CreateTournamentActivity extends AppCompatActivity {
     }
 
 
-
     public void createTournament() {
         System.out.println("Tournament " + this.isOnline + " - " + onlineBox.isChecked());
         if (this.isOnline) {
             TournamentHandler.createOnline(this.bannerID, this.name, this.color, this.game, this.teamSize,
                     this.isPublic, this.gameLength, this.stages, new TournamentHandler.CreateComplete() {
-                @Override
-                public void success(String id) {
-                    Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
-                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                }
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+                        @Override
+                        public void success(String id) {
+                            Toast.makeText(context, "Online Tournament Created", Toast.LENGTH_LONG).show();
+                            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         } else {
             TournamentHandler.createOffline(this.bannerID, this.name, this.color, this.game, this.teamSize,
                     this.isPublic, this.gameLength, this.location, this.stages, new TournamentHandler.CreateComplete() {
-                @Override
-                public void success(String id) {
-                    Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
-                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                }
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+                        @Override
+                        public void success(String id) {
+                            Toast.makeText(context, "Offline Tournament Created", Toast.LENGTH_LONG).show();
+                            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+
+                        @Override
+                        public void failure(ApiErrors error, String message) {
+                            Toast.makeText(context, "Creation Error", Toast.LENGTH_LONG).show();
+                            System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        }
+                    });
         }
     }
 
@@ -222,24 +223,24 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setTournamentName() {
         tournamentNameLayout = (LinearLayout) findViewById(R.id.tournamentName_create_tournament);
-        tournamentNameLayout.addView( new StageOptionBody(context,"Name", InputType.TYPE_CLASS_TEXT));
+        tournamentNameLayout.addView(new StageOptionBody(context, "Name", InputType.TYPE_CLASS_TEXT));
     }
 
     public void setTournamentGameName() {
         tournamentGameNameLayout = (LinearLayout) findViewById(R.id.tournamentGameName_create_tournament);
-        tournamentGameNameLayout.addView( new StageOptionBody(context,"Game Name", InputType.TYPE_CLASS_TEXT));
+        tournamentGameNameLayout.addView(new StageOptionBody(context, "Game Name", InputType.TYPE_CLASS_TEXT));
     }
 
     private void setTournamentGameLength() {
         tournamentGameLengthLayout = (LinearLayout) findViewById(R.id.tournamentGameLength_create_tournament);
-        tournamentGameLengthLayout.addView( new StageOptionBody(
+        tournamentGameLengthLayout.addView(new StageOptionBody(
                 context,
                 "Game Length\n(in min.)", InputType.TYPE_CLASS_NUMBER));
     }
 
     public void setTournamentTeamSize() {
         tournamentTeamSizeLayout = (LinearLayout) findViewById(R.id.tournamentTeamSize_create_tournament);
-        tournamentTeamSizeLayout.addView( new StageOptionBody(context,"Team Size", InputType.TYPE_CLASS_TEXT));
+        tournamentTeamSizeLayout.addView(new StageOptionBody(context, "Team Size", InputType.TYPE_CLASS_TEXT));
     }
 
     public void setTournamentColorPicker() {
@@ -256,7 +257,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
         AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, R.color.gray_400, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
-            public void onCancel(AmbilWarnaDialog dialog) {}
+            public void onCancel(AmbilWarnaDialog dialog) {
+            }
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
@@ -273,7 +275,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setFirstHeader() {
         firstHeaderLayout = (LinearLayout) findViewById(R.id.headerOne_create_tournament);
-        firstHeaderLayout.addView( new DefaultTitle("Stages", context));
+        firstHeaderLayout.addView(new DefaultTitle("Stages", context));
     }
 
     public void setStageOption() {
@@ -300,33 +302,29 @@ public class CreateTournamentActivity extends AppCompatActivity {
         boolean errored = false;
         participantsHasError = false;
 
-        for(int i = 0; i < stageOptionLayout.getChildCount(); i++) {
+        for (int i = 0; i < stageOptionLayout.getChildCount(); i++) {
             StageOption stage = (StageOption) stageOptionLayout.getChildAt(i);
 
-            if(i == 0) {
+            if (i == 0) {
                 stage.setOpenNoOfParticipants();
-            }
-            else if(errored) {
+            } else if (errored) {
                 stage.setErrorNoOfParticipants();
-            }
-            else {
+            } else {
                 stage.setForcedNoOfParticipants(nextParticipants);
             }
 
             try {
                 nextParticipants = stage.getNumberOfNextParticipants();
                 errored = false;
-            }
-            catch(NumberFormatException e)  {
+            } catch (NumberFormatException e) {
                 errored = true;
                 participantsHasError = true;
             }
         }
 
-        if(errored) {
+        if (errored) {
             numberOfWinners.setText("Number of winners has an error");
-        }
-        else {
+        } else {
             numberOfWinners.setText("Number of winners is " + nextParticipants);
         }
 
@@ -343,7 +341,8 @@ public class CreateTournamentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
         stageOptionLayout.addView(stage);
         updateParticipants();
@@ -351,7 +350,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
 
     public void setSecondHeader() {
         secondHeaderLayout = (LinearLayout) findViewById(R.id.headerTwo_create_tournament);
-        secondHeaderLayout.addView( new DefaultTitle("Location", context));
+        secondHeaderLayout.addView(new DefaultTitle("Location", context));
     }
 
     public void setAddButton() {
@@ -359,7 +358,7 @@ public class CreateTournamentActivity extends AppCompatActivity {
         Drawable qr_icon = AppCompatResources.getDrawable(context, R.drawable.qr_icon);
         addButtonLayout = (LinearLayout) findViewById(R.id.addStageOptionButton_create_tournament);
         DefaultButton button = new DefaultButton(context, "Add");
-        addButtonLayout.addView(button , 0);
+        addButtonLayout.addView(button, 0);
 
         button.button.setOnClickListener(v -> {
             addStageOption();

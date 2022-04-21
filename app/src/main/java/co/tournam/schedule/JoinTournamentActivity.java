@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 import co.tournam.api.ApiErrors;
 import co.tournam.api.TeamHandler;
@@ -37,7 +36,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         String tournamentID = null;
-        if(b != null) {
+        if (b != null) {
             tournamentID = b.getString("tournamentid");
         }
 
@@ -62,9 +61,9 @@ public class JoinTournamentActivity extends AppCompatActivity {
     }
 
     private void build() {
-        LinearLayout headerContainer = (LinearLayout)findViewById(R.id.header);
+        LinearLayout headerContainer = (LinearLayout) findViewById(R.id.header);
 
-        if(tournament.isPublic()) {
+        if (tournament.isPublic()) {
             DefaultButton button = new DefaultButton(context, "Create");
             button.button.setOnClickListener(v -> {
                 Bundle b = new Bundle();
@@ -74,20 +73,19 @@ public class JoinTournamentActivity extends AppCompatActivity {
                 startActivity(intent);
             });
             headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish(), button));
-        }
-        else {
+        } else {
             headerContainer.addView(new SmallHeader(context, "Join Tournament", () -> finish()));
         }
 
-        tournamentBannerLayout = (LinearLayout)findViewById(R.id.banner);
+        tournamentBannerLayout = (LinearLayout) findViewById(R.id.banner);
         tournamentBannerLayout.addView(new TournamentSummaryListItem(context, tournament));
 
-        teamsListLayout = (LinearLayout)findViewById(R.id.teams_list);
+        teamsListLayout = (LinearLayout) findViewById(R.id.teams_list);
 
-        LinearLayout title1 = (LinearLayout)findViewById(R.id.title1);
+        LinearLayout title1 = (LinearLayout) findViewById(R.id.title1);
         title1.addView(new DefaultTitle("Teams", context));
 
-        for(String teamId : tournament.getTeams()) {
+        for (String teamId : tournament.getTeams()) {
             addTeam(teamId);
         }
     }
@@ -119,7 +117,7 @@ public class JoinTournamentActivity extends AppCompatActivity {
             public void success(TeamModel team) {
                 System.out.println("Team: " + team.getName() + " - " + team.isPublic() + " - " + team.getMembers().size() + " - " + tournament.getTeamSize() + " - " + (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()));
 
-                if(!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()) {
+                if (!team.isPublic() || team.getMembers().size() == tournament.getTeamSize()) {
                     return;
                 }
 

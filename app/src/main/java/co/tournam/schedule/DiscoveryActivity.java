@@ -1,7 +1,6 @@
 package co.tournam.schedule;
 
 import android.Manifest;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -69,7 +68,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DiscoveryActivity.this,
-                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, 101);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
 
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -77,8 +76,9 @@ public class DiscoveryActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 DiscoveryActivity.this.currentLocation = location.getLatitude() + ", " + location.getLongitude();
-                DiscoveryActivity.this.location = new TournamentModel.TournamentLocation((float)location.getLongitude(), (float)location.getLatitude());
+                DiscoveryActivity.this.location = new TournamentModel.TournamentLocation((float) location.getLongitude(), (float) location.getLatitude());
             }
+
             @Override
             public void onProviderEnabled(@NonNull String provider) {
 
@@ -214,21 +214,21 @@ public class DiscoveryActivity extends AppCompatActivity {
         this.tournamentList.clear();
         TournamentHandler.discoveryLocal(location, 100000, 0, 10,
                 new TournamentHandler.DiscoverComplete() {
-            @Override
-            public void success(List<TournamentModel> tournaments) {
-                setTournaments(tournaments);
-            }
+                    @Override
+                    public void success(List<TournamentModel> tournaments) {
+                        setTournaments(tournaments);
+                    }
 
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-                Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void failure(ApiErrors error, String message) {
+                        System.err.println("API_ERROR: " + error.name() + " - " + message);
+                        Toast.makeText(context, "NOT Successful retrieval", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void updateList() {
-        if(this.isLocal) {
+        if (this.isLocal) {
             getOffline(context, this.currentLocation);
             Log.wtf("Location", this.currentLocation);
         } else {

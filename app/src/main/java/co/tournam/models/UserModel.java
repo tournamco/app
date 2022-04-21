@@ -14,6 +14,7 @@ public class UserModel {
         this.email = email;
         this.icon = icon;
     }
+
     public String getId() {
         return id;
     }
@@ -30,7 +31,11 @@ public class UserModel {
         return email;
     }
 
-    public String getIcon() { return icon; }
+    public String getIcon() {
+        return icon;
+    }
 
-    public void setIcon(String icon) { this.icon = icon; }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }

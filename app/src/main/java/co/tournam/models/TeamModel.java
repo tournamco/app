@@ -21,7 +21,10 @@ public class TeamModel {
         this.icon = icon;
         this.tournamentId = tournamentId;
     }
-    public String getID() { return id; }
+
+    public String getID() {
+        return id;
+    }
 
     public List<UserModel> getMembers() {
         return members;
@@ -31,7 +34,9 @@ public class TeamModel {
         this.members = members;
     }
 
-    public int getCurrentMemberAmount() { return (int) this.members.stream().count(); }
+    public int getCurrentMemberAmount() {
+        return (int) this.members.stream().count();
+    }
 
     public UserModel getLeader() {
         return leader;
@@ -49,9 +54,13 @@ public class TeamModel {
         this.name = name;
     }
 
-    public String getIcon() { return icon;}
+    public String getIcon() {
+        return icon;
+    }
 
-    public String getTournamentId() { return tournamentId; }
+    public String getTournamentId() {
+        return tournamentId;
+    }
 
     public boolean isPublic() {
         return isPublic;
