@@ -30,6 +30,13 @@ public class RequestHandler {
         queue.start();
     }
 
+    /**
+     * Request a specified path from the API
+     * @param path The path to request
+     * @param method The method to use
+     * @param bodyListener The listener to call to get the body object to send to the API
+     * @param successListener The listener to call when the request is successful
+     */
     public static void request(String path, int method, RequestBody bodyListener, RequestSuccess successListener) {
         JSONObject body = null;
         if(bodyListener != null) {
@@ -62,6 +69,11 @@ public class RequestHandler {
         queue.add(request);
     }
 
+    /**
+     * Check if a certain cookie exists
+     * @param name The name of the cookie
+     * @return Whether the cookie exists
+     */
     public static boolean hasCookie(String name) {
         try {
             List<HttpCookie> cookies = ((PersistentCookieStore) ((CookieManager)CookieHandler.getDefault()).getCookieStore()).get(new URI(url));
@@ -78,15 +90,17 @@ public class RequestHandler {
         return false;
     }
 
+    /**
+     * Interface to get the body for a request
+     */
     public interface RequestBody {
         JSONObject body() throws JSONException;
     }
 
+    /**
+     * Interface to get the response from a request
+     */
     public interface RequestSuccess {
         void success(JSONObject response) throws JSONException;
-    }
-
-    public interface AbstractCompleted {
-        void failure(ApiErrors error, String message);
     }
 }

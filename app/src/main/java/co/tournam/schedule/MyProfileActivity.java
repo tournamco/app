@@ -86,18 +86,10 @@ public class MyProfileActivity extends AppCompatActivity {
         DefaultButton button = new DefaultButton(context, "Logout");
         button.button.setOnClickListener(v -> {
             // TODO: Logout
-            UserHandler.logout(new UserHandler.LogoutCompleted() {
-                @Override
-                public void success() {
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    getApplicationContext().getSharedPreferences(PersistentCookieStore.COOKIE_PREFS, 0).edit().clear().apply();
-                    startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-
-                }
+            UserHandler.logout(() -> {
+                Intent intent = new Intent(context, LoginActivity.class);
+                getApplicationContext().getSharedPreferences(PersistentCookieStore.COOKIE_PREFS, 0).edit().clear().apply();
+                startActivity(intent);
             });
         });
         header.addView(new SmallHeader(context, "My Profile", () -> this.finish(), button));
@@ -105,24 +97,16 @@ public class MyProfileActivity extends AppCompatActivity {
 
     //Gets the information of the user from the server and using that information sets up the page
     public void getUserInfo() {
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel me) {
-                setUserInfo(me);
-                setUserIconLayout();
-                setUsernameLayout();
-                setGamerTagLayout();
-                setEmailLayout();
-                setFirstHeaderLayout();
-                setChangePasswordLayout();
-                setSecondHeaderLayout();
-                setStatisticsLayout();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        UserHandler.me(me -> {
+            setUserInfo(me);
+            setUserIconLayout();
+            setUsernameLayout();
+            setGamerTagLayout();
+            setEmailLayout();
+            setFirstHeaderLayout();
+            setChangePasswordLayout();
+            setSecondHeaderLayout();
+            setStatisticsLayout();
         });
     }
 
@@ -155,17 +139,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
     //Changes the icon of the user to the value of newUserIconID
     public void changeIcon() {
-        UserHandler.changeIcon(this.newUserIconID, new UserHandler.ChangeComplete() {
-            @Override
-            public void success() {
-                Toast.makeText(MyProfileActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        UserHandler.changeIcon(this.newUserIconID, () ->
+                Toast.makeText(MyProfileActivity.this, "Icon changed.", Toast.LENGTH_SHORT).show());
     }
 
     //Opens an intent of the gallery
@@ -188,17 +163,7 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeUsername(((StageOptionBody) usernameLayout.getChildAt(0)).getEntry(),
-                    new UserHandler.ChangeComplete() {
-                        @Override
-                        public void success() {
-                            Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
-                    });
+                    () -> Toast.makeText(MyProfileActivity.this, "Username changed.", Toast.LENGTH_SHORT).show());
         });
     }
 
@@ -213,17 +178,7 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeGamertag(((StageOptionBody) gamerTagLayout.getChildAt(0)).getEntry(),
-                    new UserHandler.ChangeComplete() {
-                        @Override
-                        public void success() {
-                            Toast.makeText(MyProfileActivity.this, "Gamertag changed.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
-                    });
+                    () -> Toast.makeText(MyProfileActivity.this, "Gamertag changed.", Toast.LENGTH_SHORT).show());
         });
     }
 
@@ -238,17 +193,7 @@ public class MyProfileActivity extends AppCompatActivity {
         change.setOnClickListener(v -> {
 
             UserHandler.changeEmail(((StageOptionBody) emailLayout.getChildAt(0)).getEntry(),
-                    new UserHandler.ChangeComplete() {
-                        @Override
-                        public void success() {
-                            Toast.makeText(MyProfileActivity.this, "Email changed.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void failure(ApiErrors error, String message) {
-                            System.err.println("API_ERROR: " + error.name() + " - " + message);
-                        }
-                    });
+                    () -> Toast.makeText(MyProfileActivity.this, "Email changed.", Toast.LENGTH_SHORT).show());
         });
     }
 

@@ -10,6 +10,12 @@ import java.util.List;
 import co.tournam.models.RoundModel;
 
 public class RoundHandler {
+    /**
+     * Parse the JSON response from the API and return the round model
+     * @param json The JSONObject to parse
+     * @return The round model
+     * @throws JSONException if the JSONObject is invalid
+     */
     public static RoundModel fromJSON(JSONObject json) throws JSONException {
         List<String> matches = new ArrayList<>();
         JSONArray matchesData = json.getJSONArray("matches");

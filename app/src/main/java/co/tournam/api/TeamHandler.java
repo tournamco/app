@@ -15,6 +15,12 @@ import co.tournam.models.TournamentModel;
 import co.tournam.models.UserModel;
 
 public class TeamHandler {
+    /**
+     * Parse the JSON response from the API and return the team model
+     * @param team The JSONObject to parse
+     * @return The team model
+     * @throws JSONException if the JSONObject is invalid
+     */
     public static TeamModel fromJSON(JSONObject team) throws JSONException {
         List<UserModel> members = new ArrayList<>();
         JSONArray membersData = team.getJSONArray("members");
@@ -41,6 +47,12 @@ public class TeamHandler {
         );
     }
 
+    /**
+     * Create an empty team for the specified tournament
+     * @param tournamentId The tournament id
+     * @param isPublic Whether the team is public or not
+     * @param listener The listener to call when the team is created
+     */
     public static void createEmptyTeam(String tournamentId, boolean isPublic, CreateEmptyTeamComplete listener) {
         RequestHandler.request("/team/create", Request.Method.POST, () -> {
             JSONObject json = new JSONObject();
@@ -56,10 +68,22 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * Interface for the create empty team API call
+     */
     public interface CreateEmptyTeamComplete {
         void success(String teamId, String inviteToken);
     }
 
+    /**
+     * API call to create a normal team
+     * @param tournamentId The tournament id
+     * @param join If the logged in user should join the team
+     * @param iconId The icon id
+     * @param isPublic Whether the team is public or not
+     * @param name The name of the team
+     * @param listener The listener to call when the team is created
+     */
     public static void createNormalTeam(String tournamentId, boolean join, String iconId, boolean isPublic, String name, CreateNormalTeamComplete listener) {
         RequestHandler.request("/team/create", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -77,10 +101,18 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * Interface for the create normal team API call
+     */
     public interface CreateNormalTeamComplete {
         void success(String teamId);
     }
 
+    /**
+     * API call to join a team with an invite token
+     * @param token The invite token
+     * @param listener The listener to call when the team is joined
+     */
     public static void joinByToken(String token, JoinCompleted listener) {
         RequestHandler.request("/team/join", Request.Method.POST, () -> {
             JSONObject json = new JSONObject();
@@ -95,6 +127,11 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * API call to join the specified team
+     * @param teamId The team id
+     * @param listener The listener to call when the team is joined
+     */
     public static void joinByTeamId(String teamId, JoinCompleted listener) {
         RequestHandler.request("/team/join", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -109,10 +146,19 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * Interface for the join by token API call
+     */
     public interface JoinCompleted {
         void success(String teamId, boolean isLeader);
     }
 
+    /**
+     * API call to create a team invite
+     * @param tournamentId The tournament id
+     * @param teamId The team id
+     * @param listener The listener to call when the invite is created
+     */
     public static void createInvite(String tournamentId, String teamId, CreateInviteComplete listener) {
         RequestHandler.request("/team/invite/create", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -123,10 +169,18 @@ public class TeamHandler {
             }, response -> listener.success(response.getString("token")));
     }
 
+    /**
+     * Interface for the create invite API call
+     */
     public interface CreateInviteComplete {
         void success(String token);
     }
 
+    /**
+     * API call to finish a match
+     * @param matchId The match id
+     * @param listener The listener to call when the match is finished
+     */
     public static void finishMatch(String matchId, FinishMatchComplete listener) {
         RequestHandler.request("/team/match/finish", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -136,10 +190,21 @@ public class TeamHandler {
             }, response -> listener.success());
     }
 
+    /**
+     * Interface for the finish match API call
+     */
     public interface FinishMatchComplete {
         void success();
     }
 
+    /**
+     * API call to list the matches of the tournaments a user is in
+     * @param future Whether to list future matches or not
+     * @param personal Whether to list personal matches or not
+     * @param pageNumber The page number
+     * @param pageSize The page size
+     * @param listener The listener to call when the matches are listed
+     */
     public static void listMatches(boolean future, boolean personal, int pageNumber, int pageSize, ListMatchesComplete listener) {
         RequestHandler.request("/team/match/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -161,10 +226,19 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * Interface for the list matches API call
+     */
     public interface ListMatchesComplete {
         void success(List<MatchModel> matches);
     }
 
+    /**
+     * API call to list the tournaments a user is in
+     * @param pageNumber The page number
+     * @param pageSize The page size
+     * @param listener The listener to call when the tournaments are listed
+     */
     public static void listTournaments(int pageNumber, int pageSize, ListTournamentsComplete listener) {
         RequestHandler.request("/team/tournament/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -184,6 +258,9 @@ public class TeamHandler {
             });
     }
 
+    /**
+     * Interface for the list tournaments API call
+     */
     public interface ListTournamentsComplete {
         void success(List<TournamentModel> tournaments);
     }

@@ -46,17 +46,8 @@ public class StageActivity extends AppCompatActivity {
         this.context = this.getApplicationContext();
 
 
-        TournamentHandler.info(tournamentID, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                setMainStage(tournament.getStages().get(stageIndex), tournament.getName());
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TournamentHandler.info(tournamentID, tournament ->
+                setMainStage(tournament.getStages().get(stageIndex), tournament.getName()));
     }
 
     //Calls setup and build functions of the activity
@@ -101,17 +92,8 @@ public class StageActivity extends AppCompatActivity {
 
     //Gets the matches of the currently selected round and passes them to the addMatches() method
     public void refreshMatches() {
-        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound, new TournamentHandler.ListRoundMatchesComplete() {
-            @Override
-            public void success(List<MatchModel> matches) {
-                addMatches(matches);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TournamentHandler.listRoundMatches(this.tournamentID, this.stageIndex, this.currentRound,
+                matches -> addMatches(matches));
     }
 
     //Add the matches to and build the match list component

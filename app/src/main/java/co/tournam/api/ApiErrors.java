@@ -39,10 +39,19 @@ public enum ApiErrors {
 
     private final int index;
 
-    private ApiErrors(int index) {
+    /**
+     * Constructor.
+     * @param index the index of the error
+     */
+    ApiErrors(int index) {
         this.index = index;
     }
 
+    /**
+     * Get the error by the index.
+     * @param index the index of the error
+     * @return the error
+     */
     public static ApiErrors valueOfIndex(int index) {
         return BY_INDEX.get(index);
     }

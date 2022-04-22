@@ -84,18 +84,8 @@ public class ChangePasswordObject extends LinearLayout {
      * @param newPass the new password.
      */
     public void changePassword(Context context, String oldPass, String newPass) {
-        UserHandler.changePassword(oldPass, newPass, new UserHandler.ChangeComplete() {
-            @Override
-            public void success() {
-                Toast.makeText(context, "Password Changed!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                Toast.makeText(context, "Incorrect password", Toast.LENGTH_SHORT).show();
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        UserHandler.changePassword(oldPass, newPass, () ->
+                Toast.makeText(context, "Password Changed!", Toast.LENGTH_SHORT).show());
     }
 
 

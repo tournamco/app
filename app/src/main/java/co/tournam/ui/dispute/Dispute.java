@@ -50,17 +50,9 @@ public class Dispute extends LinearLayout {
      * on failure it will print an error message.
      */
     private void loadMatch() {
-        TeamHandler.matchInfo(dispute.getMatchId(), new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel response) {
-                match = response;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.matchInfo(dispute.getMatchId(), response -> {
+            match = response;
+            build();
         });
     }
 
@@ -115,18 +107,9 @@ public class Dispute extends LinearLayout {
      * @param key     key of the proof
      */
     private void loadProofColumn(String proofId, String key) {
-        ProofHandler.info(proofId, new ProofHandler.InfoComplete() {
-            @Override
-            public void success(ProofModel proof) {
+        ProofHandler.info(proofId, proof ->
                 disputeColumns.addView(new DisputeColumn(context, proof, dispute.getId(),
-                        key, Dispute.this, listener));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+                key, Dispute.this, listener)));
     }
 
     /**

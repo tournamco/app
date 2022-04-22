@@ -96,18 +96,10 @@ public class GameProof extends AbstractGameProof {
      * @param context the current context
      */
     private void buildContents(Context context) {
-        ProofHandler.info(proofId, new ProofHandler.InfoComplete() {
-            @Override
-            public void success(ProofModel proof) {
-                proofModel = proof;
-                proofImages = proofModel.getImages();
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        ProofHandler.info(proofId, proof -> {
+            proofModel = proof;
+            proofImages = proofModel.getImages();
+            build();
         });
     }
 
@@ -118,17 +110,7 @@ public class GameProof extends AbstractGameProof {
      * @param image   the bitmap of the image
      */
     public void addImage(String imageId, Bitmap image) {
-        ProofHandler.addImage(match.getId(), proofId, imageId, new ProofHandler.AddImageComplete() {
-            @Override
-            public void success() {
-                imageList.addImage(image);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        ProofHandler.addImage(match.getId(), proofId, imageId, () -> imageList.addImage(image));
     }
 
     /**

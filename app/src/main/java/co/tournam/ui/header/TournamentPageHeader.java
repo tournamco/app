@@ -78,39 +78,23 @@ public class TournamentPageHeader extends AbstractHeader {
         deleteButton = findViewById(R.id.tournament_page_header_delete_button);
         deleteButton.setText("Delete");
         deleteButton.setOnClickListener(v -> {
-            TournamentHandler.delete(tournament.getId(), new TournamentHandler.DeleteComplete() {
-                @Override
-                public void success() {
-                    Intent intent = new Intent(context, DiscoveryActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TournamentHandler.delete(tournament.getId(), () -> {
+                Intent intent = new Intent(context, DiscoveryActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
         });
 
         createButton = findViewById(R.id.tournament_page_header_create_button);
         createButton.setText("Create");
         createButton.setOnClickListener(v -> {
-            TeamHandler.createEmptyTeam(tournament.getId(), false, new TeamHandler.CreateEmptyTeamComplete() {
-                @Override
-                public void success(String teamId, String inviteToken) {
-                    Bundle b = new Bundle();
-                    b.putString("token", inviteToken);
-                    Intent intent = new Intent(context, QRGenActivity.class);
-                    intent.putExtras(b);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
+            TeamHandler.createEmptyTeam(tournament.getId(), false, (teamId, inviteToken) -> {
+                Bundle b = new Bundle();
+                b.putString("token", inviteToken);
+                Intent intent = new Intent(context, QRGenActivity.class);
+                intent.putExtras(b);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
         });
 

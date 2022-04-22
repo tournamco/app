@@ -132,17 +132,7 @@ public class GameProofScore extends LinearLayout {
         scores.put(key, value);
         proof.setScores(scores);
 
-        ProofHandler.setScores(match.getId(), proof.getId(), scores, new ProofHandler.SetScoresComplete() {
-
-            @Override
-            public void success() {
-                Toast.makeText(context, "Scores Updated", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        ProofHandler.setScores(match.getId(), proof.getId(), scores, () ->
+                Toast.makeText(context, "Scores Updated", Toast.LENGTH_LONG).show());
     }
 }

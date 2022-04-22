@@ -78,17 +78,9 @@ public class MatchDetailActivity extends AppCompatActivity {
      * @post this.match = MatchModel match
      */
     private void loadMatch(String matchId) {
-        TeamHandler.matchInfo(matchId, new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel match) {
-                MatchDetailActivity.this.match = match;
-                loadTournament(match.getTournament().getId());
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.matchInfo(matchId, match -> {
+            MatchDetailActivity.this.match = match;
+            loadTournament(match.getTournament().getId());
         });
     }
 
@@ -99,33 +91,17 @@ public class MatchDetailActivity extends AppCompatActivity {
      * @post this.tournament = TournamentModel tournament
      */
     private void loadTournament(String tournamentId) {
-        TournamentHandler.info(tournamentId, new TournamentHandler.InfoComplete() {
-            @Override
-            public void success(TournamentModel tournament) {
-                MatchDetailActivity.this.tournament = tournament;
-                loadMe();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TournamentHandler.info(tournamentId, tournament -> {
+            MatchDetailActivity.this.tournament = tournament;
+            loadMe();
         });
     }
 
     //Loads and sets the information of the user and then builds the activity
     private void loadMe() {
-        UserHandler.me(new UserHandler.MeCompleted() {
-            @Override
-            public void success(UserModel user) {
-                MatchDetailActivity.this.me = user;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        UserHandler.me(user -> {
+            MatchDetailActivity.this.me = user;
+            build();
         });
     }
 
@@ -237,17 +213,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         for (GameModel game : games) {
             if (game.getProofs().get(teamKey) == null) continue;
 
-            ProofHandler.info(game.getProofs().get(teamKey), new ProofHandler.InfoComplete() {
-                @Override
-                public void success(ProofModel proof) {
-                    loadImages(proof.getImages());
-                }
-
-                @Override
-                public void failure(ApiErrors error, String message) {
-                    System.err.println("API_ERROR: " + error.name() + " - " + message);
-                }
-            });
+            ProofHandler.info(game.getProofs().get(teamKey), proof -> loadImages(proof.getImages()));
         }
     }
 

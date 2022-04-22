@@ -18,6 +18,12 @@ import co.tournam.models.MatchModel;
 import co.tournam.models.TeamModel;
 
 public class MatchHandler {
+    /**
+     * Parse the JSON response from the API and return match
+     * @param match The JSONObject to parse
+     * @return The match model
+     * @throws JSONException if the JSONObject is invalid
+     */
     public static MatchModel fromJSON(JSONObject match) throws JSONException {
         JSONObject tournamentData = match.getJSONObject("tournament");
 

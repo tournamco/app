@@ -14,6 +14,12 @@ import co.tournam.models.DisputeModel;
 import co.tournam.models.MatchModel;
 
 public class DisputeHandler {
+    /**
+     * Converts a JSONObject to a DisputeModel
+     * @param jsonObject The JSONObject to convert
+     * @return The DisputeModel
+     * @throws JSONException
+     */
     private static DisputeModel fromJSON(JSONObject jsonObject) throws JSONException {
         return new DisputeModel(jsonObject.getString("id"),
                 jsonObject.getString("match"),
@@ -21,6 +27,12 @@ public class DisputeHandler {
                 jsonObject.getString("tournament"));
     }
 
+    /**
+     * API call to resolve a dispute
+     * @param disputeId The dispute id
+     * @param chosenTeamKey The team key of the team that won the match
+     * @param listener The listener to call when the request is complete
+     */
     public static void resolve(String disputeId, String chosenTeamKey, ResolveComplete listener) {
         RequestHandler.request("/dispute/resolve", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -31,10 +43,18 @@ public class DisputeHandler {
             }, response -> listener.success());
     }
 
+    /**
+     * Interface for the resolve request
+     */
     public interface ResolveComplete {
         void success();
     }
 
+    /**
+     * API call to list all disputes
+     * @param tournamentId The tournament id
+     * @param listener The listener to call when the request is complete
+     */
     public static void list(String tournamentId, ListComplete listener) {
         RequestHandler.request("/dispute/list", Request.Method.POST, () -> {
                 JSONObject json = new JSONObject();
@@ -53,6 +73,9 @@ public class DisputeHandler {
             });
     }
 
+    /**
+     * Interface for the list request
+     */
     public interface ListComplete {
         void success(List<DisputeModel> disputes);
     }

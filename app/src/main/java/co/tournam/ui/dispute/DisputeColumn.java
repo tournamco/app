@@ -73,17 +73,8 @@ public class DisputeColumn extends LinearLayout {
         this.addView(new ImageListVertical(context, new ArrayList<>()));
         DefaultButton button = new DefaultButton(context, "Agree");
         button.setPadding(dpToPx(context, 10), dpToPx(context, 10), dpToPx(context, 10), dpToPx(context, 10));
-        button.setOnClickListener(view -> DisputeHandler.resolve(disputeId, key, new DisputeHandler.ResolveComplete() {
-            @Override
-            public void success() {
-                listener.disputeResolved(dispute);
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        }));
+        button.setOnClickListener(view -> DisputeHandler.resolve(disputeId, key, () ->
+                listener.disputeResolved(dispute)));
         this.addView(button);
     }
 

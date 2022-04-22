@@ -24,6 +24,12 @@ public class ImageLoader {
         return downloadImage(imageId);
     }
 
+
+    /**
+     * Downloads an image from the server and returns it as a Bitmap
+     * @param imageId The ID of the image to download
+     * @return The image as a Bitmap
+     */
     public static Bitmap downloadImage(String imageId) {
         if(imageId == null || imageId.equals("null")) return null;
 
@@ -55,6 +61,11 @@ public class ImageLoader {
         }
     }
 
+    /**
+     * Uploads an image to the server and returns the ID of the image
+     * @param bitmap The image to upload
+     * @return The ID of the image
+     */
     public static String uploadImage(Bitmap bitmap) {
         try {
             java.net.URL url = new java.net.URL(UPLOAD_PATH);

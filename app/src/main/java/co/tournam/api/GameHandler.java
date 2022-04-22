@@ -11,6 +11,12 @@ import java.util.Map;
 import co.tournam.models.GameModel;
 
 public class GameHandler {
+    /**
+     * Parses a JSONObject into a GameModel
+     * @param game JSONObject to parse
+     * @return The GameModel
+     * @throws JSONException
+     */
     public static GameModel fromJSON(JSONObject game) throws JSONException {
         Map<String, Integer> scores = new ArrayMap<>();
         Map<String, String> proofs = new ArrayMap<>();

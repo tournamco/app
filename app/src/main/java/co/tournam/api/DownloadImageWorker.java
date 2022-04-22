@@ -7,6 +7,11 @@ public class DownloadImageWorker extends AsyncTask<String, Void, Bitmap> {
 
     private ImageDownloaded listener;
 
+    /**
+     * Constructor
+     *
+     * @param listener The listener to be notified when the image is downloaded
+     */
     public DownloadImageWorker(ImageDownloaded listener) {
         this.listener = listener;
     }
@@ -25,6 +30,9 @@ public class DownloadImageWorker extends AsyncTask<String, Void, Bitmap> {
         this.listener.result(result);
     }
 
+    /**
+     * Interface for the listener
+     */
     public interface ImageDownloaded {
         void result(Bitmap image);
     }

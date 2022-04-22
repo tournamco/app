@@ -78,17 +78,9 @@ public class MatchProofActivity extends AppCompatActivity {
 
     //Gets the information about the selected match from the server and builds the activity
     private void loadMatch(String matchId) {
-        TeamHandler.matchInfo(matchId, new TeamHandler.MatchInfoComplete() {
-            @Override
-            public void success(MatchModel response) {
-                match = response;
-                build();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
+        TeamHandler.matchInfo(matchId, response -> {
+            match = response;
+            build();
         });
     }
 
@@ -131,39 +123,20 @@ public class MatchProofActivity extends AppCompatActivity {
 
     //Sends the information to the server that the selected match is finished
     private void finishMatch() {
-        TeamHandler.finishMatch(match.getId(), new TeamHandler.FinishMatchComplete() {
-            @Override
-            public void success() {
-                finish();
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+        TeamHandler.finishMatch(match.getId(), () -> finish());
     }
 
     //Creates a new proof in the server
     private void createProof(int gameIndex) {
-        ProofHandler.create(match.getId(), gameIndex, new ProofHandler.CreateComplete() {
-            @Override
-            public void success(String proofId) {
+        ProofHandler.create(match.getId(), gameIndex, proofId ->
                 proofContainer.addView(new GameProof(context, match.getGames().get(gameIndex),
-                        gameIndex, match, teamKey, proofId, index -> {
-                    lastAddedIndex = index;
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    someActivityResultLauncher.launch(intent);
-                }));
-            }
-
-            @Override
-            public void failure(ApiErrors error, String message) {
-                System.err.println("API_ERROR: " + error.name() + " - " + message);
-            }
-        });
+                gameIndex, match, teamKey, proofId, index -> {
+            lastAddedIndex = index;
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            someActivityResultLauncher.launch(intent);
+        })));
     }
 
     /*

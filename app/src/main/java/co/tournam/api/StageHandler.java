@@ -16,6 +16,12 @@ import co.tournam.models.RoundModel;
 import co.tournam.models.StageModel;
 
 public class StageHandler {
+    /**
+     * Parse the JSON response from the API and return the stage
+     * @param json The JSONObject to parse
+     * @return The stage model
+     * @throws JSONException if the JSONObject is invalid
+     */
     public static StageModel fromJSON(JSONObject json) throws JSONException {
         List<RoundModel> rounds = new ArrayList<>();
         JSONArray roundsData = json.getJSONArray("rounds");
